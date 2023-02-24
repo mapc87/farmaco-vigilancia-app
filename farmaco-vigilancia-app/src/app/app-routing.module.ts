@@ -11,7 +11,7 @@ import { AutenticacionComponent } from './components/autenticacion/autenticacion
 
 const routes: Routes = [
   {path: 'farmacos', component: FarmacoComponent},
-  {path: 'enfermedad', component: EnfermedadComponent},
+  {path: 'enfermedades', component: EnfermedadComponent},
   {path: 'pacientes', component: PacientesComponent},
   {path: 'formulario-pacientes', component: FormPacienteComponent},
   {path: 'ficha-medica-paciente', component: PacienteFichaMedicaComponent},
