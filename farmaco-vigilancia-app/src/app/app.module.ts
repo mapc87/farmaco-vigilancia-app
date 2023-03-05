@@ -17,6 +17,7 @@ import { FormPacienteComponent } from './components/form-paciente/form-paciente.
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ModalFormUsaurioComponent } from './components/modal-form-usaurio/modal-form-usaurio.component';
 import { AutenticacionComponent } from './components/autenticacion/autenticacion.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AutenticacionComponent } from './components/autenticacion/autenticacion
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
