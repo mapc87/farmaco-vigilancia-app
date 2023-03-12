@@ -18,6 +18,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ModalFormUsaurioComponent } from './components/modal-form-usaurio/modal-form-usaurio.component';
 import { AutenticacionComponent } from './components/autenticacion/autenticacion.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
