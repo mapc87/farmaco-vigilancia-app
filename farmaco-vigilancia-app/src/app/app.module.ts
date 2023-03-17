@@ -20,6 +20,7 @@ import { AutenticacionComponent } from './components/autenticacion/autenticacion
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpClientModule} from '@angular/common/http';
 import { ModalFormEnfermedadComponent } from './components/modal-form-enfermedad/modal-form-enfermedad.component';
+import { FormModalFarmacoComponent } from './components/form-modal-farmaco/form-modal-farmaco.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ModalFormEnfermedadComponent } from './components/modal-form-enfermedad
     UsuariosComponent,
     ModalFormUsuarioComponent,
     AutenticacionComponent,
-    ModalFormEnfermedadComponent
+    ModalFormEnfermedadComponent,
+    FormModalFarmacoComponent
   ],
   imports: [
     BrowserModule,

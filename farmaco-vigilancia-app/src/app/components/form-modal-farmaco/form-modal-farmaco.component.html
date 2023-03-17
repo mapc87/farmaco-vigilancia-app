@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{titulo}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="form">
+        <div class="form-group row">
+            <div class="mb-1 col-md-12">
+                <label for="nombreFarmaco" class="form-label">Nombre</label>
+                <input type="text" id="nombrePaciente" [(ngModel)]="farmaco.nombre"  class="form-control">
+            </div>
+            <div class="mb-1 col-md-12">
+                <label for="Observaciones" class="form-label">Observaciones</label>
+                <textarea id="Observaciones" [(ngModel)]="farmaco.observaciones" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group col-md-12 mt-1">
+                <label for="tipoUsuario">Casa Farmaceutica</label>
+                <select id="tipoUsuario" class="form-control">
+                  <option selected>Seleccione</option>
+                  <option value="1">Casa 1</option>
+                  <option value="2">Casa 2</option>
+                </select>
+            </div>    
+            <div class="mb-1 col-md-12 text-center  mt-2" (click)="guardar()">    
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>    
