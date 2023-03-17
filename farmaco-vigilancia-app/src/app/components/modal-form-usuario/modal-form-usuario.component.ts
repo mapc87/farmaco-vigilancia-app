@@ -8,7 +8,7 @@ import { BsModalRef} from 'ngx-bootstrap/modal';
   styleUrls: ['./modal-form-usuario.component.css']
 })
 
-export class ModalFormUsaurioComponent {
+export class ModalFormUsuarioComponent {
   insertar:boolean = true; 
   usuario: usuario = {
     id: "", 

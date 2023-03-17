@@ -15,10 +15,11 @@ import { ModalFormCasaMedicaComponent } from './components/modal-form-casa-medic
 import { ModalFormCasaFarmaceuticaComponent } from './components/modal-form-casa-farmaceutica/modal-form-casa-farmaceutica.component';
 import { FormPacienteComponent } from './components/form-paciente/form-paciente.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
-import { ModalFormUsaurioComponent } from './components/modal-form-usaurio/modal-form-usuario.component';
+import { ModalFormUsuarioComponent } from './components/modal-form-usuario/modal-form-usuario.component';
 import { AutenticacionComponent } from './components/autenticacion/autenticacion.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpClientModule} from '@angular/common/http';
+import { ModalFormEnfermedadComponent } from './components/modal-form-enfermedad/modal-form-enfermedad.component';
 
 @NgModule({
   declarations: [
@@ -34,8 +35,9 @@ import { HttpClientModule} from '@angular/common/http';
     ModalFormCasaFarmaceuticaComponent,
     FormPacienteComponent,
     UsuariosComponent,
-    ModalFormUsaurioComponent,
-    AutenticacionComponent
+    ModalFormUsuarioComponent,
+    AutenticacionComponent,
+    ModalFormEnfermedadComponent
   ],
   imports: [
     BrowserModule,

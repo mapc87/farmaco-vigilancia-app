@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalFormUsaurioComponent } from './modal-form-usuario.component';
+import { ModalFormUsuarioComponent } from './modal-form-usuario.component';
 
 describe('ModalFormUsaurioComponent', () => {
-  let component: ModalFormUsaurioComponent;
-  let fixture: ComponentFixture<ModalFormUsaurioComponent>;
+  let component: ModalFormUsuarioComponent;
+  let fixture: ComponentFixture<ModalFormUsuarioComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalFormUsaurioComponent ]
+      declarations: [ ModalFormUsuarioComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ModalFormUsaurioComponent);
+    fixture = TestBed.createComponent(ModalFormUsuarioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
