@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CasaFarmaceutica  } from 'src/app/interfaces/casa-farmaceutica.interface';
-import { FormsModule } from '@angular/forms';
+import { BsModalRef} from 'ngx-bootstrap/modal'; 
 
 @Component({
   selector: 'app-modal-form-casa-farmaceutica',
@@ -16,15 +16,16 @@ export class ModalFormCasaFarmaceuticaComponent {
     observaciones: ""
   }; 
 
-  constructor() {
+  constructor(public modalRef: BsModalRef) {
     this.insertar = true; 
   } 
 
   
-  textoAccion = this.insertar == true ? "Agregar": "Actualizar";
+  titulo = (this.insertar == true ? "Agregar": "Actualizar") + " Casa Farmaceutica";
 
   guardar(){
     console.log(this.casaFarmaceutica);
   }
+
 
 }

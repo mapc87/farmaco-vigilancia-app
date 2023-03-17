@@ -15,7 +15,7 @@ import { ModalFormCasaMedicaComponent } from './components/modal-form-casa-medic
 import { ModalFormCasaFarmaceuticaComponent } from './components/modal-form-casa-farmaceutica/modal-form-casa-farmaceutica.component';
 import { FormPacienteComponent } from './components/form-paciente/form-paciente.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
-import { ModalFormUsaurioComponent } from './components/modal-form-usaurio/modal-form-usaurio.component';
+import { ModalFormUsaurioComponent } from './components/modal-form-usaurio/modal-form-usuario.component';
 import { AutenticacionComponent } from './components/autenticacion/autenticacion.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpClientModule} from '@angular/common/http';

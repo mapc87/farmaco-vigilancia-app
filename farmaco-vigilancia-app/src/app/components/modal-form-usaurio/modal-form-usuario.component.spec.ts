@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalFormUsaurioComponent } from './modal-form-usaurio.component';
+import { ModalFormUsaurioComponent } from './modal-form-usuario.component';
 
 describe('ModalFormUsaurioComponent', () => {
   let component: ModalFormUsaurioComponent;

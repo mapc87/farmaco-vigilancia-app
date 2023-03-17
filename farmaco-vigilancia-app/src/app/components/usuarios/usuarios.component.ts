@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { ModalFormUsaurioComponent } from '../modal-form-usaurio/modal-form-usuario.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -6,5 +8,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent {
+  modalRef?: BsModalRef;
+  constructor (private modalService: BsModalService){
+   
+  }
 
+  abrirUsuarioModal(){
+    const initialState: ModalOptions = {
+      initialState: {
+        list: [
+          'open modal '
+        ],
+        title: 'Usuario Modal'
+      }      
+    };
+    this.modalRef = this.modalService.show(ModalFormUsaurioComponent, initialState);
+    this.modalRef.content.closeBtnName='Close';
+  }
 }
