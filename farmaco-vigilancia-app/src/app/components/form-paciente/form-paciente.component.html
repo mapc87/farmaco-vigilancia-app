@@ -1,72 +1,72 @@
 <div class="col-12 text-center">
     <label class="title-registro fs-3" >Registro de Pacientes</label>
 </div>
-<div class="col-md-12">
+  <div class="col-md-12">
     <div class="form">
         <div class="form-group row">
             <div class="mb-1 col-md-12 col-lg-4">
                 <label for="nombrePaciente" class="form-label">Nombre del paciente</label>
-                <input type="text" id="nombrePaciente" class="form-control">
+                <input type="text" id="nombrePaciente" class="form-control"  [(ngModel)]="paciente.nombre">
               </div>
               <div class="mb-1 col-md-6 col-lg-2">
                 <label for="noRegistro" class="form-label">No. de Registro</label>
-                <input type="text" id="noRegistro" class="form-control">
+                <input type="text" id="noRegistro" class="form-control"  [(ngModel)]="paciente.noRegistro">
               </div>
               <div class="mb-1 col-md-6 col-lg-2">
                 <label for="dpi" class="form-label">DPI</label>
-                <input type="text" id="dpi" class="form-control">
+                <input type="text" id="dpi" class="form-control" [(ngModel)]="paciente.dpi">
               </div>          
               <div class="mb-1 col-md-2">
                 <label for="genero" class="form-label">Sexo</label>
-                <select class="form-select md-1" aria-label="Generos">
+                <select class="form-select md-1" aria-label="Generos" [(ngModel)]="paciente.sexo"> 
                     <option *ngFor="let g of generos" [value]="g">{{g}}</option>
                 </select>
               </div>
               <div class="mb-1 col-md-6 col-lg-2">
                 <label for="etnia" class="form-label">Etnia</label>
-                <select class="form-select md-1" aria-label="Etnia">
+                <select class="form-select md-1" aria-label="Etnia" [(ngModel)]="paciente.etnia">
                     <option *ngFor="let e of etnia" [value]="e">{{e}}</option>
                 </select>
               </div>   
               <div class="mb-1 col-md-6 col-lg-3">
                 <label class="form-label">Departamento de nacimiento</label>
-                <select class="form-select md-1" aria-label="Estadio-Enfermedad">                
-                    <option *ngFor="let e of estadioEnfermedad" [value]="e">{{e}}</option>
+                <select class="form-select md-1" aria-label="Departamento-nacimiento" [(ngModel)]="paciente.deptoNacimiento" (change)="ObtenerMunicipiosDeptoNacimiento($event)">                
+                    <option *ngFor="let d of departamentos" [value]="d">{{d}}</option>
                 </select>
               </div>   
               <div class="mb-1 col-md-6 col-lg-3">
                 <label class="form-label">Municipio de nacimiento</label>
-                <select class="form-select md-1" aria-label="Estadio-Enfermedad">                
-                    <option *ngFor="let e of estadioEnfermedad" [value]="e">{{e}}</option>
+                <select class="form-select md-1" aria-label="municipio-nacimiento" [(ngModel)]="paciente.municipioNacimiento">                
+                    <option *ngFor="let m of municipiosNacimiento" [value]="m">{{m}}</option>
                 </select>
               </div>            
               <div class="mb-1 col-md-6 col-lg-3">
                 <label class="form-label">Departamento de residencia</label>
-                <select class="form-select md-1" aria-label="Estadio-Enfermedad">                
-                    <option *ngFor="let e of estadioEnfermedad" [value]="e">{{e}}</option>
+                <select class="form-select md-1" aria-label="departamento-residencia" [(ngModel)]="paciente.deptoResidencia"  (change)="ObtenerMunicipiosDeptoResedencia($event)">                
+                    <option *ngFor="let d of departamentos" [ngValue]="d">{{d}}</option>
                 </select>
               </div>
               <div class="mb-1 col-md-6 col-lg-3">
                 <label class="form-label">Municipio de residencia</label>
-                <select class="form-select md-1" aria-label="Estadio-Enfermedad">                
-                    <option *ngFor="let e of estadioEnfermedad" [value]="e">{{e}}</option>
+                <select class="form-select md-1" aria-label="Estadio-Enfermedad" [(ngModel)]="paciente.municipioResidencia">                
+                    <option *ngFor="let m of municipiosResidencia" [ngValue]="m">{{m}}</option>
                 </select>
               </div>  
               <div class="mb-1 col-md-6 col-lg-3">
                 <label for="noTelefonoEc" class="form-label">Dirección de residencia</label>
-                <input type="text" id="noTelefonoEc" class="form-control">
+                <input type="text" id="noTelefonoEc" class="form-control" [(ngModel)]="paciente.direccion">
               </div>  
               <div class="mb-1 col-md-6 col-lg-3">
                 <label for="noTelefono" class="form-label">No. de teléfono</label>
-                <input type="text" id="noTelefono" class="form-control">
+                <input type="text" id="noTelefono" class="form-control"  [(ngModel)]="paciente.telefono">
               </div>
               <div class="mb-1 col-md-6 col-lg-3">
-                <label for="noTelefono" class="form-label">Nombre del encargado</label>
-                <input type="text" id="noTelefono" class="form-control">
+                <label for="nombreEncargado" class="form-label">Nombre del encargado</label>
+                <input type="text" id="nombreEncargado" class="form-control"  [(ngModel)]="paciente.nombreEncargado">
               </div>
               <div class="mb-1 col-md-6 col-lg-3">
                 <label for="noTelefonoEc" class="form-label">No. teléfono de encargado/cuidador</label>
-                <input type="text" id="noTelefonoEc" class="form-control">
+                <input type="text" id="noTelefonoEc" class="form-control" [(ngModel)]="paciente.telefonoEncargado"> 
               </div> 
               <div class="col-12 text-center mt-1">
                 <label class="fs-3">Datos clinicos</label>
@@ -84,7 +84,7 @@
                 </select>
               </div>  
               <div class="mb-1 col-md-4 col-lg-2">
-                <label for="fechaIngresoUnidad" class="form-label">Fecha Ingreso a la unidad</label>
+                <label for="fechaIngresoUnidad" class="form-label">Fecha Ingreso</label>
                 <input type="text" id="fechaIngresoUnidad" class="form-control">
               </div>
               <div class="mb-1 col-md-4 col-lg-2">
@@ -93,32 +93,16 @@
                     <option *ngFor="let q of quimioterapia" [value]="q">{{q}}</option>
                 </select>
               </div>
-              <div class="mb-1 col-md-4 col-lg-3">
-                <label for="esquema" class="form-label">Esquema</label>
-                <input type="text" id="esquema" class="form-control">
-              </div>
               <div class="mb-1 col-md-4 col-lg-1">
                 <label for="noCiclo" class="form-label">Ciclo No.</label>
                 <input type="text" id="noCiclo" class="form-control">
               </div>
-              <div class="mb-1 col-md-4 col-lg-2">
-                <label for="fechaEsquema" class="form-label">Fecha</label>
-                <input type="text" id="fechaEsquema" class="form-control">
-              </div>
-              <div class="col-md-6 col-lg-2">
+              <div class="col-md-6 col-lg-2 mb-5">
                 <br>
-                <button class="btn btn-primary mt-1">Agregar medicamento</button>
-              </div>
-              <div class="mb-1 col-md-12 col-lg-4">
-                <label for="fechaEsquema" class="form-label">Efectos adversos</label>
-                <input type="text" id="fechaEsquema" class="form-control">
-              </div>
-              <div class="mb-1 col-md-12 col-lg-3">
-                <label for="fechaEsquema" class="form-label">Efectos adversos no reportados</label>
-                <input type="text" id="fechaEsquema" class="form-control">
-              </div>
-              
-              <div class="col-12 text-center mt-3">
+                <button class="btn btn-primary mt-1" (click)=" agregarMedicamentos()">Agregar medicamentos</button>
+              </div> 
+              <hr>             
+              <div class="col-12 text-center mt-1">
                 <label class="fs-3">Medicamentos Utilizados</label>
               </div>  
               <table class="table">
@@ -127,6 +111,8 @@
                         <td>Nombre de medicamento</td>
                         <td>Casa farmacéutica</td>
                         <td>Lote</td>
+                        <td>Efectos Adversos</td>
+                        <td>Efectos Adversos no reportados</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,12 +120,15 @@
                         <td>Nombre de medicamento</td>
                         <td>Casa farmacéutica</td>
                         <td>Lote</td>
+                        <td>Efectos Adversos</td>
+                        <td>Efectos Adversos no Reportados</td>
                     </tr>
                 </tbody>
               </table>
               <div class="text-center">
-                <button class="btn btn-success">Guardar paciente</button>
+                <button class="btn btn-success" (click)="guardarPaciente()">Guardar paciente</button>
               </div>
         </div>     
     </div>
 </div>
+

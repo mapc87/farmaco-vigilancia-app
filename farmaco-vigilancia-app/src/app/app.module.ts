@@ -21,6 +21,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpClientModule} from '@angular/common/http';
 import { ModalFormEnfermedadComponent } from './components/modal-form-enfermedad/modal-form-enfermedad.component';
 import { FormModalFarmacoComponent } from './components/form-modal-farmaco/form-modal-farmaco.component';
+import { EfectosAdversosComponent } from './components/efectos-adversos/efectos-adversos.component';
+import { AlgoritmoKarchLasagnaComponent } from './components/algoritmo-karch-lasagna/algoritmo-karch-lasagna.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { FormModalFarmacoComponent } from './components/form-modal-farmaco/form-
     ModalFormUsuarioComponent,
     AutenticacionComponent,
     ModalFormEnfermedadComponent,
-    FormModalFarmacoComponent
+    FormModalFarmacoComponent,
+    EfectosAdversosComponent,
+    AlgoritmoKarchLasagnaComponent
   ],
   imports: [
     BrowserModule,
