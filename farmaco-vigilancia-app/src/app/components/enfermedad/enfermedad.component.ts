@@ -1,19 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ModalFormEnfermedadComponent } from '../modal-form-enfermedad/modal-form-enfermedad.component';
+import { EnfermedadServiceService } from 'src/app/services/enfermedad.service.service';
+import { enfermedad } from 'src/app/interfaces/enfermedad.interface';
+import { catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-enfermedad',
   templateUrl: './enfermedad.component.html',
   styleUrls: ['./enfermedad.component.css']
 })
-export class EnfermedadComponent {
+export class EnfermedadComponent implements OnInit{
   modalRef?: BsModalRef;
-  constructor (private modalService: BsModalService){   
+  enfermedades: any[] = [];  
+  enfermedad: enfermedad = {
+    id: '',
+    nombre: '',
+    observaciones: ''
+  };  
+
+  constructor (private modalService: BsModalService, private srvEnfermedad: EnfermedadServiceService){   
+  }
+
+  ngOnInit(): void {    
+    this.getEnfermedades();
+    this.getEnfermedadById("1");
   }
 
   abrirEnfermedadModal(){
-    console.log("entro")
     const initialState: ModalOptions = {
       initialState: {
         list: [
@@ -25,4 +41,16 @@ export class EnfermedadComponent {
     this.modalRef = this.modalService.show(ModalFormEnfermedadComponent, initialState);
     this.modalRef.content.closeBtnName='Close';
   }
+
+  getEnfermedadById(id:string){
+    this.srvEnfermedad.getEnfermedad(id).subscribe((result)=> { this.enfermedad = result})
+    console.log(this.enfermedad);
+  }
+
+  getEnfermedades(){
+    this.srvEnfermedad.getEnfermedades().subscribe((result:any[]) =>{
+      this.enfermedades = result;
+      console.log(this.enfermedades);   
+    });
+  }  
 }
