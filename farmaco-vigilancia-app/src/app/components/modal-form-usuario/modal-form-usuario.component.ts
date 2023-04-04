@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { usuario  } from 'src/app/interfaces/usuario.interface';
 import { BsModalRef} from 'ngx-bootstrap/modal'; 
+import { UsuarioServiceService } from '../../services/usuario.service.service';
 
 @Component({
   selector: 'app-modal-form-usuario',
@@ -8,8 +9,13 @@ import { BsModalRef} from 'ngx-bootstrap/modal';
   styleUrls: ['./modal-form-usuario.component.css']
 })
 
-export class ModalFormUsuarioComponent {
+export class ModalFormUsuarioComponent implements OnInit {
+  
   insertar:boolean = true; 
+  titulo: string = ""
+  
+
+ 
   usuario: usuario = {
     id: "", 
     nombre: "",
@@ -18,16 +24,32 @@ export class ModalFormUsuarioComponent {
     rol: 0
   }; 
 
-  constructor(public modalRef: BsModalRef) {
+  constructor(
+    public modalRef: BsModalRef,
+    private srvUsuario: UsuarioServiceService) {
     this.insertar = true; 
   } 
+  ngOnInit(): void {
+    this.titulo = (this.insertar == true ? "Agregar": "Actualizar") + " Usuario";    
+  }
+   
+  getUsuario(id:string){
+    this.srvUsuario.getUsuario(id).subscribe(result => {
+      this.usuario =  result
+      console.log(result);
+    });
+  }
 
-  
-  titulo = (this.insertar == true ? "Agregar": "Actualizar") + " Usuario";
+  addUsuario(){
+    this.srvUsuario.addUsuario(this.usuario).subscribe(result => {
+      console.log(result);
+    })
+  }
 
-
-  guardar(){
-    console.log(this.usuario);
+  updateUsuario(){
+    this.srvUsuario.updateUsuario(this.usuario).subscribe(result => {
+      console.log(result);
+    })
   }
 
 }

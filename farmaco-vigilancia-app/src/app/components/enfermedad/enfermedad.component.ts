@@ -3,9 +3,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ModalFormEnfermedadComponent } from '../modal-form-enfermedad/modal-form-enfermedad.component';
 import { EnfermedadServiceService } from 'src/app/services/enfermedad.service.service';
 import { enfermedad } from 'src/app/interfaces/enfermedad.interface';
-import { catchError } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { throwError, Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-enfermedad',

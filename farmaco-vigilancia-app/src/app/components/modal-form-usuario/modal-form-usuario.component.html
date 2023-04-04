@@ -22,12 +22,11 @@
             <div class="form-group col-md-12 mt-1">
                 <label for="tipoUsuario">Tipo Usuario</label>
                 <select id="tipoUsuario" class="form-control">
-                  <option selected>Seleccione</option>
                   <option value="1">Administrador</option>
-                  <option value="2">Operador</option>
+                  <option value="2" selected>Operador</option>
                 </select>
             </div>       
-            <div class="mt-2 col-md-12 text-center" (click)="guardar()">    
+            <div class="mt-2 col-md-12 text-center" (click)="addUsuario()">    
                 <button class="btn btn-primary">Guardar</button>
             </div>
         </div>

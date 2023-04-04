@@ -1,5 +1,6 @@
 import { farmaco } from './farmaco.interface';
 export interface paciente{
+    id:string;
     nombre: string;
     noRegistro: string;
     dpi: string;

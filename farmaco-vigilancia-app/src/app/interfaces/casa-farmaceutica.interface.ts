@@ -1,5 +1,5 @@
 export interface CasaFarmaceutica{
-    id:number,
+    id:string,
     nombre: string,
     observaciones: string
 }
