@@ -5,50 +5,50 @@
     <div class="form">
         <div class="form-group row">
             <div class="mb-1 col-md-12 col-lg-4">
-                <label for="nombrePaciente" class="form-label">Nombre del paciente</label>
-                <input type="text" id="nombrePaciente" class="form-control"  [(ngModel)]="paciente.nombre">
+                <label for="nombrePaciente" class="form-label" >Nombre del paciente</label>
+                <input type="text" id="nombrePaciente" class="form-control"  [(ngModel)]="paciente.nombre" required >
               </div>
               <div class="mb-1 col-md-6 col-lg-2">
                 <label for="noRegistro" class="form-label">No. de Registro</label>
-                <input type="text" id="noRegistro" class="form-control"  [(ngModel)]="paciente.noRegistro">
+                <input type="text" id="noRegistro" class="form-control"  [(ngModel)]="paciente.noRegistro" required >
               </div>
               <div class="mb-1 col-md-6 col-lg-2">
                 <label for="dpi" class="form-label">DPI</label>
-                <input type="text" id="dpi" class="form-control" [(ngModel)]="paciente.dpi">
+                <input type="text" id="dpi" class="form-control" [(ngModel)]="paciente.dpi" required >
               </div>          
               <div class="mb-1 col-md-2">
                 <label for="genero" class="form-label">Sexo</label>
-                <select class="form-select md-1" aria-label="Generos" [(ngModel)]="paciente.sexo"> 
-                    <option *ngFor="let g of generos" [value]="g">{{g}}</option>
+                <select class="form-select md-1" aria-label="Generos" [(ngModel)]="paciente.sexo" required > 
+                  <option *ngFor="let g of generos" [value]="g">{{g}}</option>
                 </select>
               </div>
               <div class="mb-1 col-md-6 col-lg-2">
                 <label for="etnia" class="form-label">Etnia</label>
-                <select class="form-select md-1" aria-label="Etnia" [(ngModel)]="paciente.etnia">
+                <select class="form-select md-1" aria-label="Etnia" [(ngModel)]="paciente.etnia" required >
                     <option *ngFor="let e of etnia" [value]="e">{{e}}</option>
                 </select>
               </div>   
               <div class="mb-1 col-md-6 col-lg-3">
                 <label class="form-label">Departamento de nacimiento</label>
-                <select class="form-select md-1" aria-label="Departamento-nacimiento" [(ngModel)]="paciente.deptoNacimiento" (change)="ObtenerMunicipiosDeptoNacimiento($event)">                
-                    <option *ngFor="let d of departamentos" [value]="d">{{d}}</option>
+                <select class="form-select md-1" aria-label="Departamento-nacimiento" [(ngModel)]="paciente.deptoNacimiento" (change)="ObtenerMunicipiosDeptoNacimiento($event)" required >                
+                   <option *ngFor="let d of departamentos" [value]="d">{{d}}</option>
                 </select>
               </div>   
               <div class="mb-1 col-md-6 col-lg-3">
                 <label class="form-label">Municipio de nacimiento</label>
-                <select class="form-select md-1" aria-label="municipio-nacimiento" [(ngModel)]="paciente.municipioNacimiento">                
+                <select class="form-select md-1" aria-label="municipio-nacimiento" [(ngModel)]="paciente.municipioNacimiento" [disabled]="paciente.deptoNacimiento.length == 0">           
                     <option *ngFor="let m of municipiosNacimiento" [value]="m">{{m}}</option>
                 </select>
               </div>            
               <div class="mb-1 col-md-6 col-lg-3">
                 <label class="form-label">Departamento de residencia</label>
-                <select class="form-select md-1" aria-label="departamento-residencia" [(ngModel)]="paciente.deptoResidencia"  (change)="ObtenerMunicipiosDeptoResedencia($event)">                
+                <select class="form-select md-1" aria-label="departamento-residencia" [(ngModel)]="paciente.deptoResidencia"  (change)="ObtenerMunicipiosDeptoResedencia($event)">              
                     <option *ngFor="let d of departamentos" [ngValue]="d">{{d}}</option>
                 </select>
               </div>
               <div class="mb-1 col-md-6 col-lg-3">
                 <label class="form-label">Municipio de residencia</label>
-                <select class="form-select md-1" aria-label="Estadio-Enfermedad" [(ngModel)]="paciente.municipioResidencia">                
+                <select class="form-select md-1" aria-label="Estadio-Enfermedad" [(ngModel)]="paciente.municipioResidencia" [disabled]="paciente.deptoResidencia.length == 0">                
                     <option *ngFor="let m of municipiosResidencia" [ngValue]="m">{{m}}</option>
                 </select>
               </div>  
@@ -79,23 +79,23 @@
               </div> 
               <div class="mb-1 col-md-4 col-lg-2">
                 <label class="form-label">Estadio enfermedad</label>
-                <select class="form-select md-1" aria-label="Estadio-Enfermedad">                
+                <select class="form-select md-1" aria-label="Estadio-Enfermedad" [(ngModel)]="paciente.estadioEnfermedad">                
                     <option *ngFor="let e of estadioEnfermedad" [value]="e">{{e}}</option>
                 </select>
               </div>  
               <div class="mb-1 col-md-4 col-lg-2">
                 <label for="fechaIngresoUnidad" class="form-label">Fecha Ingreso</label>
-                <input type="text" id="fechaIngresoUnidad" class="form-control">
+                <input type="text" id="fechaIngresoUnidad" class="form-control" [(ngModel)]="paciente.fecha">
               </div>
               <div class="mb-1 col-md-4 col-lg-2">
                 <label  class="form-label">Quimioterapia</label>
-                <select class="form-select md-1" aria-label="Qumioterapias">
+                <select class="form-select md-1" aria-label="Qumioterapias" [(ngModel)]="paciente.quimioterapia">
                     <option *ngFor="let q of quimioterapia" [value]="q">{{q}}</option>
                 </select>
               </div>
               <div class="mb-1 col-md-4 col-lg-1">
                 <label for="noCiclo" class="form-label">Ciclo No.</label>
-                <input type="text" id="noCiclo" class="form-control">
+                <input type="text" id="noCiclo" class="form-control" [(ngModel)]="paciente.cicloNo">
               </div>
               <div class="col-md-6 col-lg-2 mb-5">
                 <br>
@@ -129,6 +129,6 @@
                 <button class="btn btn-success" (click)="guardarPaciente()">Guardar paciente</button>
               </div>
         </div>     
-    </div>
+    </div>    
 </div>
 

@@ -8,6 +8,7 @@ import { EnfermedadComponent } from './components/enfermedad/enfermedad.componen
 import { FarmacoComponent } from './components/farmaco/farmaco.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { AutenticacionComponent } from './components/autenticacion/autenticacion.component';
+import { EfectosAdversosComponent } from './components/efectos-adversos/efectos-adversos.component';
 
 const routes: Routes = [
   {path: 'farmacos', component: FarmacoComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'ficha-medica-paciente', component: PacienteFichaMedicaComponent},
   {path: 'casas-farmaceuticas', component: CasaFarmaceuticaComponent},
   {path: 'usuarios',component:UsuariosComponent},
-  {path: 'autenticacion', component:AutenticacionComponent}
+  {path: 'autenticacion', component:AutenticacionComponent},
+  {path: 'efectos-adversos', component: EfectosAdversosComponent}
 ];
 
 @NgModule({

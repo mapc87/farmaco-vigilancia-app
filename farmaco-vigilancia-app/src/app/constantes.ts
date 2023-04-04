@@ -124,7 +124,7 @@ export const zonaGeograficaGuatemala =
                                                                             "Chinautla",
                                                                             "Chuarrancho",
                                                                             "Fraijanes",
-                                                                            "Guatemala City",
+                                                                            "Guatemala",
                                                                             "Mixco",
                                                                             "Palencia",
                                                                             "Petapa",

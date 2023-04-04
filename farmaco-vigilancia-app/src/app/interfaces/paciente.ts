@@ -1,3 +1,4 @@
+import { farmaco } from './farmaco.interface';
 export interface paciente{
     nombre: string;
     noRegistro: string;
@@ -18,4 +19,5 @@ export interface paciente{
     quimioterapia: string; 
     cicloNo: string; 
     fecha:string; 
+    farmacosUtilizados: farmaco[];
 }

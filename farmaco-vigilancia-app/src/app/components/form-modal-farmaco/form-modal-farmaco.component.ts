@@ -7,12 +7,15 @@ import { farmaco } from 'src/app/interfaces/farmaco.interface';
   templateUrl: './form-modal-farmaco.component.html',
   styleUrls: ['./form-modal-farmaco.component.css']
 })
+
 export class FormModalFarmacoComponent {
   insertar:boolean = true; 
   farmaco: farmaco = {
     id: "", 
     nombre: "",
     casa: {id:0, nombre:"", observaciones:""},
+    efectosAdversos: [],
+    efectosAdversosNoReportados: [],
     observaciones: ""
   }; 
 

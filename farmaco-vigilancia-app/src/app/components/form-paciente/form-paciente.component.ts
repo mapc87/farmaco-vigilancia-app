@@ -16,34 +16,35 @@ export class FormPacienteComponent implements OnInit {
   estadioEnfermedad : string [] = [];
   quimioterapia: string [] = [];
   etnia: string[] = []; 
-
   departamentos: string[] = []; 
   municipios?: string[] = [];
+ 
 
   paciente: paciente = {
     nombre: "",
     noRegistro:  "",
     dpi:  "",
-    sexo:  "",
-    etnia:  "",
-    deptoNacimiento:  "",
-    deptoResidencia: "",
-    municipioNacimiento: "",
-    municipioResidencia:"",
+    sexo:  "M",
+    etnia:  "Ladino",
+    deptoNacimiento:  "Guatemala",
+    deptoResidencia: "Guatemala",
+    municipioNacimiento: "Guatemala",
+    municipioResidencia:"Guatemala",
     direccion:  "",
     telefono:  "",
     nombreEncargado: "", 
     telefonoEncargado:  "",
     diagnostico:  "",
-    estadioEnfermedad:  "",
+    estadioEnfermedad:  "Estadio I",
     fechaIngresoUnidad:  "",
-    quimioterapia: "",
+    quimioterapia: "Adyuvante",
     cicloNo:  "",
     fecha: "",
+    farmacosUtilizados:[]
   }
+
   municipiosNacimiento: string[] | undefined;
   municipiosResidencia: string[] | undefined;
-
 
   constructor(private informacionGeografica: InformacionGeograficaServiceService) {
 
@@ -55,21 +56,23 @@ export class FormPacienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.departamentos = this.informacionGeografica.obtenerDepartamentos();
-    console.log(this.departamentos);
+    this.ObtenerMunicipiosDeptoNacimiento(this.paciente.deptoNacimiento);
+    this.ObtenerMunicipiosDeptoResedencia(this.paciente.deptoResidencia);
   }
   
   ObtenerMunicipiosDeptoNacimiento(value: any){
     this.municipiosNacimiento = this.informacionGeografica.obtenerMunicipios(this.paciente.deptoNacimiento);
-    console.log("entro", );
+    this.paciente.municipioNacimiento = this.municipiosNacimiento != undefined ? this.municipiosNacimiento[0]:"";
   }
 
   ObtenerMunicipiosDeptoResedencia(value:any){
+    console.log(value);
     this.municipiosResidencia = this.informacionGeografica.obtenerMunicipios(this.paciente.deptoResidencia);
-    console.log("entro", this.municipiosResidencia);
+    this.paciente.municipioResidencia = this.municipiosResidencia != undefined ? this.municipiosResidencia[0]:"";
   }
 
   guardarPaciente(){
-    console.log()
+    console.log(this.paciente);
   }
 
   agregarMedicamentos(){

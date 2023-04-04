@@ -17,17 +17,15 @@ export class InformacionGeograficaServiceService {
     let departamentos: string[] = []        
     this.informacionGeografica.departamentos.forEach(item =>{
         departamentos.push(item.departamento);
-    })    
-
+    });    
     return departamentos;
   };
 
   obtenerMunicipios(departamento: string){
-  let municipios = this.informacionGeografica.departamentos.find(el => 
+    let municipios = this.informacionGeografica.departamentos.find(el => 
       el.departamento == departamento
-  )?.municipios; 
-
-  return municipios
-}
-
+    )?.municipios; 
+    return municipios
+  }
+  
 }
