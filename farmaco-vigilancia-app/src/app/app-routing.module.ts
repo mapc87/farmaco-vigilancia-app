@@ -10,6 +10,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { AutenticacionComponent } from './components/autenticacion/autenticacion.component';
 import { EfectosAdversosComponent } from './components/efectos-adversos/efectos-adversos.component';
 
+
 const routes: Routes = [
   {path: 'farmacos', component: FarmacoComponent},
   {path: 'enfermedades', component: EnfermedadComponent},

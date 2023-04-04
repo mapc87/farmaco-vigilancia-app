@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CasaFarmaceutica } from '../interfaces/casa-farmaceutica.interface';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 
 
 @Injectable({
@@ -8,7 +10,11 @@ import { CasaFarmaceutica } from '../interfaces/casa-farmaceutica.interface';
 
 export class CasaFarmaceuticaService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { 
+    
+  }
 
   
 }
