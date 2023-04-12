@@ -10,11 +10,10 @@ export class PacienteServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url = "https://dummyjson.com/users";
-  private url2 = "https://dummyjson.com/products/1";
+  private url = "/pacientes"
 
   getPaciente(id:string){
-    return this.http.get<paciente>(this.url2); 
+    return this.http.get<paciente>(this.url); 
   }
 
   getPacientes():Observable<paciente[]>{
@@ -23,14 +22,14 @@ export class PacienteServiceService {
     ); 
   }
 
-  addPaciente(enfermedad: paciente):Observable<paciente>{
-    return this.http.post<paciente>(this.url, enfermedad).pipe(
+  addPaciente(paciente: paciente):Observable<paciente>{
+    return this.http.post<paciente>(this.url, paciente).pipe(
       catchError(this.handleError)
     )
   }
 
-  updatePaciente(enfermedad:paciente):Observable<paciente>{
-    return this.http.put<paciente>(this.url2, enfermedad).pipe(
+  updatePaciente(paciente:paciente):Observable<paciente>{
+    return this.http.put<paciente>(this.url, paciente).pipe(
       catchError(this.handleError)
     )
   }

@@ -10,11 +10,10 @@ export class EfectosAdversosServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url = "https://dummyjson.com/users";
-  private url2 = "https://dummyjson.com/products/1";
+  private url = "/efectoAdverso";
 
   getEfectoAdverso(id:string){
-    return this.http.get<efectosAdversos>(this.url2); 
+    return this.http.get<efectosAdversos>(this.url); 
   }
 
   getgetEfectosAdversos():Observable<efectosAdversos[]>{
@@ -23,14 +22,14 @@ export class EfectosAdversosServiceService {
     ); 
   }
 
-  addgetEfectoAdverso(enfermedad: efectosAdversos):Observable<efectosAdversos>{
-    return this.http.post<efectosAdversos>(this.url, enfermedad).pipe(
+  addgetEfectoAdverso(efectoAdverso: efectosAdversos):Observable<efectosAdversos>{
+    return this.http.post<efectosAdversos>(this.url, efectoAdverso).pipe(
       catchError(this.handleError)
     )
   }
 
-  updategetEfectoAdverso(enfermedad:efectosAdversos):Observable<efectosAdversos>{
-    return this.http.put<efectosAdversos>(this.url2, enfermedad).pipe(
+  updategetEfectoAdverso(efectoAdverso:efectosAdversos):Observable<efectosAdversos>{
+    return this.http.put<efectosAdversos>(this.url, efectoAdverso).pipe(
       catchError(this.handleError)
     )
   }

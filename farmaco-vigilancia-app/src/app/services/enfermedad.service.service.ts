@@ -3,18 +3,17 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError} from 'rxjs/operators';
 import { enfermedad } from '../interfaces/enfermedad.interface';
-
+import { urlBackend } from '../constantes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnfermedadServiceService {
 
-  private url = "https://dummyjson.com/users";
+  private url =  '/enfermedades' // "https://dummyjson.com/users";
   private url2 = "https://dummyjson.com/products/1";
 
   constructor(private http: HttpClient) { }
-
   getEnfermedad(id:string){
     return this.http.get<enfermedad>(this.url2); 
   }
@@ -32,7 +31,7 @@ export class EnfermedadServiceService {
   }
 
   updateEnfermedad(enfermedad:enfermedad):Observable<enfermedad>{
-    return this.http.put<enfermedad>(this.url2, enfermedad).pipe(
+    return this.http.put<enfermedad>(this.url, enfermedad).pipe(
       catchError(this.handleError)
     )
   }

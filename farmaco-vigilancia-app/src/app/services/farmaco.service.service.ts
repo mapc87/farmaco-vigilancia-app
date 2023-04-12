@@ -10,11 +10,10 @@ export class FarmacoServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url = "https://dummyjson.com/users";
-  private url2 = "https://dummyjson.com/products/1";
+  private url = "/farmaco"
 
   getFarmaco(id:string){
-    return this.http.get<farmaco>(this.url2); 
+    return this.http.get<farmaco>(this.url); 
   }
 
   getFarmacos():Observable<farmaco[]>{
@@ -23,14 +22,14 @@ export class FarmacoServiceService {
     ); 
   }
 
-  addFarmacos(enfermedad: farmaco):Observable<farmaco>{
-    return this.http.post<farmaco>(this.url, enfermedad).pipe(
+  addFarmacos(farmaco: farmaco):Observable<farmaco>{
+    return this.http.post<farmaco>(this.url, farmaco).pipe(
       catchError(this.handleError)
     )
   }
 
-  updateFarmacos(enfermedad:farmaco):Observable<farmaco>{
-    return this.http.put<farmaco>(this.url2, enfermedad).pipe(
+  updateFarmacos(farmaco:farmaco):Observable<farmaco>{
+    return this.http.put<farmaco>(this.url, farmaco).pipe(
       catchError(this.handleError)
     )
   }

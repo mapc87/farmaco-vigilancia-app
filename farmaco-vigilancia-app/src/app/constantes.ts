@@ -1,3 +1,5 @@
+export const urlBackend = 'http://localhost:3000/api/'
+
 export const genero = ['M','F'];
 
 export const estadioEnfermedad = ['Estadio I', 'Estadio II', 'Estadio III'];

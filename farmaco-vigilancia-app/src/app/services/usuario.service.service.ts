@@ -10,27 +10,26 @@ export class UsuarioServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url = "https://dummyjson.com/users";
-  private url2 = "https://dummyjson.com/products/1";
+  private url: string = "/usuarios"
 
   getUsuario(id:string){
-    return this.http.get<usuario>(this.url2); 
+    return this.http.get<usuario>(this.url); 
   }
 
   getUsuarios():Observable<usuario[]>{
-    return this.http.get<usuario[]>(this.url, {responseType: 'json'}).pipe(
+    return this.http.get<usuario[]>(this.url,{responseType: 'json'}).pipe(
       catchError(this.handleError)
     ); 
   }
 
-  addUsuario(enfermedad: usuario):Observable<usuario>{
-    return this.http.post<usuario>(this.url, enfermedad).pipe(
+  addUsuario(usuario: usuario):Observable<usuario>{
+    return this.http.post<usuario>(this.url, usuario).pipe(
       catchError(this.handleError)
     )
   }
 
-  updateUsuario(enfermedad:usuario):Observable<usuario>{
-    return this.http.put<usuario>(this.url2, enfermedad).pipe(
+  updateUsuario(usuario:usuario):Observable<usuario>{
+    return this.http.put<usuario>(this.url, usuario).pipe(
       catchError(this.handleError)
     )
   }

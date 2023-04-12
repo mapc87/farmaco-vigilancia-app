@@ -12,11 +12,10 @@ export class CasaFarmaceuticaService {
 
   constructor(private http: HttpClient) { }
 
-  private url = "https://dummyjson.com/users";
-  private url2 = "https://dummyjson.com/products/1";
+  private url = "/casaFarmaceutica";
 
   getCasaFarmaceutica(id:string){
-    return this.http.get<CasaFarmaceutica>(this.url2); 
+    return this.http.get<CasaFarmaceutica>(this.url); 
   }
 
   getCasasFarmaceuticas():Observable<CasaFarmaceutica[]>{
@@ -25,14 +24,14 @@ export class CasaFarmaceuticaService {
     ); 
   }
 
-  addCasaFarmaceutica(enfermedad: CasaFarmaceutica):Observable<CasaFarmaceutica>{
-    return this.http.post<CasaFarmaceutica>(this.url, enfermedad).pipe(
+  addCasaFarmaceutica(casaFarmaceutica: CasaFarmaceutica):Observable<CasaFarmaceutica>{
+    return this.http.post<CasaFarmaceutica>(this.url, casaFarmaceutica).pipe(
       catchError(this.handleError)
     )
   }
 
-  updateCasaFarmaceutica(enfermedad:CasaFarmaceutica):Observable<CasaFarmaceutica>{
-    return this.http.put<CasaFarmaceutica>(this.url2, enfermedad).pipe(
+  updateCasaFarmaceutica(casaFarmaceutica:CasaFarmaceutica):Observable<CasaFarmaceutica>{
+    return this.http.put<CasaFarmaceutica>(this.url, casaFarmaceutica).pipe(
       catchError(this.handleError)
     )
   }
