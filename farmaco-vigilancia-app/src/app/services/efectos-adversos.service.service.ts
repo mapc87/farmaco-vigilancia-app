@@ -16,7 +16,7 @@ export class EfectosAdversosServiceService {
     return this.http.get<efectosAdversos>(this.url); 
   }
 
-  getgetEfectosAdversos():Observable<efectosAdversos[]>{
+  get getEfectosAdversos():Observable<efectosAdversos[]>{
     return this.http.get<efectosAdversos[]>(this.url, {responseType: 'json'}).pipe(
       catchError(this.handleError)
     ); 
@@ -32,9 +32,8 @@ export class EfectosAdversosServiceService {
     return this.http.put<efectosAdversos>(this.url, efectoAdverso).pipe(
       catchError(this.handleError)
     )
-  }
-
-  private handleError(error: HttpErrorResponse) {
+  } 
+  public handleError(error: HttpErrorResponse) {
 
     if (error.error instanceof ErrorEvent) {    
       console.error('An error ocurred', error.error.message);    

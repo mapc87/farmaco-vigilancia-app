@@ -5,8 +5,7 @@ import { UsuarioServiceService } from '../../services/usuario.service.service';
 
 @Component({
   selector: 'app-modal-form-usuario',
-  templateUrl: './modal-form-usuario.component.html',
-  styleUrls: ['./modal-form-usuario.component.css']
+  templateUrl: './modal-form-usuario.component.html'
 })
 
 export class ModalFormUsuarioComponent implements OnInit {

@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { farmaco } from '../interfaces/farmaco.interface';
 import { Observable, catchError, throwError } from 'rxjs';
+import { handleError } from '../handle-errors.class';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class FarmacoServiceService {
     return this.http.get<farmaco>(this.url); 
   }
 
-  getFarmacos():Observable<farmaco[]>{
+  get getFarmacos():Observable<farmaco[]>{
     return this.http.get<farmaco[]>(this.url, {responseType: 'json'}).pipe(
       catchError(this.handleError)
     ); 
@@ -32,9 +33,9 @@ export class FarmacoServiceService {
     return this.http.put<farmaco>(this.url, farmaco).pipe(
       catchError(this.handleError)
     )
-  }
+  }  
 
-  private handleError(error: HttpErrorResponse) {
+  public handleError(error: HttpErrorResponse) {
 
     if (error.error instanceof ErrorEvent) {    
       console.error('An error ocurred', error.error.message);    

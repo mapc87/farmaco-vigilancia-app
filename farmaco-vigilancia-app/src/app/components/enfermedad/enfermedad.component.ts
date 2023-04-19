@@ -7,8 +7,7 @@ import { enfermedad } from 'src/app/interfaces/enfermedad.interface';
 
 @Component({
   selector: 'app-enfermedad',
-  templateUrl: './enfermedad.component.html',
-  styleUrls: ['./enfermedad.component.css']
+  templateUrl: './enfermedad.component.html'
 })
 export class EnfermedadComponent implements OnInit{
   modalRef?: BsModalRef;

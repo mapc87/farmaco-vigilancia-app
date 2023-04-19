@@ -1,24 +1,50 @@
 <div class="col-12 text-center mt-3">
     <label class="title-registro fs-3" >Farmacos</label>
 </div>
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <button class="btn btn-primary" type="button" (click)="abrirFarmacoModal()"><i class="bi bi-plus"></i>Agregar</button>
+</div> -->
+<div class="form">
+    <div class="form-group row">
+        <div class="col-md-4">
+            <label for="nombreFarmaco" class="form-label">Nombre</label>
+            <input type="text" id="nombrePaciente" [(ngModel)]="farmaco.nombre"  class="form-control">
+        </div>
+        <div class="col-md-3">
+            <label for="Observaciones" class="form-label">Observaciones</label>
+            <input type="text" id="Observaciones" [(ngModel)]="farmaco.observaciones" class="form-control" rows="3">
+        </div>
+        <div class="col-md-3">
+            <label for="tipoUsuario">Casa Farmaceutica</label>
+            <select id="tipoUsuario" class="form-control mt-2" >
+              <option *ngFor="let casaFarmaceutica of casasFarmaceuticas" value="casaFarmaceutica.nombre">{{casaFarmaceutica.nombre}}</option>
+            </select>
+        </div>    
+        <div class="col-md-2 text-center mt-4" (click)="addFarmaco()">    
+            <button class="btn btn-primary">Guardar</button>
+        </div>
+    </div>
 </div>
 <div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
     <table class="table">
         <thead class="thead-dark">
             <tr class="text-center">
                 <th class="col-md-1">No.</th>
-                <th class="col-md-4">Nombre</th>
-                <th class="col-md-4">Observaciones</th>
+                <th class="col-md-2">Nombre</th>
+                <th class="col-md-2">Efectos Adversos</th>
+                <th class="col-md-2">Efectos Adversos No Reportados</th>
+                <th class="col-md-2">Observaciones</th>
                 <th class="col-md-3">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center">
-                <td>1</td>
-                <td>PFZER</td>
-                <td>observaciones</td>
+            <tr class="text-center" *ngFor="let farmaco of farmacos, let i = index">
+                <td>{{i}}</td>
+                <td>{{farmaco.nombre}}</td>
+                <td>{{farmaco.casa}}</td>
+                <td>{{farmaco.efectosAdversos}}</td>
+                <td>{{farmaco.efectosAdversosNoReportados}}</td>
+                <td>{{farmaco.observaciones}}</td>
                 <td>
                     <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
                     &nbsp;                          

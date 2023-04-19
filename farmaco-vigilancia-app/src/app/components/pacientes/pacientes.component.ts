@@ -4,8 +4,7 @@ import { paciente } from '../../interfaces/paciente';
 
 @Component({
   selector: 'app-pacientes',
-  templateUrl: './pacientes.component.html',
-  styleUrls: ['./pacientes.component.css']
+  templateUrl: './pacientes.component.html'
 })
 export class PacientesComponent {
 
@@ -45,7 +44,7 @@ export class PacientesComponent {
   }
 
   getPacientes(){
-    this.srvPaciente.getPacientes().subscribe((result:any[]) =>{
+    this.srvPaciente.getPacientes.subscribe((result:any[]) =>{
       this.pacientes = result;
       console.log(this.pacientes);   
     });

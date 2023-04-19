@@ -15,10 +15,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center">
-                <td>1</td>
-                <td>PFZER</td>
-                <td>observaciones</td>
+            <tr class="text-center" *ngFor="let enfermedad of enfermedades, let i=index">
+                <td>{{i+1}}</td>
+                <td>{{enfermedad.nombre}}</td>
+                <td>{{enfermedad.observaciones}}</td>
                 <td>
                     <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
                     &nbsp;                          

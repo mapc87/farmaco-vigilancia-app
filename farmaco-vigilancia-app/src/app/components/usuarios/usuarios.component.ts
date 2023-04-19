@@ -6,8 +6,7 @@ import { usuario } from 'src/app/interfaces/usuario.interface';
 
 @Component({
   selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.css']
+  templateUrl: './usuarios.component.html'
 })
 export class UsuariosComponent implements OnInit{
 

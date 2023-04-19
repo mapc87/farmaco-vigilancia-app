@@ -6,13 +6,17 @@ import { CasaFarmaceutica } from 'src/app/interfaces/casa-farmaceutica.interface
 
 @Component({
   selector: 'app-casa-farmaceutica',
-  templateUrl: './casa-farmaceutica.component.html',
-  styleUrls: ['./casa-farmaceutica.component.css']
+  templateUrl: './casa-farmaceutica.component.html'
 })
 export class CasaFarmaceuticaComponent implements OnInit{
 
   modalRef?: BsModalRef;
-  private casasFarmaceuticas: CasaFarmaceutica[] = [];
+  casasFarmaceuticas: CasaFarmaceutica[] = [];
+  casaFarmaceutica: CasaFarmaceutica = {
+    id: "", 
+    nombre: "",
+    observaciones: ""
+  }; 
 
   constructor (private modalService: BsModalService,
     private srvCasaFarmaceutica: CasaFarmaceuticaService){   
@@ -40,5 +44,9 @@ export class CasaFarmaceuticaComponent implements OnInit{
       this.casasFarmaceuticas = result;
       console.log(this.casasFarmaceuticas);
     })
+  }
+
+  public guardarCasaFarmaceutica(){
+    this.srvCasaFarmaceutica.addCasaFarmaceutica(this.casaFarmaceutica).subscribe();
   }
 }

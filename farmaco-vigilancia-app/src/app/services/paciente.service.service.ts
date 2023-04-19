@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { paciente } from '../interfaces/paciente';
 import { Observable, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { handleError } from '../handle-errors.class';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class PacienteServiceService {
     return this.http.get<paciente>(this.url); 
   }
 
-  getPacientes():Observable<paciente[]>{
+  get getPacientes():Observable<paciente[]>{
     return this.http.get<paciente[]>(this.url, {responseType: 'json'}).pipe(
       catchError(this.handleError)
     ); 
@@ -34,7 +35,7 @@ export class PacienteServiceService {
     )
   }
 
-  private handleError(error: HttpErrorResponse) {
+  public handleError(error: HttpErrorResponse) {
 
     if (error.error instanceof ErrorEvent) {    
       console.error('An error ocurred', error.error.message);    

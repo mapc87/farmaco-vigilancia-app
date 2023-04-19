@@ -34,7 +34,7 @@ export class UsuarioServiceService {
     )
   }
 
-  private handleError(error: HttpErrorResponse) {
+  public handleError(error: HttpErrorResponse) {
 
     if (error.error instanceof ErrorEvent) {    
       console.error('An error ocurred', error.error.message);    

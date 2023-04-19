@@ -5,8 +5,7 @@ import { CasaFarmaceuticaService } from '../../services/casa-farmaceutica.servic
 
 @Component({
   selector: 'app-modal-form-casa-farmaceutica',
-  templateUrl: './modal-form-casa-farmaceutica.component.html',
-  styleUrls: ['./modal-form-casa-farmaceutica.component.css']
+  templateUrl: './modal-form-casa-farmaceutica.component.html'
 })
 export class ModalFormCasaFarmaceuticaComponent {
 

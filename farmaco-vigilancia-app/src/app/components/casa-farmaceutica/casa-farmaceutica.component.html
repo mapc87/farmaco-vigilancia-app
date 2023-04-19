@@ -2,8 +2,23 @@
 <div class="col-12 text-center mt-3">
     <label class="title-registro fs-3" >Casa Farmacéutica</label>
 </div>
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <button class="btn btn-primary" type="button" (click)="abrirCasaFarmaceuticaModal()"><i class="bi bi-plus"></i>Agregar</button>
+</div> -->
+<div class="form">
+    <div class="form-group row">
+        <div class="mb-1 col-md-3">
+            <label for="nombrePaciente" class="form-label">Nombre</label>
+            <input type="text" id="nombrePaciente" [(ngModel)]="casaFarmaceutica.nombre"  class="form-control">
+        </div>
+        <div class="mb-1 col-md-7">
+            <label for="Observaciones" class="form-label">Observaciones</label>
+            <input type="text" id="Observaciones" [(ngModel)]="casaFarmaceutica.observaciones" class="form-control" rows="3">
+        </div>
+        <div class="mb-1 col-md-2 text-center" (click)="guardarCasaFarmaceutica()">    
+            <button class="btn btn-primary">Guardar</button>
+        </div>
+    </div>
 </div>
 <div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
     <table class="table">
@@ -16,10 +31,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center">
-                <td>1</td>
-                <td>PFZER</td>
-                <td>observaciones</td>
+            <tr class="text-center" *ngFor="let casa of casasFarmaceuticas, let i = index">
+                <td>{{i+1}}</td>
+                <td>{{casa.nombre}}</td>
+                <td>{{casa.observaciones}}</td>
                 <td>
                     <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
                     &nbsp;                          

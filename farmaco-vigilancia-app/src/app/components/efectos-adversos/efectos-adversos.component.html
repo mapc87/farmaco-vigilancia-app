@@ -7,11 +7,11 @@
         <div class="form-group row">
             <div class="mb-1 col-md-12 col-lg-7">
                 <label for="efecto" class="form-label" >Efecto</label>
-                <input type="textarea" id="efecto" class="form-control" required >
+                <input type="textarea" id="efecto" class="form-control" [(ngModel)] = "efectoAdverso.efectoAdverso" >
               </div>
               <div class="mb-1 col-md-12 col-lg-3">
                 <label for="observaciones" class="form-label">Observaciones</label>
-                <input type="textarea" id="observaciones" class="form-control"   required >
+                <input type="textarea" id="observaciones" class="form-control"   [(ngModel)] = "efectoAdverso.observaciones"  >
               </div>              
               <div class="mt-4 col-md-12 col-lg-2 d-grid gap-2">
                 <button class="btn btn-primary" type="button" (click)="agregarEfecto()"><i class="bi bi-plus"></i>Agregar</button>
@@ -19,10 +19,7 @@
         </div>
     </div>
 </div>
-
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    
-    
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">    
 </div>
 <div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
     <table class="table">
@@ -35,14 +32,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center">
-                <td>1</td>
-                <td>PFZER</td>
-                <td>observaciones</td>
+            <tr class="text-center" *ngFor="let efecto of efectosAdversos, let  i = index ">
+                <td>{{i}}</td>
+                <td>{{efecto.efectoAdverso}}</td>
+                <td>{{efecto.observaciones}}</td>
                 <td>
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
+                    <button type="button" class="btn btn-dark"   (click)="updateEfectoAdverso(efecto)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
                     &nbsp;                          
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
+                    <button type="button" class="btn btn-dark" (click)="deaxtivarEfectoAdverso(efecto)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
                 </td>
             </tr>        
         </tbody>

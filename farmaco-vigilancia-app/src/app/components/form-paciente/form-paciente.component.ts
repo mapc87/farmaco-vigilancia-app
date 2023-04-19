@@ -6,12 +6,12 @@ import { paciente } from '../../interfaces/paciente';
 import { PacienteServiceService } from '../../services/paciente.service.service';
 import { FarmacoServiceService } from 'src/app/services/farmaco.service.service';
 import { farmaco } from 'src/app/interfaces/farmaco.interface';
-
+import { enfermedad } from 'src/app/interfaces/enfermedad.interface';
+import { EnfermedadServiceService } from 'src/app/services/enfermedad.service.service';
 
 @Component({
   selector: 'app-form-paciente',
-  templateUrl: './form-paciente.component.html',
-  styleUrls: ['./form-paciente.component.css']
+  templateUrl: './form-paciente.component.html'
 })
 
 export class FormPacienteComponent implements OnInit {
@@ -22,8 +22,8 @@ export class FormPacienteComponent implements OnInit {
   etnia: string[] = []; 
   departamentos: string[] = []; 
   municipios?: string[] = [];
- 
-  private farmacos: farmaco[] = []
+  enfermedades: enfermedad[] = []; 
+  farmacos: farmaco[] = []
 
   paciente: paciente = {
     id: "",
@@ -55,18 +55,20 @@ export class FormPacienteComponent implements OnInit {
   constructor(
     private informacionGeografica: InformacionGeograficaServiceService, 
     private srvPaciente: PacienteServiceService,
-    private srvFarmaco: FarmacoServiceService) {
-
-    this.generos = genero;
-    this.estadioEnfermedad = estadioEnfermedad; 
-    this.quimioterapia = quimioterapia;  
-    this.etnia = etnia; 
+    private srvFarmaco: FarmacoServiceService,
+    private srvEnfermedad: EnfermedadServiceService) { 
   }
 
   ngOnInit(): void {
     this.departamentos = this.informacionGeografica.obtenerDepartamentos();
     this.ObtenerMunicipiosDeptoNacimiento(this.paciente.deptoNacimiento);
     this.ObtenerMunicipiosDeptoResedencia(this.paciente.deptoResidencia);
+    this.getEnfermedades();
+
+    this.generos = genero;
+    this.estadioEnfermedad = estadioEnfermedad; 
+    this.quimioterapia = quimioterapia;  
+    this.etnia = etnia;     
   }
   
   ObtenerMunicipiosDeptoNacimiento(value: any){
@@ -81,10 +83,17 @@ export class FormPacienteComponent implements OnInit {
   } 
 
   getFarmacos(){
-    this.srvFarmaco.getFarmacos().subscribe((result)=>{
+    this.srvFarmaco.getFarmacos.subscribe((result)=>{
       this.farmacos = result; 
       console.log(this.farmacos);
     })
+  }
+
+  getEnfermedades(){
+    this.srvEnfermedad.getEnfermedades().subscribe(result => {
+      this.enfermedades = result;
+      console.log(result)
+    });
   }
 
   getPaciente(id:string){

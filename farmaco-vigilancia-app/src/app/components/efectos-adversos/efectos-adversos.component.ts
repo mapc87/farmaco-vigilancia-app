@@ -4,8 +4,7 @@ import { EfectosAdversosServiceService } from '../../services/efectos-adversos.s
 
 @Component({
   selector: 'app-efectos-adversos',
-  templateUrl: './efectos-adversos.component.html',
-  styleUrls: ['./efectos-adversos.component.css']
+  templateUrl: './efectos-adversos.component.html'
 })
 export class EfectosAdversosComponent implements OnInit {
 
@@ -24,13 +23,12 @@ export class EfectosAdversosComponent implements OnInit {
   }
 
   agregarEfecto(){
-    console.log("agregar efecto");
+    this.srvEfectoAdverso.addgetEfectoAdverso(this.efectoAdverso).subscribe();
   }
 
   getEfectosAdversos(){
-    this.srvEfectoAdverso.getgetEfectosAdversos().subscribe(result => {
+    this.srvEfectoAdverso.getEfectosAdversos.subscribe(result => {
         this.efectosAdversos = result;
-        console.log(this.efectosAdversos);
     });
   }
 
@@ -40,13 +38,20 @@ export class EfectosAdversosComponent implements OnInit {
 
   AddEfectoAdverso(id: string){
     this.srvEfectoAdverso.addgetEfectoAdverso(this.efectoAdverso).subscribe(result => {
-      console.log("Insertados");
+      
     }); 
+    this.getEfectosAdversos();
   }
 
-  updateEfectoAdverso(id: string){
-    this.srvEfectoAdverso.updategetEfectoAdverso(this.efectoAdverso).subscribe(result => {
-      console.log("actualizado");
-    }); 
+  updateEfectoAdverso(efecto: efectosAdversos){
+    // this.srvEfectoAdverso.updategetEfectoAdverso(this.efectoAdverso).subscribe(result => {
+    //   console.log("actualizado");
+    // }); 
+
+    console.log("test" )
+  }
+
+  deaxtivarEfectoAdverso(efecto: efectosAdversos){
+    console.log(efecto)
   }
 }

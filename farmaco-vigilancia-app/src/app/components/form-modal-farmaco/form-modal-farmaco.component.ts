@@ -7,8 +7,7 @@ import { CasaFarmaceutica } from 'src/app/interfaces/casa-farmaceutica.interface
 
 @Component({
   selector: 'app-form-modal-farmaco',
-  templateUrl: './form-modal-farmaco.component.html',
-  styleUrls: ['./form-modal-farmaco.component.css']
+  templateUrl: './form-modal-farmaco.component.html'
 })
 
 export class FormModalFarmacoComponent implements OnInit {

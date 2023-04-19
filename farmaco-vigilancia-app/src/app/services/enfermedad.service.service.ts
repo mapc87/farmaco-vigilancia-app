@@ -10,12 +10,12 @@ import { urlBackend } from '../constantes';
 })
 export class EnfermedadServiceService {
 
-  private url =  '/enfermedades' // "https://dummyjson.com/users";
-  private url2 = "https://dummyjson.com/products/1";
+  private url =  '/enfermedades' 
 
   constructor(private http: HttpClient) { }
+
   getEnfermedad(id:string){
-    return this.http.get<enfermedad>(this.url2); 
+    return this.http.get<enfermedad>(this.url); 
   }
 
   getEnfermedades():Observable<enfermedad[]>{
@@ -25,6 +25,7 @@ export class EnfermedadServiceService {
   }
 
   addEnfermedad(enfermedad: enfermedad):Observable<enfermedad>{
+    console.log(enfermedad);
     return this.http.post<enfermedad>(this.url, enfermedad).pipe(
       catchError(this.handleError)
     )
@@ -34,9 +35,9 @@ export class EnfermedadServiceService {
     return this.http.put<enfermedad>(this.url, enfermedad).pipe(
       catchError(this.handleError)
     )
-  }
+  }  
 
-  private handleError(error: HttpErrorResponse) {
+  public handleError(error: HttpErrorResponse) {
 
     if (error.error instanceof ErrorEvent) {    
       console.error('An error ocurred', error.error.message);    
@@ -46,6 +47,4 @@ export class EnfermedadServiceService {
     
     return throwError('Ha ocurrido un error; Por favor, inténtelo de nuevo más tarde');    
   }
-
-
 }

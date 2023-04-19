@@ -74,7 +74,7 @@
               <div class="mb-1 col-md-4 col-lg-3">
                 <label class="form-label">Diagnostico</label>
                 <select class="form-select md-1" aria-label="Estadio-Enfermedad">                
-                    <option *ngFor="let e of estadioEnfermedad" [value]="e">{{e}}</option>
+                    <option *ngFor="let e of enfermedades" [value]="e.nombre">{{e.nombre}}</option>
                 </select>                
               </div> 
               <div class="mb-1 col-md-4 col-lg-2">

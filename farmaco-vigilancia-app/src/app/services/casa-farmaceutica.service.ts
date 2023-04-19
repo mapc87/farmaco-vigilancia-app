@@ -3,7 +3,6 @@ import { CasaFarmaceutica } from '../interfaces/casa-farmaceutica.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -25,6 +24,7 @@ export class CasaFarmaceuticaService {
   }
 
   addCasaFarmaceutica(casaFarmaceutica: CasaFarmaceutica):Observable<CasaFarmaceutica>{
+    console.log(casaFarmaceutica)
     return this.http.post<CasaFarmaceutica>(this.url, casaFarmaceutica).pipe(
       catchError(this.handleError)
     )
