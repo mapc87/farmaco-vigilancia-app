@@ -25,14 +25,13 @@ export class CasaFarmaceuticaService {
   }
 
   addCasaFarmaceutica(casaFarmaceutica: CasaFarmaceutica):Observable<CasaFarmaceutica>{
-    console.log(casaFarmaceutica)
     return this.http.post<CasaFarmaceutica>(this.url, casaFarmaceutica).pipe(
       catchError(this.handleError)
     )
   }
 
   updateCasaFarmaceutica(casaFarmaceutica:CasaFarmaceutica):Observable<CasaFarmaceutica>{
-    return this.http.put<CasaFarmaceutica>(this.url, casaFarmaceutica).pipe(
+    return this.http.put<CasaFarmaceutica>(`${this.url}/${casaFarmaceutica._id}`, casaFarmaceutica).pipe(
       catchError(this.handleError)
     )
   }

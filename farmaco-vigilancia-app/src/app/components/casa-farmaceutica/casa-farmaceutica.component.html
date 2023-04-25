@@ -15,7 +15,7 @@
             <label for="Observaciones" class="form-label">Observaciones</label>
             <input type="text" id="Observaciones" [(ngModel)]="casaFarmaceutica.observaciones" class="form-control" rows="3">
         </div>
-        <div class="mb-1 col-md-2 text-center" (click)="guardarCasaFarmaceutica()">    
+        <div class="mb-1 col-md-2 text-center" (click)="guardar()">    
             <button class="btn btn-primary">Guardar</button>
         </div>
     </div>
@@ -36,9 +36,9 @@
                 <td>{{casa.nombre}}</td>
                 <td>{{casa.observaciones}}</td>
                 <td>
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
+                    <button type="button" class="btn btn-dark" (click)="actualizar(casa)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar" ></i></button>  
                     &nbsp;                          
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
+                    <button type="button" class="btn btn-dark" (click)="openModal(template, casa)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
                 </td>
             </tr>        
         </tbody>
@@ -49,3 +49,11 @@
     (page)="cambiarpagina($event)">
 </mat-paginator>
 </div>
+<pre class="card card-block card-header">{{message}}</pre>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>¿Está seguro que desea inactivar?</p>
+    <button type="button" class="btn btn-primary" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="decline()" >No</button>
+  </div>
+</ng-template>

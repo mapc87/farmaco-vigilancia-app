@@ -12,9 +12,9 @@ export class ModalFormCasaFarmaceuticaComponent {
   insertar:boolean = true; 
   
   casaFarmaceutica: CasaFarmaceutica = {
-    id: "", 
     nombre: "",
-    observaciones: ""
+    observaciones: "",
+    estado: false
   }; 
 
   constructor(public modalRef: BsModalRef,
