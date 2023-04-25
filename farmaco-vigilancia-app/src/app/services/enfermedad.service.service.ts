@@ -10,7 +10,7 @@ import { urlBackend } from '../constantes';
 })
 export class EnfermedadServiceService {
 
-  private url =  '/enfermedades' 
+  private url: string = `${urlBackend}/enfermedades`;
 
   constructor(private http: HttpClient) { }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { efectosAdversos } from '../interfaces/efectos-adversos.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+import { urlBackend } from '../constantes';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class EfectosAdversosServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url = "/efectoAdverso";
+  private url: string = `${urlBackend}/efectoAdverso`;
 
   getEfectoAdverso(id:string){
     return this.http.get<efectosAdversos>(this.url); 

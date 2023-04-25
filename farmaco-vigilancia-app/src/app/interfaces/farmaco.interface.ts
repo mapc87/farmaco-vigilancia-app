@@ -5,7 +5,7 @@ export interface farmaco{
     id: string,
     nombre: string, 
     observaciones: string, 
-    casa: CasaFarmaceutica,
+    casa: string,
     efectosAdversos: efectosAdversos[],
     efectosAdversosNoReportados: efectosAdversos[];
 }

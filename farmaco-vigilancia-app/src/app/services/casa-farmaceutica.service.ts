@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CasaFarmaceutica } from '../interfaces/casa-farmaceutica.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+import { urlBackend } from '../constantes';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class CasaFarmaceuticaService {
 
   constructor(private http: HttpClient) { }
 
-  private url = "/casaFarmaceutica";
+  private url: string = `${urlBackend}/casaFarmaceutica`;
 
   getCasaFarmaceutica(id:string){
     return this.http.get<CasaFarmaceutica>(this.url); 

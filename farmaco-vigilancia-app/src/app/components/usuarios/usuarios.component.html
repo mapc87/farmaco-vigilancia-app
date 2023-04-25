@@ -16,11 +16,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center">
-                <td>1</td>
-                <td>PFZER</td>
-                <td>Usuario</td>
-                <td>Rol</td>
+            <tr class="text-center" *ngFor="let usuario of usuarios|slice:desde:hasta, let i = index">
+                <td>{{i+1}}</td>
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.usuario}}</td>
+                <td>{{usuario.rol}}</td>
                 <td>
                     <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
                     &nbsp;                          
@@ -29,13 +29,9 @@
             </tr>        
         </tbody>
     </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
+    <mat-paginator [length]="usuarios.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="cambiarpagina($event)">
+    </mat-paginator>
 </div>

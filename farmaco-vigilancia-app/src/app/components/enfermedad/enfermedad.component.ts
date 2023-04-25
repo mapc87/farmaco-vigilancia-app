@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ModalFormEnfermedadComponent } from '../modal-form-enfermedad/modal-form-enfermedad.component';
 import { EnfermedadServiceService } from 'src/app/services/enfermedad.service.service';
 import { enfermedad } from 'src/app/interfaces/enfermedad.interface';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -13,17 +14,20 @@ export class EnfermedadComponent implements OnInit{
   modalRef?: BsModalRef;
   enfermedades: any[] = [];  
   enfermedad: enfermedad = {
-    id: '',
+    id: '', 
     nombre: '',
     observaciones: ''
-  };  
+  }; 
+
+  pageSize = 10;
+  desde: number = 0; 
+  hasta: number = 10;
 
   constructor (private modalService: BsModalService, private srvEnfermedad: EnfermedadServiceService){   
   }
 
   ngOnInit(): void {    
     this.getEnfermedades();
-    this.getEnfermedadById("1");
   }
 
   abrirEnfermedadModal(){
@@ -46,8 +50,16 @@ export class EnfermedadComponent implements OnInit{
 
   getEnfermedades(){
     this.srvEnfermedad.getEnfermedades().subscribe((result:any[]) =>{
-      this.enfermedades = result;
-      console.log(this.enfermedades);   
+      this.enfermedades = result;  
     });
   }  
+
+  guardar(){
+    this.srvEnfermedad.addEnfermedad(this.enfermedad).subscribe();
+  }
+
+  cambiarpagina(e: PageEvent){
+    this.desde = e.pageIndex * e.pageSize; 
+    this.hasta = this.desde + e.pageSize;
+  }
 }

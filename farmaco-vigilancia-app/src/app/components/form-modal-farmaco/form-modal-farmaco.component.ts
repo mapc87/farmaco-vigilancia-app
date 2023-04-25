@@ -18,7 +18,7 @@ export class FormModalFarmacoComponent implements OnInit {
   farmaco: farmaco = {
     id: "", 
     nombre: "",
-    casa: {id:"", nombre:"", observaciones:""},
+    casa: '',
     efectosAdversos: [],
     efectosAdversosNoReportados: [],
     observaciones: ""

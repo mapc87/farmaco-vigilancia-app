@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
+import { MatPaginatorModule} from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { ModalFormEnfermedadComponent } from './components/modal-form-enfermedad
 import { FormModalFarmacoComponent } from './components/form-modal-farmaco/form-modal-farmaco.component';
 import { EfectosAdversosComponent } from './components/efectos-adversos/efectos-adversos.component';
 import { AlgoritmoKarchLasagnaComponent } from './components/algoritmo-karch-lasagna/algoritmo-karch-lasagna.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { AlgoritmoKarchLasagnaComponent } from './components/algoritmo-karch-las
     AppRoutingModule,
     FormsModule,
     ModalModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

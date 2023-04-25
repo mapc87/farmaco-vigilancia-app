@@ -16,8 +16,8 @@
         </div>
         <div class="col-md-3">
             <label for="tipoUsuario">Casa Farmaceutica</label>
-            <select id="tipoUsuario" class="form-control mt-2" >
-              <option *ngFor="let casaFarmaceutica of casasFarmaceuticas" value="casaFarmaceutica.nombre">{{casaFarmaceutica.nombre}}</option>
+            <select id="tipoUsuario" class="form-control mt-2" [(ngModel)]="farmaco.casa">
+              <option *ngFor="let casaFarmaceutica of casasFarmaceuticas" value="{{casaFarmaceutica.nombre}}">{{casaFarmaceutica.nombre}}</option>
             </select>
         </div>    
         <div class="col-md-2 text-center mt-4" (click)="addFarmaco()">    
@@ -31,15 +31,16 @@
             <tr class="text-center">
                 <th class="col-md-1">No.</th>
                 <th class="col-md-2">Nombre</th>
-                <th class="col-md-2">Efectos Adversos</th>
-                <th class="col-md-2">Efectos Adversos No Reportados</th>
+                <th class="col-md-2">Casa</th>
+                <th class="col-md-1">Efectos Adversos</th>
+                <th class="col-md-1">Efectos Adversos No Reportados</th>
                 <th class="col-md-2">Observaciones</th>
-                <th class="col-md-3">Acciones</th>
+                <th class="col-md-5">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center" *ngFor="let farmaco of farmacos, let i = index">
-                <td>{{i}}</td>
+            <tr class="text-center" *ngFor="let farmaco of farmacos| slice:desde:hasta, let i = index">
+                <td>{{i+1}}</td>
                 <td>{{farmaco.nombre}}</td>
                 <td>{{farmaco.casa}}</td>
                 <td>{{farmaco.efectosAdversos}}</td>
@@ -57,13 +58,9 @@
             </tr>        
         </tbody>
     </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
+    <mat-paginator [length]="farmacos.length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="cambiarpagina($event)">
+    </mat-paginator>
 </div>

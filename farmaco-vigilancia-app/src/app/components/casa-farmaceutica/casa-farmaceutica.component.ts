@@ -3,6 +3,7 @@ import { BsModalService, BsModalRef, ModalOptions} from 'ngx-bootstrap/modal';
 import { ModalFormCasaFarmaceuticaComponent } from '../modal-form-casa-farmaceutica/modal-form-casa-farmaceutica.component';
 import { CasaFarmaceuticaService } from '../../services/casa-farmaceutica.service';
 import { CasaFarmaceutica } from 'src/app/interfaces/casa-farmaceutica.interface';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-casa-farmaceutica',
@@ -17,6 +18,10 @@ export class CasaFarmaceuticaComponent implements OnInit{
     nombre: "",
     observaciones: ""
   }; 
+
+  pageSize = 10;
+  desde: number = 0; 
+  hasta: number = 10;
 
   constructor (private modalService: BsModalService,
     private srvCasaFarmaceutica: CasaFarmaceuticaService){   
@@ -42,11 +47,15 @@ export class CasaFarmaceuticaComponent implements OnInit{
   getCasasFarmaceuticas(){
     this.srvCasaFarmaceutica.getCasasFarmaceuticas().subscribe(result => {
       this.casasFarmaceuticas = result;
-      console.log(this.casasFarmaceuticas);
     })
   }
 
   public guardarCasaFarmaceutica(){
     this.srvCasaFarmaceutica.addCasaFarmaceutica(this.casaFarmaceutica).subscribe();
+  }
+
+  cambiarpagina(e: PageEvent){
+    this.desde = e.pageIndex * e.pageSize; 
+    this.hasta = this.desde + e.pageSize;
   }
 }

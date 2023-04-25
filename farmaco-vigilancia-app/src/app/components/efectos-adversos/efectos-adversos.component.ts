@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { efectosAdversos } from '../../interfaces/efectos-adversos.interface';
 import { EfectosAdversosServiceService } from '../../services/efectos-adversos.service.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-efectos-adversos',
@@ -14,6 +16,10 @@ export class EfectosAdversosComponent implements OnInit {
     efectoAdverso: '',
     observaciones: ''
   }
+
+  pageSize = 10;
+  desde: number = 0; 
+  hasta: number = 10;
  
   constructor(private srvEfectoAdverso: EfectosAdversosServiceService) {    
   }
@@ -30,6 +36,11 @@ export class EfectosAdversosComponent implements OnInit {
     this.srvEfectoAdverso.getEfectosAdversos.subscribe(result => {
         this.efectosAdversos = result;
     });
+  }
+
+  cambiarpagina(e: PageEvent){
+    this.desde = e.pageIndex * e.pageSize; 
+    this.hasta = this.desde + e.pageSize;
   }
 
   getEfectoAdverso(id: string){
@@ -53,5 +64,6 @@ export class EfectosAdversosComponent implements OnInit {
 
   deaxtivarEfectoAdverso(efecto: efectosAdversos){
     console.log(efecto)
+
   }
 }

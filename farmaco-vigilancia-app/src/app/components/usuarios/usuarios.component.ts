@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ModalFormUsuarioComponent } from '../modal-form-usuario/modal-form-usuario.component';
 import { UsuarioServiceService } from '../../services/usuario.service.service';
 import { usuario } from 'src/app/interfaces/usuario.interface';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-usuarios',
@@ -12,6 +13,9 @@ export class UsuariosComponent implements OnInit{
 
   modalRef?: BsModalRef;
   usuarios: usuario[] = []
+  pageSize = 10;
+  desde: number = 0; 
+  hasta: number = 10;
 
   constructor (private modalService: BsModalService,
     private srvUsuario: UsuarioServiceService){   
@@ -36,7 +40,11 @@ export class UsuariosComponent implements OnInit{
   getUsuarios(){
     this.srvUsuario.getUsuarios().subscribe(result => {
       this.usuarios = result; 
-      console.log(result)
     })
+  }
+
+  cambiarpagina(e: PageEvent){
+    this.desde = e.pageIndex * e.pageSize; 
+    this.hasta = this.desde + e.pageSize;
   }
 }

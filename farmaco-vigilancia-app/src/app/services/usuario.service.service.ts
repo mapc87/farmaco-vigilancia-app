@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { usuario } from '../interfaces/usuario.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+import { urlBackend } from '../constantes';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class UsuarioServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url: string = "/usuarios"
+  private url: string = `${urlBackend}/usuarios`;
 
   getUsuario(id:string){
     return this.http.get<usuario>(this.url); 

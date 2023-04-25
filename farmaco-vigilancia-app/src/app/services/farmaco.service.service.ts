@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { farmaco } from '../interfaces/farmaco.interface';
 import { Observable, catchError, throwError } from 'rxjs';
 import { handleError } from '../handle-errors.class';
+import { urlBackend } from '../constantes';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class FarmacoServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url = "/farmaco"
-
+  private url: string = `${urlBackend}/farmaco`;
+  
   getFarmaco(id:string){
     return this.http.get<farmaco>(this.url); 
   }

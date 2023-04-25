@@ -31,7 +31,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center" *ngFor="let casa of casasFarmaceuticas, let i = index">
+            <tr class="text-center" *ngFor="let casa of casasFarmaceuticas | slice:desde:hasta, let i = index">
                 <td>{{i+1}}</td>
                 <td>{{casa.nombre}}</td>
                 <td>{{casa.observaciones}}</td>
@@ -43,13 +43,9 @@
             </tr>        
         </tbody>
     </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav>
+    <mat-paginator [length]="casasFarmaceuticas.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="cambiarpagina($event)">
+</mat-paginator>
 </div>

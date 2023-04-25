@@ -3,6 +3,7 @@ import { paciente } from '../interfaces/paciente';
 import { Observable, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { handleError } from '../handle-errors.class';
+import { urlBackend } from '../constantes';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class PacienteServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url = "/pacientes"
+  private url = `${urlBackend}/pacientes`;
 
   getPaciente(id:string){
     return this.http.get<paciente>(this.url); 
