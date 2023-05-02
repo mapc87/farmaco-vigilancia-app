@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { farmaco } from 'src/app/interfaces/farmaco.interface';
-import { CasaFarmaceuticaService } from 'src/app/services/casa-farmaceutica.service';
-import { FarmacoServiceService } from 'src/app/services/farmaco.service.service';
-import { CasaFarmaceutica } from 'src/app/interfaces/casa-farmaceutica.interface';
+import { CasaFarmaceuticaService } from 'src/app/admin/services/casa-farmaceutica.service';
+import { CasaFarmaceutica } from 'src/app/admin/interfaces/casa-farmaceutica.interface';
+import { farmaco } from 'src/app/admin/interfaces/farmaco.interface';
+import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.service';
 
 @Component({
   selector: 'app-form-modal-farmaco',

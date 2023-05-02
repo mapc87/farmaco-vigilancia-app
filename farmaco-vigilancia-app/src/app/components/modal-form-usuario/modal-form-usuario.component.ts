@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { usuario  } from 'src/app/interfaces/usuario.interface';
 import { BsModalRef} from 'ngx-bootstrap/modal'; 
-import { UsuarioServiceService } from '../../services/usuario.service.service';
+import { UsuarioServiceService } from '../../admin/services/usuario.service.service';
+import { usuario } from 'src/app/admin/interfaces/usuario.interface';
 
 @Component({
   selector: 'app-modal-form-usuario',
