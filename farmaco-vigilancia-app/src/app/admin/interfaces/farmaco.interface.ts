@@ -8,4 +8,5 @@ export interface farmaco{
     casa: string,
     efectosAdversos: efectosAdversos[],
     efectosAdversosNoReportados: efectosAdversos[];
+    estado: boolean
 }

@@ -10,7 +10,7 @@ import { enfermedad } from '../interfaces/enfermedad.interface';
 })
 export class EnfermedadServiceService {
 
-  private url: string = `${urlBackend}/enfermedades`;
+  private url: string = `${urlBackend}enfermedades`;
 
   constructor(private http: HttpClient) { }
 
@@ -32,7 +32,7 @@ export class EnfermedadServiceService {
   }
 
   updateEnfermedad(enfermedad:enfermedad):Observable<enfermedad>{
-    return this.http.put<enfermedad>(this.url, enfermedad).pipe(
+    return this.http.put<enfermedad>(`${this.url}/${enfermedad._id}` , enfermedad).pipe(
       catchError(this.handleError)
     )
   }  

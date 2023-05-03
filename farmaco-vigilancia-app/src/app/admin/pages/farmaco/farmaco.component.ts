@@ -22,7 +22,8 @@ export class FarmacoComponent implements OnInit{
     observaciones: '',
     casa:'',
     efectosAdversos: [],
-    efectosAdversosNoReportados: []
+    efectosAdversosNoReportados: [],
+    estado: false
   }
 
   casasFarmaceuticas: CasaFarmaceutica[]  = [];
@@ -72,10 +73,6 @@ export class FarmacoComponent implements OnInit{
      this.srvCasaFarmaceutica.getCasasFarmaceuticas().subscribe(result => {
       this.casasFarmaceuticas = result; 
      });
-  }
-
-  onChange(changedDropdown: string){
-
   }
 
   cambiarpagina(e: PageEvent){

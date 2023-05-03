@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { PageEvent } from '@angular/material/paginator';
 import { enfermedad } from '../../interfaces/enfermedad.interface';
@@ -13,9 +13,9 @@ export class EnfermedadComponent implements OnInit{
   modalRef?: BsModalRef;
   enfermedades: any[] = [];  
   enfermedad: enfermedad = {
-    id: '', 
     nombre: '',
-    observaciones: ''
+    observaciones: '',
+    estado: true
   }; 
 
   pageSize = 10;
@@ -27,19 +27,6 @@ export class EnfermedadComponent implements OnInit{
 
   ngOnInit(): void {    
     this.getEnfermedades();
-  }
-
-  abrirEnfermedadModal(){
-    // const initialState: ModalOptions = {
-    //   initialState: {
-    //     list: [
-    //       'open modal '
-    //     ],
-    //     title: 'Enfermedad Modal'
-    //   }      
-    // };
-    // this.modalRef = this.modalService.show(ModalFormEnfermedadComponent, initialState);
-    // this.modalRef.content.closeBtnName='Close';
   }
 
   getEnfermedadById(id:string){
@@ -54,11 +41,50 @@ export class EnfermedadComponent implements OnInit{
   }  
 
   guardar(){
-    this.srvEnfermedad.addEnfermedad(this.enfermedad).subscribe();
+    if(this.enfermedad.hasOwnProperty('_id')){
+      this.ActualizarEnfermedad();
+       }else{
+      this.InsertarEnfermedad();
+    }
+    this.LimpiarEnfermedad();
+  }
+
+  InsertarEnfermedad(){
+    this.enfermedad.estado = true;
+    this.srvEnfermedad.addEnfermedad(this.enfermedad).subscribe(result => console.log(result));
+  }
+
+  ActualizarEnfermedad(){
+    this.srvEnfermedad.updateEnfermedad(this.enfermedad).subscribe(result => console.log(result));
   }
 
   cambiarpagina(e: PageEvent){
     this.desde = e.pageIndex * e.pageSize; 
     this.hasta = this.desde + e.pageSize;
+  }
+
+  openModal(template: TemplateRef<any>, enfermedad: enfermedad) {
+    this.enfermedad = enfermedad;
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {   
+      this.enfermedad.estado = this.enfermedad.estado == true? false: true;
+      this.guardar();
+      this.modalRef?.hide();        
+  }
+ 
+  decline(): void {
+    this.modalRef?.hide();
+  }
+
+  LimpiarEnfermedad(){
+    this.enfermedad.nombre = '';
+    this.enfermedad.estado = false;
+    this.enfermedad.observaciones = "";
+  }
+
+  ActualizarRow(enfermedadSeleccionada: enfermedad){
+    this.enfermedad = enfermedadSeleccionada; 
   }
 }

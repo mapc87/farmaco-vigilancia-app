@@ -1,9 +1,6 @@
 <div class="col-12 text-center mt-3">
     <label class="title-registro fs-3">Enfermedades</label>
 </div>
-<!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button class="btn btn-primary" type="button" (click)="abrirEnfermedadModal()"><i class="bi bi-plus"></i>Agregar</button>
-</div> -->
 <div class="form">
     <div class="form-group row">
         <div class="col-md-5">
@@ -25,7 +22,8 @@
             <tr class="text-center">
                 <th class="col-md-1">No.</th>
                 <th class="col-md-4">Nombre</th>
-                <th class="col-md-5">Observaciones</th>
+                <th class="col-md-3">Observaciones</th>
+                <th class="col-md-2">Estado</th>
                 <th class="col-md-2">Acciones</th>
             </tr>
         </thead>
@@ -34,10 +32,11 @@
                 <td>{{i+1}}</td>
                 <td>{{enfermedad.nombre}}</td>
                 <td>{{enfermedad.observaciones}}</td>
+                <td>{{enfermedad.estado == true? 'Activo': 'Inactivo'}}</td>
                 <td>
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>
+                    <button type="button" class="btn btn-dark" (click)="ActualizarRow(enfermedad)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>
                     &nbsp;
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
+                    <button type="button" class="btn btn-dark" (click)="openModal(template, enfermedad)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
                 </td>
             </tr>
         </tbody>
@@ -48,3 +47,10 @@
               (page)="cambiarpagina($event)">
     </mat-paginator>
 </div>
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>¿Está seguro que desea inactivar?</p>
+      <button type="button" class="btn btn-primary" (click)="confirm()" >Yes</button>
+      <button type="button" class="btn btn-secondary" (click)="decline()" >No</button>
+    </div>
+  </ng-template>

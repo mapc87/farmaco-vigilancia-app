@@ -21,7 +21,8 @@ export class FormModalFarmacoComponent implements OnInit {
     casa: '',
     efectosAdversos: [],
     efectosAdversosNoReportados: [],
-    observaciones: ""
+    observaciones: "",
+    estado: false
   }; 
 
   constructor(

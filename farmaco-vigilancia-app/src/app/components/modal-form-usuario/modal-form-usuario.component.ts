@@ -20,7 +20,8 @@ export class ModalFormUsuarioComponent implements OnInit {
     nombre: "",
     usuario: "",
     password: "",
-    rol: 0
+    rol: 0,
+    estado: false
   }; 
 
   constructor(

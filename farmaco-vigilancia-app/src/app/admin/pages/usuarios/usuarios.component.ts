@@ -12,7 +12,8 @@ import { usuario } from '../../interfaces/usuario.interface';
 export class UsuariosComponent implements OnInit{
 
   modalRef?: BsModalRef;
-  usuarios: usuario[] = []
+  usuarios: usuario[] = [];
+  usuario!: usuario;
   pageSize = 10;
   desde: number = 0; 
   hasta: number = 10;
