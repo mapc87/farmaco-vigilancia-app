@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { efectosAdversos } from '../../interfaces/efectos-adversos.interface';
 import { EfectosAdversosServiceService } from '../../services/efectos-adversos.service.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -13,7 +14,6 @@ export class EfectosAdversosComponent implements OnInit {
 
   efectosAdversos: efectosAdversos[] =[];
   efectoAdverso: efectosAdversos = {
-    id: '',
     efectoAdverso: '',
     observaciones: '',
     estado: false
@@ -22,8 +22,9 @@ export class EfectosAdversosComponent implements OnInit {
   pageSize = 10;
   desde: number = 0; 
   hasta: number = 10;
+  modalRef: any;
  
-  constructor(private srvEfectoAdverso: EfectosAdversosServiceService) {    
+  constructor(private modalService: BsModalService,private srvEfectoAdverso: EfectosAdversosServiceService) {    
   }
 
   ngOnInit(): void {
@@ -49,23 +50,51 @@ export class EfectosAdversosComponent implements OnInit {
     this.srvEfectoAdverso.getEfectoAdverso(id).subscribe(result => this.efectoAdverso);
   }
 
-  AddEfectoAdverso(id: string){
+  AddEfectoAdverso(){
+    this.efectoAdverso.estado = true;
     this.srvEfectoAdverso.addgetEfectoAdverso(this.efectoAdverso).subscribe(result => {
-      
+      console.log(result);
     }); 
     this.getEfectosAdversos();
   }
 
-  updateEfectoAdverso(efecto: efectosAdversos){
-    // this.srvEfectoAdverso.updategetEfectoAdverso(this.efectoAdverso).subscribe(result => {
-    //   console.log("actualizado");
-    // }); 
-
-    console.log("test" )
+  updateEfectoAdverso(){
+    this.srvEfectoAdverso.updategetEfectoAdverso(this.efectoAdverso).subscribe(result => {
+      console.log(result)
+    }); 
   }
 
-  deaxtivarEfectoAdverso(efecto: efectosAdversos){
-    console.log(efecto)
+  Guardar(){
+    if(this.efectoAdverso.hasOwnProperty('_id')){
+      this.updateEfectoAdverso();
+    }else{
+      this.AddEfectoAdverso();
+    }
+    this.LimpiarEfecto();
+  }
 
+  openModal(template: TemplateRef<any>, efecto: efectosAdversos) {
+    this.efectoAdverso = efecto;
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {   
+      this.efectoAdverso.estado = this.efectoAdverso.estado == true? false: true;
+      this.Guardar();
+      this.modalRef?.hide();        
+  }
+ 
+  decline(): void {
+    this.modalRef?.hide();
+  }
+
+  LimpiarEfecto(){
+    this.efectoAdverso.efectoAdverso = '';
+    this.efectoAdverso.estado = false;
+    this.efectoAdverso.observaciones = "";
+  }
+
+  ActualizarRow(efectoSeleccionado: efectosAdversos){
+    this.efectoAdverso = efectoSeleccionado; 
   }
 }

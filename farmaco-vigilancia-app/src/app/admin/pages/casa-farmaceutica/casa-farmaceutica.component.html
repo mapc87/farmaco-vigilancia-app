@@ -2,9 +2,6 @@
 <div class="col-12 text-center mt-3">
     <label class="title-registro fs-3" >Casa Farmacéutica</label>
 </div>
-<!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button class="btn btn-primary" type="button" (click)="abrirCasaFarmaceuticaModal()"><i class="bi bi-plus"></i>Agregar</button>
-</div> -->
 <div class="form">
     <div class="form-group row">
         <div class="mb-1 col-md-3">
@@ -25,8 +22,9 @@
         <thead class="thead-dark">
             <tr class="text-center">
                 <th class="col-md-1">No.</th>
-                <th class="col-md-5">Nombre</th>
-                <th class="col-md-4">Observaciones</th>
+                <th class="col-md-3">Nombre</th>
+                <th class="col-md-3">Observaciones</th>
+                <th class="col-md-2">Estado</th>
                 <th class="col-md-2">Acciones</th>
             </tr>
         </thead>
@@ -35,6 +33,7 @@
                 <td>{{i+1}}</td>
                 <td>{{casa.nombre}}</td>
                 <td>{{casa.observaciones}}</td>
+                <td>{{casa.estado == true? 'Activa':'Inactiva'}}</td>
                 <td>
                     <button type="button" class="btn btn-dark" (click)="actualizar(casa)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar" ></i></button>  
                     &nbsp;                          

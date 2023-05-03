@@ -14,7 +14,7 @@
                 <input type="textarea" id="observaciones" class="form-control"   [(ngModel)] = "efectoAdverso.observaciones"  >
               </div>              
               <div class="mt-4 col-md-12 col-lg-2 d-grid gap-2">
-                <button class="btn btn-primary" type="button" (click)="agregarEfecto()"><i class="bi bi-plus"></i>Agregar</button>
+                <button class="btn btn-primary" type="button" (click)="Guardar()"><i class="bi bi-plus"></i>Agregar</button>
             </div>              
         </div>
     </div>
@@ -26,8 +26,9 @@
         <thead class="thead-dark">
             <tr class="text-center">
                 <th class="col-md-1">No.</th>
-                <th class="col-md-5">Nombre</th> 
-                <th class="col-md-4">Observaciones</th>
+                <th class="col-md-4">Nombre</th> 
+                <th class="col-md-3">Observaciones</th>
+                <th class="col-md-2">Estado</th>
                 <th class="col-md-2">Acciones</th>
             </tr>
         </thead>
@@ -36,10 +37,11 @@
                 <td>{{i+1}}</td>
                 <td>{{efecto.efectoAdverso}}</td>
                 <td>{{efecto.observaciones}}</td>
+                <td>{{efecto.estado == true ? 'Activo': 'Inactivo'}}</td>
                 <td>
-                    <button type="button" class="btn btn-dark"   (click)="updateEfectoAdverso(efecto)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
+                    <button type="button" class="btn btn-dark"   (click)="ActualizarRow(efecto)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
                     &nbsp;                          
-                    <button type="button" class="btn btn-dark" (click)="deaxtivarEfectoAdverso(efecto)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
+                    <button type="button" class="btn btn-dark" (click)="openModal(template, efecto)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
                 </td>
             </tr>        
         </tbody>
@@ -50,3 +52,10 @@
               (page)="cambiarpagina($event)">
     </mat-paginator>
 </div>
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>¿Está seguro que desea inactivar?</p>
+      <button type="button" class="btn btn-primary" (click)="confirm()" >Yes</button>
+      <button type="button" class="btn btn-secondary" (click)="decline()" >No</button>
+    </div>
+  </ng-template>

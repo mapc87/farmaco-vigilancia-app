@@ -12,7 +12,7 @@ export class FarmacoServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url: string = `${urlBackend}/farmaco`;
+  private url: string = `${urlBackend}farmaco`;
   
   getFarmaco(id:string){
     return this.http.get<farmaco>(this.url); 
@@ -31,7 +31,7 @@ export class FarmacoServiceService {
   }
 
   updateFarmacos(farmaco:farmaco):Observable<farmaco>{
-    return this.http.put<farmaco>(this.url, farmaco).pipe(
+    return this.http.put<farmaco>(`${this.url}/${farmaco._id}`, farmaco).pipe(
       catchError(this.handleError)
     )
   }  

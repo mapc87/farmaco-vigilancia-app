@@ -20,7 +20,7 @@
               <option *ngFor="let casaFarmaceutica of casasFarmaceuticas" value="{{casaFarmaceutica.nombre}}">{{casaFarmaceutica.nombre}}</option>
             </select>
         </div>    
-        <div class="col-md-2 text-center mt-4" (click)="addFarmaco()">    
+        <div class="col-md-2 text-center mt-4" (click)="Guardar()">    
             <button class="btn btn-primary">Guardar</button>
         </div>
     </div>
@@ -31,10 +31,11 @@
             <tr class="text-center">
                 <th class="col-md-1">No.</th>
                 <th class="col-md-2">Nombre</th>
-                <th class="col-md-2">Casa</th>
+                <th class="col-md-1">Casa</th>
                 <th class="col-md-1">Efectos Adversos</th>
                 <th class="col-md-1">Efectos Adversos No Reportados</th>
                 <th class="col-md-2">Observaciones</th>
+                <th class="col-md-1">Estado</th>
                 <th class="col-md-5">Acciones</th>
             </tr>
         </thead>
@@ -46,10 +47,11 @@
                 <td>{{farmaco.efectosAdversos}}</td>
                 <td>{{farmaco.efectosAdversosNoReportados}}</td>
                 <td>{{farmaco.observaciones}}</td>
+                <td>{{farmaco.estado == true ? 'Activo' : 'Inactivo'}}</td>
                 <td>
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
+                    <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar" (click)="ActualizarRow(farmaco)"></i></button>  
                     &nbsp;                          
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
+                    <button type="button" class="btn btn-dark"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Activar/Inactivar" (click)="openModal(template, farmaco)"></i></button>
                     &nbsp;                          
                     <button type="button" class="btn btn-dark"><i class="bi bi-exclamation-diamond" data-toggle="tooltip"   data-placement="top" title="Agregar efectos adversos"></i></button>
                     &nbsp;                          
@@ -64,3 +66,10 @@
               (page)="cambiarpagina($event)">
     </mat-paginator>
 </div>
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>¿Está seguro que desea inactivar?</p>
+      <button type="button" class="btn btn-primary" (click)="confirm()" >Yes</button>
+      <button type="button" class="btn btn-secondary" (click)="decline()" >No</button>
+    </div>
+  </ng-template>

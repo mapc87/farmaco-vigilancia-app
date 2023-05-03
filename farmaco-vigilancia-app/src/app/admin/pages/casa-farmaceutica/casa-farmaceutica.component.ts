@@ -56,7 +56,9 @@ export class CasaFarmaceuticaComponent implements OnInit{
       this.actualizarCasaFarmaceutica();
     }else{
       this.guardarCasaFarmaceutica()
+      console.log("guardar")
     }    
+    this.LimpiarCasaFarmaceutica
   }
 
   actualizar(casa: CasaFarmaceutica){
@@ -82,16 +84,20 @@ export class CasaFarmaceuticaComponent implements OnInit{
   }
 
   confirm(): void {
-    if(this.casaFarmaceutica.hasOwnProperty("_id")){
-      this.casaFarmaceutica.estado = false;
-      // this.actualizarCasaFarmaceutica();
-      console.log(this.casaFarmaceutica);
-      this.modalRef?.hide();
-    }    
+    this.casaFarmaceutica.estado = this.casaFarmaceutica.estado == true? false: true;
+      this.guardar();
+      this.modalRef?.hide();  
   }
  
   decline(): void {
     this.message = 'Declined!';
     this.modalRef?.hide();
   }
+
+  LimpiarCasaFarmaceutica(){
+    this.casaFarmaceutica.nombre = '';
+    this.casaFarmaceutica.estado = false;
+    this.casaFarmaceutica.observaciones = "";
+  }
+
 }

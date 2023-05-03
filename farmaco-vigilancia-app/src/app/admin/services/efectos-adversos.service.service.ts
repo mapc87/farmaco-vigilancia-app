@@ -11,7 +11,7 @@ export class EfectosAdversosServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url: string = `${urlBackend}/efectoAdverso`;
+  private url: string = `${urlBackend}efectoAdverso`;
 
   getEfectoAdverso(id:string){
     return this.http.get<efectosAdversos>(this.url); 
@@ -30,7 +30,7 @@ export class EfectosAdversosServiceService {
   }
 
   updategetEfectoAdverso(efectoAdverso:efectosAdversos):Observable<efectosAdversos>{
-    return this.http.put<efectosAdversos>(this.url, efectoAdverso).pipe(
+    return this.http.put<efectosAdversos>(`${this.url}/${efectoAdverso._id}`, efectoAdverso).pipe(
       catchError(this.handleError)
     )
   } 

@@ -1,5 +1,5 @@
 export interface efectosAdversos{
-    id: string; 
+    _id?: any; 
     efectoAdverso: string;
     observaciones: string; 
     estado: boolean

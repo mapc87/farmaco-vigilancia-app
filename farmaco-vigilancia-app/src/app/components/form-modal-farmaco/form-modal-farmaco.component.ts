@@ -16,7 +16,6 @@ export class FormModalFarmacoComponent implements OnInit {
   private casasFarmaceuticas : CasaFarmaceutica[] = [];
 
   farmaco: farmaco = {
-    id: "", 
     nombre: "",
     casa: '',
     efectosAdversos: [],
