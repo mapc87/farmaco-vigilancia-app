@@ -1,9 +1,6 @@
 <div class="col-12 text-center mt-3">
     <label class="title-registro fs-3" >Farmacos</label>
 </div>
-<!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button class="btn btn-primary" type="button" (click)="abrirFarmacoModal()"><i class="bi bi-plus"></i>Agregar</button>
-</div> -->
 <div class="form">
     <div class="form-group row">
         <div class="col-md-4">
@@ -49,13 +46,11 @@
                 <td>{{farmaco.observaciones}}</td>
                 <td>{{farmaco.estado == true ? 'Activo' : 'Inactivo'}}</td>
                 <td>
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar" (click)="ActualizarRow(farmaco)"></i></button>  
+                    <button type="button" class="btn btn-dark" (click)="ActualizarRow(farmaco)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar" ></i></button>  
                     &nbsp;                          
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Activar/Inactivar" (click)="openModal(template, farmaco)"></i></button>
+                    <button type="button" class="btn btn-dark" (click)="openModal(template, farmaco)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Activar/Inactivar" ></i></button>
                     &nbsp;                          
-                    <button type="button" class="btn btn-dark"><i class="bi bi-exclamation-diamond" data-toggle="tooltip"   data-placement="top" title="Agregar efectos adversos"></i></button>
-                    &nbsp;                          
-                    <button type="button" class="btn btn-dark"><i class="bi bi-exclamation-triangle" data-toggle="tooltip"   data-placement="top" title="Agregar efectos adversos no reportados"></i></button>
+                    <button type="button" class="btn btn-dark" (click)="abrirEfectosModal(farmaco)"><i class="bi bi-exclamation-diamond" data-toggle="tooltip"   data-placement="top" title="Agregar efectos adversos" ></i></button>
                 </td>
             </tr>        
         </tbody>

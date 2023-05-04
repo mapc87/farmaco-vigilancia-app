@@ -11,6 +11,8 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalEfectosComponent } from './modals/form-modal-farmaco/form-modal-efectos.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     EnfermedadComponent,
     EfectosAdversosComponent,
     FarmacoComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    ModalEfectosComponent
   ],
   imports: [
     CommonModule,

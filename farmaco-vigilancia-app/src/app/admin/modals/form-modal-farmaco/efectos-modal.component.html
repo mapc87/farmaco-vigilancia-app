@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{titulo}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="form">
+        <div class="form-group row">     
+                <div class="form-group col-md-12 mt-1 mb-3">
+                    <label for="tipoUsuario">Tipo de Efecto Adverso</label>
+                    <select id="tipoUsuario" class="form-control" [(ngModel)]="tipoEfecto">
+                      <option selected value="1" >Reportado</option>
+                      <option value="2">No Reportado</option>
+                    </select>
+                </div>
+                <hr>
+                <div *ngFor="let efecto of efectos, let i=index" class="col-12 mt-1">
+                    <input type="checkbox" (change)="onTextBoxChange(efecto, $event)"> {{i+1}} - {{efecto.efectoAdverso}}
+                </div>
+            <div class="mb-1 col-md-12 text-center  mt-2" (click)="guardar()">    
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>    

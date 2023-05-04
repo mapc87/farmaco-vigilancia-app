@@ -7,6 +7,8 @@ import { CasaFarmaceutica } from 'src/app/admin/interfaces/casa-farmaceutica.int
 import { farmaco } from '../../interfaces/farmaco.interface';
 import { FarmacoServiceService } from '../../services/farmaco.service.service';
 import { FormModalFarmacoComponent } from '../../../components/form-modal-farmaco/form-modal-farmaco.component';
+import { EfectosAdversosComponent } from '../efectos-adversos/efectos-adversos.component';
+import { ModalEfectosComponent } from '../../modals/form-modal-farmaco/form-modal-efectos.component';
 
 @Component({
   selector: 'app-farmaco',
@@ -41,18 +43,6 @@ export class FarmacoComponent implements OnInit{
   ngOnInit(): void {
     this.getFarmacos();
     this.getCasasFarmaceuticas();
-  }
-
-  abrirFarmacoModal(){
-    const initialState: ModalOptions = {
-      initialState: {
-        list: [
-          'open modal '
-        ],
-        title: 'Farmaco Modal'
-      }      
-    };
-    this.modalRef = this.modalService.show(FormModalFarmacoComponent, initialState);    
   }
 
   getFarmacos(){
@@ -122,5 +112,18 @@ export class FarmacoComponent implements OnInit{
 
   ActualizarRow(farmacoSeleccionado: farmaco){
     this.farmaco = farmacoSeleccionado; 
+  }
+
+  abrirEfectosModal(farmaco: farmaco){
+    const initialState: ModalOptions = {
+      initialState: {
+        list: [
+          farmaco
+        ],
+        title: 'Efectos Adversos'
+      }      
+    };
+    this.modalRef = this.modalService.show(ModalEfectosComponent, initialState);
+    this.modalRef.content.closeBtnName='Close';
   }
 }
