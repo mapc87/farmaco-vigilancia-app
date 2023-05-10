@@ -6,6 +6,7 @@ import { AutenticacionComponent } from './components/autenticacion/autenticacion
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TooltipModule } from 'ngx-bootstrap/tooltip'
 
 import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './admin/admin.module';
@@ -23,7 +24,8 @@ import { PatientsModule } from './patients/patients.module';
     HttpClientModule,
     BrowserAnimationsModule,
     SharedModule,
-    PatientsModule
+    PatientsModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]

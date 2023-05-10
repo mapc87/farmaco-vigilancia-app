@@ -8,11 +8,11 @@ import { EfectosAdversosComponent } from './pages/efectos-adversos/efectos-adver
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { AdminRoutingModule } from './admin-routing.module';
-import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalEfectosComponent } from './modals/form-modal-farmaco/form-modal-efectos.component';
-import { BrowserModule } from '@angular/platform-browser';
+import { TooltipModule } from 'ngx-bootstrap/tooltip'
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,9 @@ import { BrowserModule } from '@angular/platform-browser';
     MatPaginatorModule,
     AdminRoutingModule,
     RouterModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TooltipModule.forRoot(),
+    ToastrModule.forRoot()
   ], 
   exports: [    
   ]

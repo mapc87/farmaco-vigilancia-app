@@ -1,19 +1,22 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalService, BsModalRef, ModalOptions} from 'ngx-bootstrap/modal'; 
 import { CasaFarmaceuticaService } from '../../services/casa-farmaceutica.service';
 import { CasaFarmaceutica } from 'src/app/admin/interfaces/casa-farmaceutica.interface';
 import { PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
   selector: 'app-casa-farmaceutica',
   templateUrl: './casa-farmaceutica.component.html'
 })
-export class CasaFarmaceuticaComponent implements OnInit{
+export class CasaFarmaceuticaComponent implements OnInit{  
+
 
   modalRef?: BsModalRef;
   message?: string;
   casasFarmaceuticas: CasaFarmaceutica[] = [];
+
   casaFarmaceutica: CasaFarmaceutica = {
     nombre: "",
     observaciones: "",
@@ -24,25 +27,15 @@ export class CasaFarmaceuticaComponent implements OnInit{
   desde: number = 0; 
   hasta: number = 10;
 
+  @ViewChild('casaFarmaceuticaForm') form: any;
+
   constructor (private modalService: BsModalService,
-    private srvCasaFarmaceutica: CasaFarmaceuticaService){   
+    private srvCasaFarmaceutica: CasaFarmaceuticaService,
+    private toastr: ToastrService){   
   }
 
   ngOnInit(): void {
     this.getCasasFarmaceuticas();
-  }
-
-  abrirCasaFarmaceuticaModal(){
-    // const initialState: ModalOptions = {
-    //   initialState: {
-    //     list: [
-    //       'open modal '
-    //     ],
-    //     title: 'Casa farmaceutica Modal'
-    //   }      
-    // };
-    // this.modalRef = this.modalService.show(ModalFormCasaFarmaceuticaComponent, initialState);
-    // this.modalRef.content.closeBtnName='Close';
   }
 
   getCasasFarmaceuticas(){
@@ -51,26 +44,38 @@ export class CasaFarmaceuticaComponent implements OnInit{
     })
   }
 
-  public guardar(){  
-    if(this.casaFarmaceutica.hasOwnProperty("_id")){
-      this.actualizarCasaFarmaceutica();
-    }else{
-      this.guardarCasaFarmaceutica()
-      console.log("guardar")
-    }    
-    this.LimpiarCasaFarmaceutica
+  public guardar(){ 
+    if(this.form.valid){
+      if(this.casaFarmaceutica._id){
+        this.actualizarCasaFarmaceutica();  
+      }else{
+        this.guardarCasaFarmaceutica()
+      }          
+    }   
   }
 
   actualizar(casa: CasaFarmaceutica){
     this.casaFarmaceutica = casa;
   }
 
-  public guardarCasaFarmaceutica(){     
-      this.srvCasaFarmaceutica.addCasaFarmaceutica(this.casaFarmaceutica).subscribe(result => console.log(result));     
+  private guardarCasaFarmaceutica(){     
+      this.srvCasaFarmaceutica
+        .addCasaFarmaceutica(this.casaFarmaceutica)
+        .subscribe(result => { 
+          this.toastr.success("Casa farmaceutica guardada");
+          this.form.reset();
+          this.getCasasFarmaceuticas();
+        });     
   }
  
-  actualizarCasaFarmaceutica(){
-    this.srvCasaFarmaceutica.updateCasaFarmaceutica(this.casaFarmaceutica).subscribe(result => console.log(result));     
+  private actualizarCasaFarmaceutica(){
+    this.srvCasaFarmaceutica
+      .updateCasaFarmaceutica(this.casaFarmaceutica)
+      .subscribe(result => {
+        this.toastr.success("Casa farmaceutica actualizada");
+        this.form.reset();
+        this.getCasasFarmaceuticas();
+      });     
   }
 
   openModal(template: TemplateRef<any>, casa: CasaFarmaceutica) {
@@ -90,14 +95,10 @@ export class CasaFarmaceuticaComponent implements OnInit{
   }
  
   decline(): void {
-    this.message = 'Declined!';
     this.modalRef?.hide();
   }
 
-  LimpiarCasaFarmaceutica(){
-    this.casaFarmaceutica.nombre = '';
-    this.casaFarmaceutica.estado = false;
-    this.casaFarmaceutica.observaciones = "";
+  limpiarModelo(){
+    this.form.reset();
   }
-
 }
