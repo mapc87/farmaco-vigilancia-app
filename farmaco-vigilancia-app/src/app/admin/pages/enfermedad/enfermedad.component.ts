@@ -1,8 +1,9 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { PageEvent } from '@angular/material/paginator';
 import { enfermedad } from '../../interfaces/enfermedad.interface';
 import { EnfermedadServiceService } from '../../services/enfermedad.service.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -22,7 +23,12 @@ export class EnfermedadComponent implements OnInit{
   desde: number = 0; 
   hasta: number = 10;
 
-  constructor (private modalService: BsModalService, private srvEnfermedad: EnfermedadServiceService){   
+  @ViewChild('formularioEnfermedad') form: any;
+
+  constructor (
+    private modalService: BsModalService,
+    private srvEnfermedad: EnfermedadServiceService,
+    private toastr: ToastrService){   
   }
 
   ngOnInit(): void {    
@@ -41,21 +47,32 @@ export class EnfermedadComponent implements OnInit{
   }  
 
   guardar(){
-    if(this.enfermedad.hasOwnProperty('_id')){
+    if(this.enfermedad._id){
       this.ActualizarEnfermedad();
        }else{
       this.InsertarEnfermedad();
     }
-    this.LimpiarEnfermedad();
   }
 
   InsertarEnfermedad(){
     this.enfermedad.estado = true;
-    this.srvEnfermedad.addEnfermedad(this.enfermedad).subscribe(result => console.log(result));
+    this.srvEnfermedad
+      .addEnfermedad(this.enfermedad)
+      .subscribe(result => {
+        this.toastr.success("Enfermedad guardada")
+        this.form.reset();
+        this.getEnfermedades();
+      });
   }
 
   ActualizarEnfermedad(){
-    this.srvEnfermedad.updateEnfermedad(this.enfermedad).subscribe(result => console.log(result));
+    this.srvEnfermedad
+      .updateEnfermedad(this.enfermedad)
+      .subscribe(result => {
+        this.toastr.success("Enfermedad actualizada")
+        this.form.reset();
+        this.getEnfermedades();
+      });
   }
 
   cambiarpagina(e: PageEvent){
@@ -76,12 +93,6 @@ export class EnfermedadComponent implements OnInit{
  
   decline(): void {
     this.modalRef?.hide();
-  }
-
-  LimpiarEnfermedad(){
-    this.enfermedad.nombre = '';
-    this.enfermedad.estado = false;
-    this.enfermedad.observaciones = "";
   }
 
   ActualizarRow(enfermedadSeleccionada: enfermedad){

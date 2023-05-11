@@ -1,23 +1,58 @@
 <div class="col-12 text-center mt-3">
     <label class="title-registro fs-3">Enfermedades</label>
 </div>
-<div class="form">
-    <div class="form-group row">
-        <div class="col-md-5">
-            <label for="nombreEnfermedad" class="form-label">Nombre</label>
-            <input type="text" id="nombreEnfermedad" [(ngModel)]="enfermedad.nombre"  class="form-control">
+<div class="form mt-3">
+    <form #formularioEnfermedad="ngForm" (ngSubmit)="guardar()">
+        <div class="form-group row">
+            <div class="col-md-5">
+                <input 
+                    type="text"
+                    id="_id"
+                    name="_id"
+                    #_id
+                    [(ngModel)]="enfermedad._id"
+                    [hidden]="true"  
+                >
+                <label for="nombreEnfermedad" class="form-label">Nombre</label>
+                <input 
+                    type="text" 
+                    id="nombreEnfermedad"
+                    name="nombreEnfermedad"
+                    #nombreEnfermedad
+                    [(ngModel)]="enfermedad.nombre"  
+                    class="form-control"
+                    required>                 
+            </div>
+            <div class="col-md-5">
+                <label 
+                    for="Observaciones" 
+                    class="form-label">Observaciones</label>
+                <input 
+                    type="text" 
+                    id="Observaciones" 
+                    name="Observaciones"
+                    #Observaciones
+                    [(ngModel)]="enfermedad.observaciones" 
+                    class="form-control">
+            </div>
+                <input 
+                    type="checkbox" 
+                    [hidden]="true" 
+                    [(ngModel)]="enfermedad.estado"
+                    name="estado"
+                >   
+            <div class="mt-4 col-md-2 text-center">    
+                <button 
+                    class="btn btn-primary" 
+                    type="submit" 
+                    [disabled]="formularioEnfermedad.invalid">
+                    <i class="bi bi-plus"></i>Guardar</button>
+            </div>
         </div>
-        <div class="col-md-5">
-            <label for="Observaciones" class="form-label">Observaciones</label>
-            <input type="text" id="Observaciones" [(ngModel)]="enfermedad.observaciones" class="form-control">
-        </div>
-        <div class="mt-4 col-md-2 text-center" (click)="guardar()">    
-            <button class="btn btn-primary">Guardar</button>
-        </div>
-    </div>
+    </form>    
 </div>
-<div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
-    <table class="table">
+<div class="mt-5 bg-secondary.bg-gradient bg-opacity-10">
+    <table class="table  table-bordered table-striped table-hover" width="100%">
         <thead class="thead-dark">
             <tr class="text-center">
                 <th class="col-md-1">No.</th>
@@ -49,8 +84,8 @@
 </div>
 <ng-template #template>
     <div class="modal-body text-center">
-      <p>¿Está seguro que desea inactivar?</p>
-      <button type="button" class="btn btn-primary" (click)="confirm()" >Yes</button>
+      <p>¿Está seguro que desea inactivar esta enfermedad?</p>
+      <button type="button" class="btn btn-primary" (click)="confirm()" >Sí</button>
       <button type="button" class="btn btn-secondary" (click)="decline()" >No</button>
     </div>
   </ng-template>
