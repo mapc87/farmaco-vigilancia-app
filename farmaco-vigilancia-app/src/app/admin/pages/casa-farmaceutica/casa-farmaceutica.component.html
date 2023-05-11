@@ -33,7 +33,13 @@
                 class="form-control"
                 [(ngModel)]="casaFarmaceutica.observaciones">
         </div>
-        <input type="checkbox" [hidden]="true" [(ngModel)]="casaFarmaceutica.estado">
+        <input 
+            type="checkbox" 
+            id="estado"
+            name="estado"
+            #estado
+            [hidden]="true" 
+            [(ngModel)]="casaFarmaceutica.estado">
         <div class="mt-4 col-md-2 text-center">    
             <button type="submit" class="btn btn-primary" [disabled]="casaFarmaceuticaForm.invalid">Guardar</button>
         </div>
