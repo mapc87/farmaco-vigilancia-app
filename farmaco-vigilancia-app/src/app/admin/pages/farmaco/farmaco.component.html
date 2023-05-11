@@ -1,60 +1,104 @@
 <div class="col-12 text-center mt-3">
     <label class="title-registro fs-3" >Farmacos</label>
 </div>
-<div class="form">
-    <div class="form-group row">
-        <div class="col-md-4">
-            <label for="nombreFarmaco" class="form-label">Nombre</label>
-            <input type="text" id="nombrePaciente" [(ngModel)]="farmaco.nombre"  class="form-control">
+<div class="form mt-3">
+    <form #formularioFarmaco="ngForm" (ngSubmit)="Guardar()">
+        <div class="form-group row">
+            <div class="col-md-4">
+                <input 
+                    type="text"
+                    id="_id"
+                    name="_id"
+                    #_id
+                    [(ngModel)]="farmaco._id"
+                    [hidden]="true"  
+                >               
+                <label for="nombre" class="form-label">Nombre</label>
+                <input 
+                    type="text" 
+                    id="nombre"
+                    name="nombre"
+                    #nombre
+                    [(ngModel)]="farmaco.nombre"
+                    required 
+                class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="casaFarmaceutica">Casa Farmaceutica</label>
+                <select 
+                    id="casaFarmaceutica" 
+                    name="casaFarmaceutica"
+                    #casaFarmaceutica
+                    class="form-control mt-2" 
+                    [(ngModel)]="farmaco.casa"
+                    required>
+                  <option *ngFor="let casaFarmaceutica of casasFarmaceuticas" value="{{casaFarmaceutica.nombre}}">{{casaFarmaceutica.nombre}}</option>
+                </select>
+            </div>   
+            <div class="col-md-3">
+                <label for="Observaciones" class="form-label">Observaciones</label>
+                <input 
+                    type="text" 
+                    id="Observaciones" 
+                    name="Observaciones"
+                    [(ngModel)]="farmaco.observaciones" 
+                    class="form-control" rows="3">
+            </div>
+            <input 
+                type="checkbox" 
+                [hidden]="true" 
+                [(ngModel)]="farmaco.estado"
+                name="estado"
+            >   
+            <div class="col-md-2 text-center mt-4">    
+                <button class="btn btn-primary" [disabled]="formularioFarmaco.invalid">Guardar</button>
+            </div>
         </div>
-        <div class="col-md-3">
-            <label for="Observaciones" class="form-label">Observaciones</label>
-            <input type="text" id="Observaciones" [(ngModel)]="farmaco.observaciones" class="form-control" rows="3">
-        </div>
-        <div class="col-md-3">
-            <label for="tipoUsuario">Casa Farmaceutica</label>
-            <select id="tipoUsuario" class="form-control mt-2" [(ngModel)]="farmaco.casa">
-              <option *ngFor="let casaFarmaceutica of casasFarmaceuticas" value="{{casaFarmaceutica.nombre}}">{{casaFarmaceutica.nombre}}</option>
-            </select>
-        </div>    
-        <div class="col-md-2 text-center mt-4" (click)="Guardar()">    
-            <button class="btn btn-primary">Guardar</button>
-        </div>
-    </div>
+    </form>    
 </div>
-<div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr class="text-center">
-                <th class="col-md-1">No.</th>
-                <th class="col-md-2">Nombre</th>
-                <th class="col-md-1">Casa</th>
-                <th class="col-md-1">Efectos Adversos</th>
-                <th class="col-md-1">Efectos Adversos No Reportados</th>
-                <th class="col-md-2">Observaciones</th>
-                <th class="col-md-1">Estado</th>
-                <th class="col-md-5">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="text-center" *ngFor="let farmaco of farmacos| slice:desde:hasta, let i = index">
-                <td>{{i+1}}</td>
-                <td>{{farmaco.nombre}}</td>
-                <td>{{farmaco.casa}}</td>
-                <td>{{farmaco.efectosAdversos}}</td>
-                <td>{{farmaco.efectosAdversosNoReportados}}</td>
-                <td>{{farmaco.observaciones}}</td>
-                <td>{{farmaco.estado == true ? 'Activo' : 'Inactivo'}}</td>
-                <td>
-                    <button type="button" class="btn btn-dark" (click)="ActualizarRow(farmaco)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar" ></i></button>  
-                    &nbsp;                          
-                    <button type="button" class="btn btn-dark" (click)="openModal(template, farmaco)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Activar/Inactivar" ></i></button>
-                    &nbsp;                          
-                    <button type="button" class="btn btn-dark" (click)="abrirEfectosModal(farmaco)"><i class="bi bi-exclamation-diamond" data-toggle="tooltip"   data-placement="top" title="Agregar efectos adversos" ></i></button>
-                </td>
-            </tr>        
-        </tbody>
-    </table>
+<div class="mt-5 bg-secondary.bg-gradient bg-opacity-10">
+    <div class="mt-5 table-responsive">
+        <table class="table  table-bordered table-striped table-hover" width="100%">
+            <thead class="thead-dark">
+                <tr class="text-center" >
+                    <th class="col-1">No.</th>
+                    <th class="col-2">Nombre</th>
+                    <th class="col-1">Casa</th>
+                    <th class="col-2">Efectos Adversos</th>
+                    <th class="col-2">Efectos Adversos No Reportados</th>
+                    <th class="">Observaciones</th>
+                    <th class="col-1">Estado</th>
+                    <th class="col-2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" *ngFor="let farmaco of farmacos| slice:desde:hasta, let i = index">
+                    <td class="col-1">{{i+1}}</td>
+                    <td class="col-2">{{farmaco.nombre}}</td>
+                    <td class="col-1">{{farmaco.casa}}</td>
+                    <td class="col-2"><ul class="" style="list-style:none">
+                            <li class="" *ngFor="let efecto of farmaco.efectosAdversos, let idx = index">{{idx+1}} - {{efecto}}</li>
+                        </ul>
+                    </td>
+                    <td class="col-2">
+                        <ul class="" style="list-style:none">
+                            <li class="" *ngFor="let efecto of farmaco.efectosAdversosNoReportados, let idx = index">{{idx+1}} - {{efecto}}</li>
+                        </ul>
+                    </td>
+                    <td class="">{{farmaco.observaciones}}</td>
+                    <td class="col-1">{{farmaco.estado == true ? 'Activo' : 'Inactivo'}}</td>
+                    <td class="col-2">
+                        <button type="button" class="btn btn-dark" (click)="ActualizarRow(farmaco)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar" ></i></button>  
+                        &nbsp;                          
+                        <button type="button" class="btn btn-dark" (click)="openModal(template, farmaco)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Activar/Inactivar" ></i></button>
+                        &nbsp;                          
+                        <button type="button" class="btn btn-dark" (click)="abrirEfectosModal(farmaco)"><i class="bi bi-exclamation-diamond" data-toggle="tooltip"   data-placement="top" title="Agregar efectos adversos" ></i></button>
+                    </td>
+                </tr>        
+            </tbody>
+        </table>
+    </div>
+    
     <mat-paginator [length]="farmacos.length"
               [pageSize]="pageSize"
               [pageSizeOptions]="[5, 10, 25, 100]"
@@ -63,8 +107,8 @@
 </div>
 <ng-template #template>
     <div class="modal-body text-center">
-      <p>¿Está seguro que desea inactivar?</p>
-      <button type="button" class="btn btn-primary" (click)="confirm()" >Yes</button>
+      <p>¿Está seguro que desea activar/inactivar  este farmaco?</p>
+      <button type="button" class="btn btn-primary" (click)="confirm()" >Sí</button>
       <button type="button" class="btn btn-secondary" (click)="decline()" >No</button>
     </div>
   </ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -9,6 +9,7 @@ import { FarmacoServiceService } from '../../services/farmaco.service.service';
 import { FormModalFarmacoComponent } from '../../../components/form-modal-farmaco/form-modal-farmaco.component';
 import { EfectosAdversosComponent } from '../efectos-adversos/efectos-adversos.component';
 import { ModalEfectosComponent } from '../../modals/form-modal-farmaco/form-modal-efectos.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-farmaco',
@@ -34,10 +35,13 @@ export class FarmacoComponent implements OnInit{
   desde: number = 0; 
   hasta: number = 10;
 
+  @ViewChild('formularioFarmaco') form:any;
+
   constructor (
     private modalService: BsModalService, 
     private srvFarmaco: FarmacoServiceService,
-    private srvCasaFarmaceutica: CasaFarmaceuticaService){
+    private srvCasaFarmaceutica: CasaFarmaceuticaService,
+    private toastr: ToastrService){
   }
 
   ngOnInit(): void {
@@ -48,15 +52,7 @@ export class FarmacoComponent implements OnInit{
   getFarmacos(){
     this.srvFarmaco.getFarmacos.subscribe((result)=>{
       this.farmacos = result; 
-      console.log(this.farmacos);
     })
-  }
-
-  addFarmaco(){
-    this.farmaco.estado = true;
-    this.srvFarmaco.addFarmacos(this.farmaco).subscribe((result)=>{
-      console.log(result);
-    });
   }
 
   getCasasFarmaceuticas(){
@@ -66,19 +62,32 @@ export class FarmacoComponent implements OnInit{
   }
 
   Guardar(){
-    if(this.farmaco.hasOwnProperty('_id')){
-      console.log("upadte")
-      this.updateFarmaco();
-      
+    if(this.farmaco._id){
+      this.updateFarmaco(); 
     }else{
       this.addFarmaco();
     }
-    this.LimpiarFarmaco();
+  }
+  
+  addFarmaco(){
+    this.farmaco.estado = true;
+    this.srvFarmaco
+      .addFarmacos(this.farmaco)
+      .subscribe((result)=>{        
+        this.toastr.success("Farmaco guardado");
+        this.getFarmacos();
+        this.limpiarFormulario();
+    });
   }
 
   updateFarmaco(){
-    console.log("upadte")
-    this.srvFarmaco.updateFarmacos(this.farmaco).subscribe(result => console.log(result));
+    this.srvFarmaco
+      .updateFarmacos(this.farmaco)
+      .subscribe(result => {
+        this.toastr.success("Farmaco actualizado");
+        this.getFarmacos();
+        this.limpiarFormulario();
+      });
   }
 
   cambiarpagina(e: PageEvent){
@@ -101,15 +110,6 @@ export class FarmacoComponent implements OnInit{
     this.modalRef?.hide();
   }
 
-  LimpiarFarmaco(){
-    this.farmaco.nombre = ""; 
-    this.farmaco.casa = "";
-    this.farmaco.efectosAdversos = [];
-    this.farmaco.efectosAdversosNoReportados = [];
-    this.farmaco.observaciones = "";
-    this.farmaco.estado = false;
-  }
-
   ActualizarRow(farmacoSeleccionado: farmaco){
     this.farmaco = farmacoSeleccionado; 
   }
@@ -125,5 +125,11 @@ export class FarmacoComponent implements OnInit{
     };
     this.modalRef = this.modalService.show(ModalEfectosComponent, initialState);
     this.modalRef.content.closeBtnName='Close';
+  }
+
+  limpiarFormulario(){
+    this.form.reset();
+    this.farmaco.efectosAdversosNoReportados = [];
+    this.farmaco.efectosAdversos = [];
   }
 }
