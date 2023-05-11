@@ -1,9 +1,11 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { efectosAdversos } from '../../interfaces/efectos-adversos.interface';
 import { EfectosAdversosServiceService } from '../../services/efectos-adversos.service.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -24,8 +26,13 @@ export class EfectosAdversosComponent implements OnInit {
   hasta: number = 10;
   modalRef: any;
  
-  constructor(private modalService: BsModalService,private srvEfectoAdverso: EfectosAdversosServiceService) {    
+  constructor(  
+    private modalService: BsModalService,
+    private srvEfectoAdverso: EfectosAdversosServiceService,
+    private toastr: ToastrService) {    
   }
+
+  @ViewChild('formularioEfectosAdversos') form: any;
 
   ngOnInit(): void {
     this.getEfectosAdversos();
@@ -53,24 +60,27 @@ export class EfectosAdversosComponent implements OnInit {
   AddEfectoAdverso(){
     this.efectoAdverso.estado = true;
     this.srvEfectoAdverso.addgetEfectoAdverso(this.efectoAdverso).subscribe(result => {
-      console.log(result);
+      this.form.reset();
+      this.toastr.success("Efecto adverso guardado");
+      this.getEfectosAdversos();
     }); 
-    this.getEfectosAdversos();
+   
   }
 
   updateEfectoAdverso(){
     this.srvEfectoAdverso.updategetEfectoAdverso(this.efectoAdverso).subscribe(result => {
-      console.log(result)
+      this.form.reset();
+      this.toastr.success("Efecto adverso actualizado");
+      this.getEfectosAdversos();
     }); 
   }
 
   Guardar(){
-    if(this.efectoAdverso.hasOwnProperty('_id')){
+    if(this.efectoAdverso._id){
       this.updateEfectoAdverso();
     }else{
       this.AddEfectoAdverso();
     }
-    this.LimpiarEfecto();
   }
 
   openModal(template: TemplateRef<any>, efecto: efectosAdversos) {
@@ -86,13 +96,7 @@ export class EfectosAdversosComponent implements OnInit {
  
   decline(): void {
     this.modalRef?.hide();
-  }
-
-  LimpiarEfecto(){
-    this.efectoAdverso.efectoAdverso = '';
-    this.efectoAdverso.estado = false;
-    this.efectoAdverso.observaciones = "";
-  }
+  }  
 
   ActualizarRow(efectoSeleccionado: efectosAdversos){
     this.efectoAdverso = efectoSeleccionado; 

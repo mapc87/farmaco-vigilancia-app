@@ -4,25 +4,53 @@
 <br>
 <div class="col-md-12">
     <div class="form">
-        <div class="form-group row">
-            <div class="mb-1 col-md-12 col-lg-7">
-                <label for="efecto" class="form-label" >Efecto</label>
-                <input type="textarea" id="efecto" class="form-control" [(ngModel)] = "efectoAdverso.efectoAdverso" >
-              </div>
-              <div class="mb-1 col-md-12 col-lg-3">
-                <label for="observaciones" class="form-label">Observaciones</label>
-                <input type="textarea" id="observaciones" class="form-control"   [(ngModel)] = "efectoAdverso.observaciones"  >
-              </div>              
-              <div class="mt-4 col-md-12 col-lg-2 d-grid gap-2">
-                <button class="btn btn-primary" type="button" (click)="Guardar()"><i class="bi bi-plus"></i>Agregar</button>
-            </div>              
-        </div>
+        <form #formularioEfectosAdversos="ngForm" (ngSubmit)="Guardar()">
+            <div class="form-group row">
+                <div class="mb-1 col-md-12 col-lg-7">
+                    <input 
+                        type="text"
+                        id="_id"
+                        name="_id"
+                        #_id
+                        [(ngModel)]="efectoAdverso._id"
+                        [hidden]="true"  
+                    >
+                    <label for="efecto" class="form-label" >Efecto</label>
+                    <input 
+                        type="text" 
+                        id="nombreEfecto" 
+                        name="nombreEfecto"
+                        #nombreEfecto
+                        class="form-control" 
+                        [(ngModel)] = "efectoAdverso.efectoAdverso" 
+                        required>
+                  </div>
+                  <div class="mb-1 col-md-12 col-lg-3">
+                    <label for="observaciones" class="form-label">Observaciones</label>
+                    <input 
+                        type="text" 
+                        id="observaciones" 
+                        name="observaciones"
+                        #observaciones
+                        class="form-control"   
+                        [(ngModel)] = "efectoAdverso.observaciones"  >
+                  </div>      
+                  <input 
+                    type="checkbox" 
+                    [hidden]="true" 
+                    [(ngModel)]="efectoAdverso.estado"
+                    name="estado">        
+                  <div class="mt-4 col-md-12 col-lg-2 d-grid gap-2">
+                    <button class="btn btn-primary" type="submit" [disabled]="formularioEfectosAdversos.invalid"><i class="bi bi-plus"></i>Guardar</button>
+                </div>              
+            </div>
+        </form>        
     </div>
 </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">    
 </div>
-<div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
-    <table class="table">
+<div class="mt-5 bg-secondary.bg-gradient bg-opacity-10">
+    <table class="table table-bordered table-striped table-hover" width="100%">
         <thead class="thead-dark">
             <tr class="text-center">
                 <th class="col-md-1">No.</th>
@@ -54,8 +82,8 @@
 </div>
 <ng-template #template>
     <div class="modal-body text-center">
-      <p>¿Está seguro que desea inactivar?</p>
-      <button type="button" class="btn btn-primary" (click)="confirm()" >Yes</button>
+      <p>¿Está seguro que desea inactivar este efecto adverso?</p>
+      <button type="button" class="btn btn-primary" (click)="confirm()" >Sí</button>
       <button type="button" class="btn btn-secondary" (click)="decline()" >No</button>
     </div>
   </ng-template>
