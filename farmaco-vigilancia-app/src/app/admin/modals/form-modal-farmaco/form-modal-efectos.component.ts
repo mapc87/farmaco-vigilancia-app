@@ -6,6 +6,7 @@ import { farmaco } from 'src/app/admin/interfaces/farmaco.interface';
 import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.service';
 import { efectosAdversos } from '../../interfaces/efectos-adversos.interface';
 import { EfectosAdversosServiceService } from '../../services/efectos-adversos.service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'modal-efectos',
@@ -13,10 +14,8 @@ import { EfectosAdversosServiceService } from '../../services/efectos-adversos.s
 })
 
 export class ModalEfectosComponent implements OnInit {
-  insertar:boolean = true; 
-
-
- 
+  
+  insertar:boolean = true;  
   farmaco: farmaco ={
     nombre: '',
     casa: '',
@@ -26,7 +25,8 @@ export class ModalEfectosComponent implements OnInit {
     estado: false
   }
 
-  efectos : efectosAdversos[] = [];
+  efectosReportados : efectosAdversos[] = [];
+  efectosNoReportados : efectosAdversos[] = [];
   efectosReportadosSeleccionados: string[] = [];
   efectosNoReportadosSeleccionados: string[] = [];
   tipoEfecto: string = "";
@@ -35,64 +35,73 @@ export class ModalEfectosComponent implements OnInit {
   constructor(
     public modalRef: BsModalRef,
     private srvFarmaco: FarmacoServiceService,
-    private srvEfectosAdversos: EfectosAdversosServiceService) {
-    this.insertar = true; 
+    private srvEfectosAdversos: EfectosAdversosServiceService,
+    private toastr: ToastrService) {
+    this.insertar = true
+  
   } 
 
   ngOnInit(): void {
     this.getEfectosAdversos();
-    this.farmaco = this.list[0];
+    this.farmaco = this.list[0];   
   }
   
   titulo = "Registro de Efectos Adversos";
 
   guardar(){
-    if(parseInt(this.tipoEfecto) == 1){
-      this.farmaco.efectosAdversos = this.efectosReportadosSeleccionados;
-      console.log("Reportados")
-    }    else{
-      this.farmaco.efectosAdversosNoReportados = this.efectosNoReportadosSeleccionados;
-      console.log("No Reportados")
-    }
-    console.log(this.farmaco);
     this.updateFarmaco(this.farmaco);
   }
 
   getEfectosAdversos(){
-     this.srvEfectosAdversos.getEfectosAdversos.subscribe(result=>{
-      this.efectos = result; 
-      console.log(this.efectos);
-     })
+     this.srvEfectosAdversos.getEfectosAdversos.subscribe(result=>{     
+     
+      this.efectosReportadosSeleccionados = this.farmaco.efectosAdversos;   
+      this.efectosReportados = result.map(e => {        
+        if(this.efectosReportadosSeleccionados[this.efectosReportadosSeleccionados.indexOf(e.efectoAdverso)]){ 
+          e.seleccionado  = true; 
+        }else{
+          e.seleccionado = false; 
+        }        
+        return e;
+      });         
+     });    
+
+     this.srvEfectosAdversos.getEfectosAdversos.subscribe(result=>{ 
+      this.efectosNoReportadosSeleccionados = this.farmaco.efectosAdversosNoReportados;    
+      this.efectosNoReportados = result.map(e => {        
+        if(this.efectosNoReportadosSeleccionados[this.efectosNoReportadosSeleccionados.indexOf(e.efectoAdverso)]){  
+          e.seleccionado = true; 
+        }else{
+          e.seleccionado = false; 
+        }        
+        return e
+      })         
+     });  
   }
 
   updateFarmaco(farmaco: farmaco){
+    console.log(farmaco);
     this.srvFarmaco.updateFarmacos(farmaco).subscribe((result)=>{
-      console.log("guardado", result);
+      this.toastr.success("Efectos adversos actualizados");
+      console.log(farmaco);
     });
   }
 
-  onTextBoxChange(efecto :efectosAdversos, event: any){
-    console.log(efecto)
-    console.log(event.target.checked)
-
+  onTextBoxChangeReportados(efecto :efectosAdversos, event: any){
     let accion = event.target.checked
-
-    if(parseInt(this.tipoEfecto) == 1){
-      if(accion){
-        this.efectosReportadosSeleccionados.push(efecto.efectoAdverso);
-      }else{
-        this.efectosReportadosSeleccionados.splice(this.efectosReportadosSeleccionados.indexOf(efecto.efectoAdverso),1);
-      }      
-      console.log("Reportados")
-      console.log(this.efectosReportadosSeleccionados);
+    if(accion){
+      this.efectosReportadosSeleccionados.push(efecto.efectoAdverso);
     }else{
+      this.efectosReportadosSeleccionados.splice(this.efectosReportadosSeleccionados.indexOf(efecto.efectoAdverso),1);
+    } 
+  }
+
+  onTextBoxChangeNoReportados(efecto :efectosAdversos, event: any){
+    let accion = event.target.checked
       if(accion){
         this.efectosNoReportadosSeleccionados.push(efecto.efectoAdverso);
       }else{
         this.efectosNoReportadosSeleccionados.splice(this.efectosNoReportadosSeleccionados.indexOf(efecto.efectoAdverso),1);
-      }
-      console.log(this.efectosNoReportadosSeleccionados);
-      console.log("No Reportados")
-    }
+      }    
   }
 }
