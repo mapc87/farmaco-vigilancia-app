@@ -5,8 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-modal-farmacos',
-  templateUrl: './modal-farmacos.component.html',
-  styleUrls: ['./modal-farmacos.component.css']
+  templateUrl: './modal-farmacos.component.html'
 })
 
 

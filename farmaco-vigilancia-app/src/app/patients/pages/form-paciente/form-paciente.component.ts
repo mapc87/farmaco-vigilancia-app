@@ -28,7 +28,6 @@ export class FormPacienteComponent implements OnInit {
   modalRef?: BsModalRef;
 
   paciente: paciente = {
-    _id: "",
     nombre: "",
     noRegistro: "",
     dpi: "",
@@ -43,7 +42,9 @@ export class FormPacienteComponent implements OnInit {
     nombreEncargado: "",
     telefonoEncargado: "",
     datosClinicos: [],
-    fehaIngreso: new Date()
+    fechaIngreso: new Date(),
+    estado: false,
+    observaciones: ''
   }
 
   municipiosNacimiento: string[] | undefined;

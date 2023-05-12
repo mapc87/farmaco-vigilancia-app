@@ -11,7 +11,7 @@ export class PacienteServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url = `${urlBackend}/pacientes`;
+  private url = `${urlBackend}/paciente`;
 
   getPaciente(id:string){
     return this.http.get<paciente>(this.url); 

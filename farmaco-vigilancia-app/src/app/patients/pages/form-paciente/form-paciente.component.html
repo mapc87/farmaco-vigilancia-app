@@ -149,10 +149,19 @@
                 id="fechaIngreso"
                 name="fechaIngreso"
                  class="form-control" 
-                 [(ngModel)]="paciente.fehaIngreso"
+                 [(ngModel)]="paciente.fechaIngreso"
                  [disabled]="true"
                  [hidden]="true"> 
-            </div>   
+            </div>         
+            <div class="mb-1 col-md-12">
+              <label for="observaciones" class="form-label">Observaciones</label>
+              <textarea 
+                type="text" 
+                id="observaciones"
+                name="observaciones"
+                 class="form-control" 
+                 [(ngModel)]="paciente.observaciones"> </textarea>
+            </div>          
             <div class="col-12 mt-4 ">
               <div class="text-center">
                 <button class="btn btn-success" (click)="addPaciente()">Guardar paciente</button>

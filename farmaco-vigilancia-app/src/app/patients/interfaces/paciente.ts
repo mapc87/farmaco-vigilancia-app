@@ -1,7 +1,7 @@
 import { farmaco } from '../../admin/interfaces/farmaco.interface';
 import { datosClinicos } from './datos-clinicos';
 export interface paciente{
-    _id:any;
+    _id?:any;
     nombre: string;
     noRegistro: string;
     dpi: string;
@@ -15,6 +15,8 @@ export interface paciente{
     telefono: string;
     nombreEncargado:string; 
     telefonoEncargado: string; 
-    fehaIngreso: Date;
-    datosClinicos : datosClinicos [];   
+    fechaIngreso: Date;
+    datosClinicos : datosClinicos [];
+    estado: boolean;
+    observaciones: string;    
 }

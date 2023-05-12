@@ -7,18 +7,22 @@ import { PacientesComponent } from './pages/pacientes/pacientes.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ModalFarmacosComponent } from './modals/modal-farmacos/modal-farmacos.component';
 import { DatosClinicosComponent } from './pages/datos-clinicos/datos-clinicos.component';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     FormPacienteComponent, 
     PacienteFichaMedicaComponent, 
-    PacientesComponent, ModalFarmacosComponent, DatosClinicosComponent
+    PacientesComponent, 
+    ModalFarmacosComponent, 
+    DatosClinicosComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    MatPaginatorModule    
+    MatPaginatorModule,
+    ToastrModule.forRoot() 
   ]
 })
 export class PatientsModule { }
