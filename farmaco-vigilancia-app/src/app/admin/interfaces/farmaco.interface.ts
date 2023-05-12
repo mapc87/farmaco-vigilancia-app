@@ -7,5 +7,7 @@ export interface farmaco{
     efectosAdversos: string[],
     efectosAdversosNoReportados: string[];
     observaciones: string, 
-    estado: boolean
+    estado: boolean,
+    seleccionado?: boolean,
+    lote?: string;
 }

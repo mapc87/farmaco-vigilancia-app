@@ -5,13 +5,14 @@ import { FormPacienteComponent } from './pages/form-paciente/form-paciente.compo
 import { PacienteFichaMedicaComponent } from './pages/paciente-ficha-medica/paciente-ficha-medica.component';
 import { PacientesComponent } from './pages/pacientes/pacientes.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ModalFarmacosComponent } from './modals/modal-farmacos/modal-farmacos.component';
 
 
 @NgModule({
   declarations: [
     FormPacienteComponent, 
     PacienteFichaMedicaComponent, 
-    PacientesComponent
+    PacientesComponent, ModalFarmacosComponent
   ],
   imports: [
     CommonModule,

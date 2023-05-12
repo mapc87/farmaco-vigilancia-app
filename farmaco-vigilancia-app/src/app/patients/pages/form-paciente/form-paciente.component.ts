@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { genero, estadioEnfermedad, quimioterapia, etnia } from 'src/app/constantes';
 import { InformacionGeograficaServiceService } from 'src/app/patients/services/informacion-geografica.service.service';
 import { PacienteServiceService } from '../../services/paciente.service.service';
@@ -7,6 +7,8 @@ import { farmaco } from 'src/app/admin/interfaces/farmaco.interface';
 import { paciente } from '../../interfaces/paciente';
 import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.service';
 import { EnfermedadServiceService } from 'src/app/admin/services/enfermedad.service.service';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { ModalFarmacosComponent } from '../../modals/modal-farmacos/modal-farmacos.component';
 
 @Component({
   selector: 'app-form-paciente',
@@ -23,6 +25,7 @@ export class FormPacienteComponent implements OnInit {
   municipios?: string[] = [];
   enfermedades: enfermedad[] = []; 
   farmacos: farmaco[] = []
+  modalRef?: BsModalRef;
 
   paciente: paciente = {
     id: "",
@@ -53,6 +56,8 @@ export class FormPacienteComponent implements OnInit {
 
   constructor(
     private informacionGeografica: InformacionGeograficaServiceService, 
+    private modalService: BsModalService, 
+    
     private srvPaciente: PacienteServiceService,
     private srvFarmaco: FarmacoServiceService,
     private srvEnfermedad: EnfermedadServiceService) { 
@@ -114,5 +119,22 @@ export class FormPacienteComponent implements OnInit {
 
   agregarMedicamentos(){
     console.log("agregar los medicamentos al listado");
+  }
+
+  openModal(template: TemplateRef<any>, farmaco: farmaco) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  abrirFarmacosModal(){
+    const initialState: ModalOptions = {
+      initialState: {
+        list: [
+
+        ],
+        title: 'Efectos Adversos'
+      }      
+    };
+    this.modalRef = this.modalService.show(ModalFarmacosComponent, initialState);
+    this.modalRef.content.closeBtnName='Close';
   }
 }
