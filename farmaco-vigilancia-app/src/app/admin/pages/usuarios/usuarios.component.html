@@ -1,11 +1,64 @@
 <div class="col-12 text-center mt-3">
     <label class="title-registro fs-3">Administración de Usuarios</label>
 </div>
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button class="btn btn-primary" type="button" (click)="abrirUsuarioModal()"><i class="bi bi-plus"></i>Agregar</button>
+<div class="form mt-3">
+    <form #formularioUsuario="ngForm" (ngSubmit)="Guardar()">        
+  
+        <div class="form-group row">
+            <div class="col-md-3">
+                <input 
+                    type="text"
+                    id="_id"
+                    name="_id"
+                    #_id
+                    [(ngModel)]="usuario._id"
+                    [hidden]="true"  
+                >
+                <label for="nombreEnfermedad" class="form-label">Nombre</label>
+                <input 
+                    type="text" 
+                    id="nombreEnfermedad"
+                    name="nombreEnfermedad"
+                    #nombreEnfermedad
+                    [(ngModel)]="usuario.nombre"  
+                    class="form-control"
+                    required>                 
+            </div>
+            <div class="col-md-3">
+                <label for="usuario" class="form-label">Observaciones</label>
+                <input 
+                    type="text" 
+                    id="usuario" 
+                    name="usuario"
+                    [(ngModel)]="usuario.usuario" 
+                    class="form-control" rows="3"
+                    required>
+            </div>
+            <div class="col-md-3">
+                <label for="password" class="form-label">Observaciones</label>
+                <input 
+                    type="text" 
+                    id="password" 
+                    name="password"
+                    [(ngModel)]="usuario.password" 
+                    class="form-control" rows="3"
+                    required>
+            </div>
+            <div class="form-group col-md-12 mt-1">
+                <label for="tipoUsuario">Tipo Usuario</label>
+                <select id="tipoUsuario" class="form-control">
+                  <option value="1">Administrador</option>
+                  <option value="2" selected>Operador</option>
+                </select>
+            </div>    
+            <div class="col-md-2 text-center mt-4">    
+                <button class="btn btn-primary" [disabled]="formularioUsuario.invalid">Guardar</button>
+            </div>
+       </div>
+    </form>    
 </div>
 <div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
-    <table class="table">
+    <table class="table  table-bordered table-striped table-hover">
         <thead class="thead-dark">
             <tr class="text-center">
                 <th class="col-md-1">No.</th>

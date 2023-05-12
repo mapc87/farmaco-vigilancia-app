@@ -12,8 +12,18 @@ import { usuario } from '../../interfaces/usuario.interface';
 export class UsuariosComponent implements OnInit{
 
   modalRef?: BsModalRef;
+  
   usuarios: usuario[] = [];
-  usuario!: usuario;
+
+  usuario: usuario = {
+    _id: '',
+    nombre: '',
+    usuario: '',
+    password: '',
+    rol: 0,
+    estado: false
+  };
+
   pageSize = 10;
   desde: number = 0; 
   hasta: number = 10;
@@ -21,21 +31,9 @@ export class UsuariosComponent implements OnInit{
   constructor (private modalService: BsModalService,
     private srvUsuario: UsuarioServiceService){   
   }
+
   ngOnInit(): void {
     this.getUsuarios();
-  }
-
-  abrirUsuarioModal(){
-    const initialState: ModalOptions = {
-      initialState: {
-        list: [
-          'open modal '
-        ],
-        title: 'Usuario Modal'
-      }      
-    };
-    this.modalRef = this.modalService.show(ModalFormUsuarioComponent, initialState);
-    this.modalRef.content.closeBtnName='Close';
   }
 
   getUsuarios(){
@@ -47,5 +45,9 @@ export class UsuariosComponent implements OnInit{
   cambiarpagina(e: PageEvent){
     this.desde = e.pageIndex * e.pageSize; 
     this.hasta = this.desde + e.pageSize;
+  }
+
+  Guardar(){
+
   }
 }

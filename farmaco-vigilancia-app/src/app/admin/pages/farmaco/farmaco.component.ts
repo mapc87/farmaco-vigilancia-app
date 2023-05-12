@@ -6,7 +6,6 @@ import { CasaFarmaceuticaService } from 'src/app/admin/services/casa-farmaceutic
 import { CasaFarmaceutica } from 'src/app/admin/interfaces/casa-farmaceutica.interface';
 import { farmaco } from '../../interfaces/farmaco.interface';
 import { FarmacoServiceService } from '../../services/farmaco.service.service';
-import { FormModalFarmacoComponent } from '../../../components/form-modal-farmaco/form-modal-farmaco.component';
 import { EfectosAdversosComponent } from '../efectos-adversos/efectos-adversos.component';
 import { ModalEfectosComponent } from '../../modals/form-modal-farmaco/form-modal-efectos.component';
 import { ToastrService } from 'ngx-toastr';

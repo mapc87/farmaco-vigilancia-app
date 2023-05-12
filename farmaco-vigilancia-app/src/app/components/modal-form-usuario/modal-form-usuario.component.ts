@@ -12,11 +12,8 @@ export class ModalFormUsuarioComponent implements OnInit {
   
   insertar:boolean = true; 
   titulo: string = ""
-  
 
- 
   usuario: usuario = {
-    id: "", 
     nombre: "",
     usuario: "",
     password: "",
