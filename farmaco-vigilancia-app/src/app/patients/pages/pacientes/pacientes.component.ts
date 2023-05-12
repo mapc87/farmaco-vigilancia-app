@@ -15,7 +15,7 @@ export class PacientesComponent {
   private pacientes: paciente[] = [];
 
   private paciente: paciente = {
-    id:'',
+    _id: '',
     nombre: '',
     noRegistro: '',
     dpi: '',
@@ -29,13 +29,8 @@ export class PacientesComponent {
     telefono: '',
     nombreEncargado: '',
     telefonoEncargado: '',
-    diagnostico: '',
-    estadioEnfermedad: '',
-    fechaIngresoUnidad: '',
-    quimioterapia: '',
-    cicloNo: '',
-    fecha: '',
-    farmacosUtilizados: []
+    datosClinicos: [],
+    fehaIngreso: new Date()
   }; 
 
   constructor(private srvPaciente:  PacienteServiceService ) {   

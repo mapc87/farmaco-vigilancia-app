@@ -28,27 +28,22 @@ export class FormPacienteComponent implements OnInit {
   modalRef?: BsModalRef;
 
   paciente: paciente = {
-    id: "",
+    _id: "",
     nombre: "",
-    noRegistro:  "",
-    dpi:  "",
-    sexo:  "M",
-    etnia:  "Ladino",
-    deptoNacimiento:  "Guatemala",
+    noRegistro: "",
+    dpi: "",
+    sexo: "M",
+    etnia: "Ladino",
+    deptoNacimiento: "Guatemala",
     deptoResidencia: "Guatemala",
     municipioNacimiento: "Guatemala",
-    municipioResidencia:"Guatemala",
-    direccion:  "",
-    telefono:  "",
-    nombreEncargado: "", 
-    telefonoEncargado:  "",
-    diagnostico:  "",
-    estadioEnfermedad:  "Estadio I",
-    fechaIngresoUnidad:  "",
-    quimioterapia: "Adyuvante",
-    cicloNo:  "",
-    fecha: "",
-    farmacosUtilizados:[]
+    municipioResidencia: "Guatemala",
+    direccion: "",
+    telefono: "",
+    nombreEncargado: "",
+    telefonoEncargado: "",
+    datosClinicos: [],
+    fehaIngreso: new Date()
   }
 
   municipiosNacimiento: string[] | undefined;
