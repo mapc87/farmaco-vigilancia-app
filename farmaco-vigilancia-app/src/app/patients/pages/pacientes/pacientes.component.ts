@@ -1,12 +1,12 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
 import { paciente } from '../../interfaces/paciente';
 import { PacienteServiceService } from 'src/app/patients/services/paciente.service.service';
 import { RouterLink } from '@angular/router';
 import { ResourceLoader } from '@angular/compiler';
 import { PageEvent } from '@angular/material/paginator';
-import { BsModalService } from 'ngx-bootstrap/modal';
-
-
+import { BsModalService, ModalOptions, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalFormPacienteComponent } from '../../modals/modal-form-paciente/modal-form-paciente.component';
+import { combineLatest, Subscription  } from 'rxjs';
 
 @Component({
   selector: 'app-pacientes',
@@ -42,9 +42,14 @@ export class PacientesComponent implements OnInit {
     estado: false,
     observaciones: ''
   }; 
-  modalRef: any;
 
-  constructor(private srvPaciente:  PacienteServiceService,private modalService: BsModalService, ) {   
+  modalRef: any;
+  subscriptions: Subscription[] = [];
+
+  constructor(
+    private srvPaciente:  PacienteServiceService,
+    private modalService: BsModalService, 
+    private changeDetection: ChangeDetectorRef) {   
   }
 
   ngOnInit(): void {
@@ -93,7 +98,48 @@ export class PacientesComponent implements OnInit {
   }  
 
   actualizarPaciente(paciente: paciente){
-
+    this.paciente = paciente;
+    this.abrirFormPacientesModal();
   }
 
+  abrirFormPacientesModal(){    
+    const _combine = combineLatest(
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string | any) => {
+        if (typeof reason !== 'string') {
+          reason = `onHide(), modalId is : ${reason.id}`;
+        }
+        const _reason = reason ? `, dismissed by ${reason}` : '';
+        this.getPacientes();
+        console.log("evento disparado")
+        this.unsubscribe();
+      })
+    );
+
+    const initialState: ModalOptions = {
+      initialState: {
+        list: [
+          this.paciente
+        ],
+        title: 'Agregar Pacientes'
+      },
+      class: 'modal-xl'
+    };
+    this.modalRef = this.modalService.show(ModalFormPacienteComponent, initialState) ;
+    this.modalRef.content.closeBtnName='Close';      
+  }
+
+  unsubscribe() {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+    this.subscriptions = [];
+  }
+
+  
 }
+
+

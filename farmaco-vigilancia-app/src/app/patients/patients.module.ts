@@ -9,6 +9,7 @@ import { ModalFarmacosComponent } from './modals/modal-farmacos/modal-farmacos.c
 import { DatosClinicosComponent } from './pages/datos-clinicos/datos-clinicos.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
+import { ModalFormPacienteComponent } from './modals/modal-form-paciente/modal-form-paciente.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { ToastrModule } from 'ngx-toastr';
     PacienteFichaMedicaComponent, 
     PacientesComponent, 
     ModalFarmacosComponent, 
-    DatosClinicosComponent
+    DatosClinicosComponent, ModalFormPacienteComponent
   ],
   imports: [
     CommonModule,

@@ -11,7 +11,7 @@ export class PacienteServiceService {
 
   constructor(private http: HttpClient) { }
 
-  private url = `${urlBackend}/paciente`;
+  private url = `${urlBackend}paciente`;
 
   getPaciente(id:string){
     return this.http.get<paciente>(this.url); 
@@ -30,7 +30,7 @@ export class PacienteServiceService {
   }
 
   updatePaciente(paciente:paciente):Observable<paciente>{
-    return this.http.put<paciente>(this.url, paciente).pipe(
+    return this.http.put<paciente>(`${this.url}/${paciente._id}`, paciente).pipe(
       catchError(this.handleError)
     )
   }

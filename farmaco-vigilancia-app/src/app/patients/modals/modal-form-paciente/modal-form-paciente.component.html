@@ -1,0 +1,177 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{accion}} Paciente</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="col-md-12 mt-3">
+        <div class="form">
+          <form  #formularioPaciente="ngForm" (submit)="guardar()">
+            <div class="form-group row">
+              <div class="mb-1 col-md-12 col-lg-6">
+                  <label for="nombrePaciente" class="form-label" >Nombre del paciente</label>
+                  <input 
+                    type="text" 
+                    id="nombrePaciente"
+                    name="nombre"
+                    #nombre
+                    class="form-control"  
+                    [(ngModel)]="paciente.nombre" 
+                    required >
+                </div>
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="noRegistro" class="form-label">No. de Registro</label>
+                  <input type="text" 
+                    id="noRegistro" 
+                    name="noRegistro"
+                    #noRegistro
+                    class="form-control"  [(ngModel)]="paciente.noRegistro" required >
+                </div>
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="dpi" class="form-label">DPI</label>
+                  <input 
+                    type="text" 
+                    id="dpi" 
+                    name="dpi"
+                    #dpi
+                    class="form-control" 
+                    [(ngModel)]="paciente.dpi" 
+                    required >
+                </div>          
+                <div class="mb-1 col-md-3">
+                  <label for="genero" class="form-label">Sexo</label>
+                  <select 
+                    class="form-select md-1" aria-label="Generos" 
+                    [(ngModel)]="paciente.sexo" 
+                    id="genero" 
+                    name="genero"
+                    #genero
+                    required > 
+                    <option *ngFor="let g of generos" [value]="g">{{g}}</option>
+                  </select>
+                </div>
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="etnia" class="form-label">Etnia</label>
+                  <select 
+                    class="form-select md-1" 
+                    id="etnia" 
+                    name="etnia"
+                    aria-label="Etnia" 
+                    [(ngModel)]="paciente.etnia" 
+                    required >
+                      <option *ngFor="let e of etnia" [value]="e">{{e}}</option>
+                  </select>
+                </div>   
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="departamentoNacimiento" class="form-label">Departamento de nacimiento</label>
+                  <select 
+                    class="form-select md-1" 
+                    id="departamentoNacimiento" 
+                    name="departamentoNacimiento"
+                    aria-label="Departamento-nacimiento" 
+                    [(ngModel)]="paciente.deptoNacimiento" 
+                    (change)="ObtenerMunicipiosDeptoNacimiento($event)" required >                
+                     <option *ngFor="let d of departamentos" [value]="d">{{d}}</option>
+                  </select>
+                </div>   
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label  for="municipioNacimiento" class="form-label">Municipio de nacimiento</label>
+                  <select 
+                    class="form-select md-1"
+                    id="municipioNacimiento" 
+                    name="municipioNacimiento"
+                    aria-label="municipio-nacimiento" 
+                    [(ngModel)]="paciente.municipioNacimiento" 
+                    [disabled]="paciente.deptoNacimiento.length == 0">           
+                      <option *ngFor="let m of municipiosNacimiento" [value]="m">{{m}}</option>
+                  </select>
+                </div>            
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="deptoResidencia" class="form-label">Departamento de residencia</label>
+                  <select 
+                    class="form-select md-1" 
+                    aria-label="departamento-residencia"
+                    id="deptoResidencia" 
+                    name="deptoResidencia" 
+                    [(ngModel)]="paciente.deptoResidencia"  
+                    (change)="ObtenerMunicipiosDeptoResedencia($event)">              
+                      <option *ngFor="let d of departamentos" [ngValue]="d">{{d}}</option>
+                  </select>
+                </div>
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="municipioResidencia" class="form-label">Municipio de residencia</label>
+                  <select 
+                    class="form-select md-1" 
+                    id="municipioResidencia" 
+                    name="municipioResidencia" 
+                    aria-label="Estadio-Enfermedad" 
+                    [(ngModel)]="paciente.municipioResidencia" 
+                    [disabled]="paciente.deptoResidencia.length == 0">                
+                      <option *ngFor="let m of municipiosResidencia" [ngValue]="m">{{m}}</option>
+                  </select>
+                </div>  
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="direccion" class="form-label">Dirección de residencia</label>
+                  <input 
+                    type="text" 
+                    id="direccion" 
+                    name="direccion" 
+                    class="form-control" 
+                    [(ngModel)]="paciente.direccion">
+                </div>  
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="noTelefono" class="form-label">No. de teléfono</label>
+                  <input 
+                    type="text" 
+                    id="noTelefono" 
+                    name="noTelefono"
+                    class="form-control"  
+                    [(ngModel)]="paciente.telefono">
+                </div>
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="nombreEncargado" class="form-label">Nombre del encargado</label>
+                  <input 
+                    type="text" 
+                    id="nombreEncargado" 
+                    name="nombreEncargado"
+                    class="form-control"  
+                    [(ngModel)]="paciente.nombreEncargado">
+                </div>
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="noTelefonoEc" class="form-label">No. teléfono de encargado/cuidador</label>
+                  <input 
+                    type="text" 
+                    id="noTelefonoEc"
+                    name="noTelefonoEc"
+                     class="form-control" 
+                     [(ngModel)]="paciente.telefonoEncargado"> 
+                </div>        
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <input 
+                    type="text" 
+                    id="fechaIngreso"
+                    name="fechaIngreso"
+                     class="form-control" 
+                     [(ngModel)]="paciente.fechaIngreso"
+                     [disabled]="true"
+                     [hidden]="true"> 
+                </div>         
+                <div class="mb-1 col-md-12">
+                  <label for="observaciones" class="form-label">Observaciones</label>
+                  <textarea 
+                    type="text" 
+                    id="observaciones"
+                    name="observaciones"
+                     class="form-control" 
+                     [(ngModel)]="paciente.observaciones"> </textarea>
+                </div>          
+                <div class="col-12 mt-4 ">
+                  <div class="text-center">
+                    <button class="btn btn-success" type="submit">Guardar paciente</button>
+                  </div>
+                </div>   
+        </div>    
+      </form>
+    </div> 
+</div>    
