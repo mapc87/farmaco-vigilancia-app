@@ -1,67 +1,84 @@
-
-<label class="form-label">Estadio enfermedad</label>
-<select 
-  class="form-select md-1" 
-  aria-label="Estadio-Enfermedad" 
-  id="estadioEnfermedad"
-  name="estadioEnfermedad"
-  [(ngModel)]="datoClinico.estadioEnfermedad">                
-    <option *ngFor="let e of estadioEnfermedad" [value]="e">{{e}}</option>
-</select>
-<div class="mb-1 col-md-4 col-lg-2">
-<label for="fechaIngresoUnidad" class="form-label">Fecha Ingreso</label>
-<input 
-  type="text" 
-  id="fechaIngresoUnidad" 
-  name="fechaIngresoUnidad"
-  class="form-control" 
-  [(ngModel)]="datoClinico.fecha">
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{accion}} datos clínicos</h4>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
 </div>
-<div class="mb-1 col-md-4 col-lg-2">
-<label  class="form-label">Quimioterapia</label>
-<select 
-  class="form-select md-1" 
-  id="quimioterapia"
-  name="quimioterapia"
-  aria-label="Qumioterapias" 
-  [(ngModel)]="datoClinico.quimioterapia">
-    <option *ngFor="let q of quimioterapia" [value]="q">{{q}}</option>
-</select>
-</div>
-<div class="mb-1 col-md-4 col-lg-1">
-<label for="noCiclo" class="form-label">Ciclo No.</label>
-<input 
-  type="text" 
-  id="noCiclo" 
-  name="noCiclo"
-  class="form-control" 
-  [(ngModel)]="datoClinico.cicloNo">
-</div>
-<div class="col-md-6 col-lg-2 mb-5">
-<br>
-<button class="btn btn-primary mt-1">Farmacos</button>
-</div>   
-<div>
-<div class="col-12 text-center">
-  <label class="fs-3">Medicamentos asociados al paciente</label>
+<div class="modal-body">
+  <div class="col-md-12 mt-3">
+      <div class="form ">
+        <form  #formularioDatosClinicos="ngForm" (submit)="guardar()"> 
+          <div class="form-group row ">     
+            <div class="mb-1 col-4">
+              <label for="fechaIngresoUnidad" class="form-label">Fecha Ingreso</label>
+              <input 
+                type="text" 
+                id="fechaIngresoUnidad" 
+                name="fechaIngresoUnidad"
+                class="form-control" 
+                [(ngModel)]="datoClinico.fecha">
+            </div>
+            <div class="mb-1 col-4">
+              <label  class="form-label">Diagnostico</label>
+              <select 
+                class="form-select md-1" 
+                id="quimioterapia"
+                name="quimioterapia"
+                aria-label="Qumioterapias" 
+                [(ngModel)]="datoClinico.diagnostico">
+                  <option *ngFor="let q of enfermedades" [value]="q.nombre">{{q.nombre}}</option>
+              </select>               
+            </div>
+            <div class="mb-1 col-4">
+              <label class="form-label">Estadio enfermedad</label>
+              <select 
+              class="form-select md-1" 
+              aria-label="Estadio-Enfermedad" 
+              id="estadioEnfermedad"
+              name="estadioEnfermedad"
+              [(ngModel)]="datoClinico.estadioEnfermedad">                
+                <option *ngFor="let e of estadioEnfermedad" [value]="e">{{e}}</option>                
+              </select>
+            </div>       
+              <div class="mb-1 col-md-4">
+                <label  class="form-label">Quimioterapia</label>
+                <select 
+                  class="form-select md-1" 
+                  id="quimioterapia"
+                  name="quimioterapia"
+                  aria-label="Qumioterapias" 
+                  [(ngModel)]="datoClinico.quimioterapia">
+                    <option *ngFor="let q of quimioterapia" [value]="q">{{q}}</option>
+                </select>
+                </div>
+                <div class="mb-1 col-4">
+                <label for="noCiclo" class="form-label">Ciclo No.</label>
+                <input 
+                  type="text" 
+                  id="noCiclo" 
+                  name="noCiclo"
+                  class="form-control" 
+                  [(ngModel)]="datoClinico.cicloNo">
+                </div>        
+                <div class="col-12 mt-3">
+                  <div>  
+                    <div class="text-center">
+                      <label class="fs-3">Medicamentos</label>
+                    </div>   
+                    <div *ngFor="let farmaco of farmacos let i = index" class="col-3">
+                      <div >
+                        <input type="checkbox"(change)="agregar(farmaco, $event)"> {{i+1}} - {{farmaco.nombre}}            
+                      </div>                         
+                    </div>                    
+                  </div>                                
+                </div>     
+                <div class="col-12">
+                  <div class="text-center mt-3">  
+                    <button class="btn btn-success" type="submit">Guardar datos clínicos</button>
+                  </div>
+                </div>               
+              </div>    
+            </form>
+          </div>  
 </div>  
-<table class="table">
-  <thead>
-      <tr>
-          <td>Nombre de medicamento</td>
-          <td>Casa farmacéutica</td>
-          <td>Lote</td>
-          <td>Efectos Adversos</td>
-          <td>Efectos Adversos no reportados</td>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Nombre de medicamento</td>
-          <td>Casa farmacéutica</td>
-          <td>Lote</td>
-          <td>Efectos Adversos</td>
-          <td>Efectos Adversos no Reportados</td>
-      </tr>
-  </tbody>
-</table>
+

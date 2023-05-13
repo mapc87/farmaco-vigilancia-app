@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
 import { paciente } from '../../interfaces/paciente';
 import { PacienteServiceService } from 'src/app/patients/services/paciente.service.service';
-import { RouterLink } from '@angular/router';
-import { ResourceLoader } from '@angular/compiler';
 import { PageEvent } from '@angular/material/paginator';
 import { BsModalService, ModalOptions, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalFormPacienteComponent } from '../../modals/modal-form-paciente/modal-form-paciente.component';
 import { combineLatest, Subscription  } from 'rxjs';
+import { DatosClinicosComponent } from '../datos-clinicos/datos-clinicos.component';
+import { datosClinicos } from '../../interfaces/datos-clinicos';
 
 @Component({
   selector: 'app-pacientes',
@@ -20,7 +20,6 @@ export class PacientesComponent implements OnInit {
   pageSize = 10;
   desde: number = 0; 
   hasta: number = 10;
-
 
   private paciente: paciente = {
     _id: '',
@@ -62,14 +61,9 @@ export class PacientesComponent implements OnInit {
 
   getPacientes(){
     this.srvPaciente.getPacientes.subscribe((result) =>{
-      this.pacientes = result; 
-      console.log(this.pacientes);
+      this.pacientes = result;
     });
   }  
-
-  agregarDatosClinicos(paciente: paciente){
-
-  }
 
   updateEstadoPaciente(){
     this.srvPaciente.updatePaciente(this.paciente._id).subscribe(result => {
@@ -114,10 +108,9 @@ export class PacientesComponent implements OnInit {
         }
         const _reason = reason ? `, dismissed by ${reason}` : '';
         this.getPacientes();
-        console.log("evento disparado")
         this.unsubscribe();
       })
-    );
+    );   
 
     const initialState: ModalOptions = {
       initialState: {
@@ -129,6 +122,46 @@ export class PacientesComponent implements OnInit {
       class: 'modal-xl'
     };
     this.modalRef = this.modalService.show(ModalFormPacienteComponent, initialState) ;
+    this.modalRef.content.closeBtnName='Close';      
+  }
+
+  abrirDatosClinicosModal(paciente: paciente){    
+    const _combine = combineLatest(
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string | any) => {
+        if (typeof reason !== 'string') {
+          reason = `onHide(), modalId is : ${reason.id}`;
+        }
+        const _reason = reason ? `, dismissed by ${reason}` : '';
+        this.getPacientes();
+        this.unsubscribe();
+      })
+    );   
+
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string | any) => {
+        if (typeof reason !== 'string') {
+          reason = `onHide(), modalId is : ${reason.id}`;
+        }
+        const _reason = reason ? `, dismissed by ${reason}` : '';
+        this.getPacientes();
+        this.unsubscribe();
+      })
+    );   
+
+    const initialState: ModalOptions = {
+      initialState: {
+        list: [
+          paciente
+        ],
+        title: 'Agregar Pacientes'
+      },
+      class: 'modal-xl'
+    };
+    this.modalRef = this.modalService.show(DatosClinicosComponent, initialState) ;
     this.modalRef.content.closeBtnName='Close';      
   }
 

@@ -8,7 +8,6 @@ import { paciente } from '../../interfaces/paciente';
 import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.service';
 import { EnfermedadServiceService } from 'src/app/admin/services/enfermedad.service.service';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { ModalFarmacosComponent } from '../../modals/modal-farmacos/modal-farmacos.component';
 import { ToastrService } from 'ngx-toastr';
 
 

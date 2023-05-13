@@ -1,5 +1,5 @@
-import { farmaco } from '../../admin/interfaces/farmaco.interface';
-import { datosClinicos } from './datos-clinicos';
+import { datosClinicos } from "./datos-clinicos";
+
 export interface paciente{
     _id?:any;
     nombre: string;
@@ -16,7 +16,8 @@ export interface paciente{
     nombreEncargado:string; 
     telefonoEncargado: string; 
     fechaIngreso: Date;
-    datosClinicos : datosClinicos [];
+    datosClinicos : datosClinicos[];
     estado: boolean;
     observaciones: string;    
 }
+

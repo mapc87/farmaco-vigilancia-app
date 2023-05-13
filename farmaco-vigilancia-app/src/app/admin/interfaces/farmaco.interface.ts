@@ -1,5 +1,3 @@
-import { efectosAdversos } from './efectos-adversos.interface';
-
 export interface farmaco{
     _id?: any,
     nombre: string, 
