@@ -1,3 +1,121 @@
-<div class="col-12 text-center">
-    <label class="title-registro fs-3" >Ficha Medica</label>
-</div>
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Ficha médica de paciente</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-md-12 mt-3 text-center fs-1 mt-2">
+       <label>{{paciente.nombre}}</label>
+    </div>  
+    <div class="mt-5 col-12">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-4">NO. REGISTRO</td>
+                    <td class="col-8">{{paciente.noRegistro}}</td>
+                </tr>  
+                <tr>
+                    <td>DPI</td>
+                    <td>{{paciente.dpi}}</td>
+                </tr>     
+                <tr>
+                    <td>ETNIA</td>
+                    <td>{{paciente.etnia}}</td>
+                </tr>  
+                <tr>
+                    <td>SEXO</td>
+                    <td>{{paciente.sexo}}</td>
+                </tr>  
+                <tr>
+                    <td>TELEFONO</td>
+                    <td>{{paciente.telefono}}</td>
+                </tr>  
+                <tr>
+                    <td>DIRECCIÓN</td>
+                    <td>{{paciente.direccion}}</td>
+                </tr> 
+                <tr>
+                    <td>DEPARTAMENTO DE RESIDENCIA</td>
+                    <td>{{paciente.deptoResidencia}}</td>
+                </tr>  
+                <tr>
+                    <td>MUNICIPIO DE RESIDENCIA</td>
+                    <td>{{paciente.municipioResidencia}}</td>
+                </tr>  
+                <tr>
+                    <td>DEPARTAMENTO DE NACIEMIENTO</td>
+                    <td>{{paciente.deptoNacimiento}}</td>
+                </tr>  
+                <tr>
+                    <td>MUNICIPIO DE NACIMIENTO</td>
+                    <td>{{paciente.municipioNacimiento}}</td>
+                </tr>                   
+                <tr>
+                    <td>NOMBRE DEL ENCARGADO</td>
+                    <td>{{paciente.nombreEncargado}}</td>
+                </tr>  
+                <tr>
+                    <td>TELÉF0NO DEL ENCARGADO</td>
+                    <td>{{paciente.telefonoEncargado}}</td>
+                </tr>              
+            </tbody>
+        </table>  
+        <div class="text-center fs-3 mt-3 mb-3">
+            <label>DATOS CLINICOS</label>
+        </div>
+        <table class="table table-bordered col-12">
+            <thead>
+                <tr class="text-center">
+                    <th class="col-1">NO.</th>
+                    <th class="col-1">DIAGNOSTICO</th>
+                    <th class="col-1">ESTADIO ENFERMEDAD</th>
+                    <th class="col-1">FECHA INGRESO UNIDAD</th>
+                    <th class="col-1">QUIMIOTERAPIA</th>
+                    <th class="col-7">FARMACOS</th>
+                </tr>      
+      
+            </thead>
+            <tbody class="tbody">
+                <tr *ngFor="let dc of this.paciente.datosClinicos, let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{dc.diagnostico}}</td>
+                    <td>{{dc.estadioEnfermedad}}</td>
+                    <td>{{dc.fecha}}</td>
+                    <td>{{dc.quimioterapia}}</td>   
+                    <td>
+                        <table class="table table-bordered table-striped ">
+                            <thead>
+                                <tr>
+                                    <th class="col-1">FARMACO</th>
+                                    <th class="col-2">OBSERVACIONES</th>
+                                    <th class="col-1">CASA FARMACEUTICA</th>
+                                    <th class="col-4">EFECTOS ADVERSOS</th>
+                                    <th class="col-4">EFECTOS ADVERSOS NO REPORTADOS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let f of dc.farmacosUtilizados">
+                                    <td>{{f.nombre}}</td>
+                                    <td>{{f.observaciones}}</td>
+                                    <td>{{f.casa}}</td>
+                                    <td>
+                                        <ul style="list-style-type: none; margin: 0; padding: 0;" >
+                                            <li *ngFor="let e of f.efectosAdversos">{{e}}</li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul style="list-style-type: none; margin: 0; padding: 0;" >
+                                            <li *ngFor="let e of f.efectosAdversosNoReportados"class="ml-0">{{e}}</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>       
+                    </td> 
+                </tr>      
+            </tbody>
+        </table>         
+    </div>       
+  </div>  
+  

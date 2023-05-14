@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center" *ngFor="let p of pacientes| slice:desde:hasta,, let i = index">
+            <tr class="text-center" *ngFor="let p of pacientes| slice:desde:hasta, let i = index">
                 <td>{{i+1}}</td>
                 <td>{{p.nombre}}</td>
                 <td>{{p.noRegistro}}</td>
@@ -26,7 +26,7 @@
                 <td>{{p.direccion}}</td>
                 <td>{{p.estado == true ? "Activo":"Inactivo"}}</td>
                 <td>
-                    <button type="button" class="btn btn-dark" data-toggle="tooltip"  data-placement="top" title="Ficha medica del paciente" ><i class="bi bi-person-vcard"></i></button>
+                    <button type="button" class="btn btn-dark" (click)="abrirfichaPacientesModal(p)"data-toggle="tooltip"  data-placement="top" title="Ficha medica del paciente" ><i class="bi bi-person-vcard"></i></button>
                     &nbsp;
                     <button type="button" class="btn btn-dark" (click)="actualizarPaciente(p)"><i class="bi bi-person-fill-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
                     &nbsp;  

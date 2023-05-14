@@ -65,18 +65,18 @@ export class DatosClinicosComponent implements OnInit  {
     farmacosUtilizados: []
   }
 
-
   ngOnInit(): void {
     this.getEnfermedades();
     this.estadioEnfermedad = estadioEnfermedad;
     this.quimioterapia = quimioterapia;   
     this.getFarmacos()
     this.paciente = this.list[0]; 
-    if(this.paciente.datosClinicos){
-      console.log("actualiacion");
-    }else{
-      console.log("nuevo")
-    }
+    
+    if(this.list[1]){
+      this.accion = "Actualizar";
+      this.datoClinico = this.list[1][0];
+      console.log(this.datoClinico);
+    }  
   }
 
   constructor(
@@ -86,6 +86,7 @@ export class DatosClinicosComponent implements OnInit  {
     private srvFarmacos: FarmacoServiceService,
     private toastr: ToastrService
   ){     
+    
   }
 
   getEnfermedades(){

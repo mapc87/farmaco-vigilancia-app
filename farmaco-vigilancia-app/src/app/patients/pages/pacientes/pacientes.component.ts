@@ -6,6 +6,7 @@ import { BsModalService, ModalOptions, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalFormPacienteComponent } from '../../modals/modal-form-paciente/modal-form-paciente.component';
 import { combineLatest, Subscription  } from 'rxjs';
 import { DatosClinicosComponent } from '../datos-clinicos/datos-clinicos.component';
+import { PacienteFichaMedicaComponent } from '../paciente-ficha-medica/paciente-ficha-medica.component';
 import { datosClinicos } from '../../interfaces/datos-clinicos';
 
 @Component({
@@ -36,10 +37,10 @@ export class PacientesComponent implements OnInit {
     telefono: '',
     nombreEncargado: '',
     telefonoEncargado: '',
-    datosClinicos: [],
     fechaIngreso: new Date(),
     estado: false,
-    observaciones: ''
+    observaciones: '',
+    datosClinicos: []
   }; 
 
   modalRef: any;
@@ -162,6 +163,46 @@ export class PacientesComponent implements OnInit {
       class: 'modal-xl'
     };
     this.modalRef = this.modalService.show(DatosClinicosComponent, initialState) ;
+    this.modalRef.content.closeBtnName='Close';      
+  }
+
+  abrirfichaPacientesModal(paciente: paciente){    
+    const _combine = combineLatest(
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string | any) => {
+        if (typeof reason !== 'string') {
+          reason = `onHide(), modalId is : ${reason.id}`;
+        }
+        const _reason = reason ? `, dismissed by ${reason}` : '';
+        this.getPacientes();
+        this.unsubscribe();
+      })
+    );   
+
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string | any) => {
+        if (typeof reason !== 'string') {
+          reason = `onHide(), modalId is : ${reason.id}`;
+        }
+        const _reason = reason ? `, dismissed by ${reason}` : '';
+        this.getPacientes();
+        this.unsubscribe();
+      })
+    );   
+
+    const initialState: ModalOptions = {
+      initialState: {
+        list: [
+          paciente
+        ],
+        title: 'Agregar Pacientes'
+      },
+      class: 'modal-xl'
+    };
+    this.modalRef = this.modalService.show(PacienteFichaMedicaComponent, initialState) ;
     this.modalRef.content.closeBtnName='Close';      
   }
 
