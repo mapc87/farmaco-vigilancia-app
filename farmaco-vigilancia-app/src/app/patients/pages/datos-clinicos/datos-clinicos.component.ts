@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { paciente } from '../../interfaces/paciente';
 import { datosClinicos } from '../../interfaces/datos-clinicos';
 import { PacienteServiceService } from '../../services/paciente.service.service';
 import { EnfermedadServiceService } from 'src/app/admin/services/enfermedad.service.service';
 import { enfermedad } from 'src/app/admin/interfaces/enfermedad.interface';
 import { estadioEnfermedad, quimioterapia } from 'src/app/constantes';
-import { BsModalRef} from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.service';
 import { farmaco } from 'src/app/admin/interfaces/farmaco.interface';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +18,9 @@ export class DatosClinicosComponent implements OnInit  {
 
   list: any[] = [];
   accion: string = "Agregar"; 
-  private paciente : paciente = {
+  actualizacion: boolean = false; 
+
+  paciente : paciente = {
     nombre: '',
     noRegistro: '',
     dpi: '',
@@ -43,6 +45,7 @@ export class DatosClinicosComponent implements OnInit  {
   quimioterapia: string [] = [];
   farmacos: farmaco [] = [];
   farmacosSeleccionados: farmaco[] = [];
+  datosClinicos: datosClinicos [] = [];
 
   
   farmaco: farmaco = {
@@ -62,7 +65,8 @@ export class DatosClinicosComponent implements OnInit  {
     quimioterapia: '',
     cicloNo: '',
     fecha: '',
-    farmacosUtilizados: []
+    farmacosUtilizados: [],
+    estado: false
   }
 
   ngOnInit(): void {
@@ -72,10 +76,8 @@ export class DatosClinicosComponent implements OnInit  {
     this.getFarmacos()
     this.paciente = this.list[0]; 
     
-    if(this.list[1]){
-      this.accion = "Actualizar";
-      this.datoClinico = this.list[1][0];
-      console.log(this.datoClinico);
+    if(this.list[0]){
+      console.log(this.list[0]);
     }  
   }
 
@@ -83,8 +85,10 @@ export class DatosClinicosComponent implements OnInit  {
     private srvPaciente : PacienteServiceService,
     private srvEnfermedad: EnfermedadServiceService,
     public modalRef: BsModalRef,
+    public modalRefConfirm: BsModalRef,
     private srvFarmacos: FarmacoServiceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: BsModalService
   ){     
     
   }
@@ -97,14 +101,24 @@ export class DatosClinicosComponent implements OnInit  {
 
   guardar(){   
     this.datoClinico.farmacosUtilizados = this.farmacosSeleccionados;
-    this.paciente.datosClinicos.push(this.datoClinico);
+    let mensaje:string  = "actualizado"
+
+    if(!this.actualizacion){
+      this.paciente.datosClinicos.push(this.datoClinico);
+      this.datoClinico.estado = true; 
+      mensaje = "guardado"
+    } 
+
     this.srvPaciente.updatePaciente(this.paciente).subscribe(
       result => {
-        this.toastr.success("Dato clinico guardado");
-        this.modalRef.hide();
+          this.toastr.success("Dato clinico " + mensaje); 
+          this.actualizacion = false;  
+          this.farmacosSeleccionados = [];
+          this.modalRef.hide();          
       }
     );
   }
+
 
   getFarmacos(){
     this.srvFarmacos.getFarmacos.subscribe(result => {
@@ -123,4 +137,55 @@ export class DatosClinicosComponent implements OnInit  {
      }
   }
 
+  actualizarDatosClinicos(dato:datosClinicos){
+     
+    this.farmacos.forEach(f => f.seleccionado = false);
+    this.actualizacion = true; 
+
+    this.datosClinicos = this.paciente.datosClinicos; 
+    this.farmacosSeleccionados = dato.farmacosUtilizados;
+    this.datoClinico = dato; 
+  
+    this.farmacos.forEach(f => {
+      if(this.farmacosSeleccionados[this.farmacosSeleccionados.findIndex(fs=> fs._id == f._id)]){
+        f.seleccionado = true;
+      }
+    });     
+  }
+
+  inactivarDatoClinico(index : number){
+    if(this.paciente.datosClinicos[index].estado){
+      this.paciente.datosClinicos[index].estado = false
+    }else{
+      this.paciente.datosClinicos[index].estado = true;
+    } 
+    this.actualizacion = true;  
+    this.guardar();
+  }
+
+  index :number = 0;
+
+  openModal(template: TemplateRef<any>, index: number) {
+    this.index = index;
+    this.modalRefConfirm = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {   
+    if(this.paciente.datosClinicos[this.index].estado){
+      this.paciente.datosClinicos[this.index].estado = false
+    }else{
+      this.paciente.datosClinicos[this.index].estado = true;
+    }
+ 
+    this.actualizacion = true;  
+    this.guardar();
+    this.index = 0;
+    this.modalRefConfirm?.hide(); 
+    this.modalRef?.hide();        
+  }
+
+  decline(): void {
+    this.modalRefConfirm?.hide();
+    this.modalRef?.hide();
+  }  
 }

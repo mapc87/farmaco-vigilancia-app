@@ -23,19 +23,19 @@
               <label  class="form-label">Diagnostico</label>
               <select 
                 class="form-select md-1" 
-                id="quimioterapia"
-                name="quimioterapia"
-                aria-label="Qumioterapias" 
+                id="diagnostico"
+                name="diagnostico"
+                aria-label="diagnostico" 
                 [(ngModel)]="datoClinico.diagnostico"
                 required>
-                  <option *ngFor="let q of enfermedades" [value]="q.nombre">{{q.nombre}}</option>
+                  <option *ngFor="let e of enfermedades" [value]="e.nombre">{{e.nombre}}</option>
               </select>               
             </div>
             <div class="mb-1 col-4">
-              <label class="form-label">Estadio enfermedad</label>
+              <label class="form-label" for="estadioEnfermedad">Estadio enfermedad</label>
               <select 
               class="form-select md-1" 
-              aria-label="Estadio-Enfermedad" 
+              aria-label="EstadioEnfermedad" 
               id="estadioEnfermedad"
               name="estadioEnfermedad"
               [(ngModel)]="datoClinico.estadioEnfermedad"
@@ -72,7 +72,7 @@
                   </div>   
                   <div class="row">
                     <div class="d-inline col-3" *ngFor="let farmaco of farmacos let i = index">  
-                        <input type="checkbox" class=" form-check-input"  (change)="agregar(farmaco, $event)"> 
+                        <input type="checkbox" class=" form-check-input" (change)="agregar(farmaco, $event)"  [checked]="farmaco.seleccionado"> 
                         <label class="form-check-label" >
                           &nbsp; {{i+1}} - {{farmaco.nombre}} &nbsp; 
                         </label>                                 
@@ -86,5 +86,51 @@
               </div>  
             </form>
           </div>  
+          <div class="col-12 text-center mt-5">
+            <h1 >Datos Clinicos Asociados al paciente</h1>
+          </div>         
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr class="text-center">
+                <th>Fecha Ingreso</th>
+                <th>Diagnostico</th>
+                <th>Estadio Efermedad</th>
+                <th>Quimioterapia</th>
+                <th>Ciclo No.</th>
+                <th>Farmacos</th>
+                <th>estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of paciente.datosClinicos, let i = index" class="text-center">
+                <td class="col-1">{{d.fecha}}</td>
+                <td class="col-2">{{d.diagnostico}}</td>
+                <td class="col-1">{{d.estadioEnfermedad}}</td>
+                <td class="col-1">{{d.quimioterapia}}</td>
+                <td class="col-1">{{d.cicloNo}}</td>                
+                <td class="col-3">
+                  <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-left">
+                    <li *ngFor="let d of d.farmacosUtilizados, let i = index">{{i+1}} - {{d.nombre}}</li>
+                  </ul>
+                </td>
+                <td class="col-1">{{d.estado == true ? "Activo": "Inactivo"}}</td>
+                <td class="col-2">
+                    <button type="button" class="btn btn-dark" data-toggle="tooltip" (click)="actualizarDatosClinicos(d)"  data-placement="top" title="actualizar" ><i class="bi bi-file-arrow-up" >                        
+                    </i></button>  
+                    &nbsp;                          
+                    <button type="button" class="btn btn-dark" (click)="openModal(template, i)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Activar/Inactivar"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 </div>  
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>¿Está seguro que desea activar/inactivar este dato clinico?</p>
+    <button type="button" class="btn btn-primary" (click)="confirm()" >Sí</button>
+    &nbsp;
+    <button type="button" class="btn btn-secondary" (click)="decline()" >No</button>
+  </div>
+</ng-template>
 
