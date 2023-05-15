@@ -215,6 +215,34 @@ export class PacientesComponent implements OnInit {
     this.subscriptions = [];
   }
 
+  exportExcel(): void{
+    const fileToExport = this.pacientes.map(item => {
+      return{ 
+        "_id" : item._id ,
+        "nombre" : item.nombre,
+        "NoRegistro": item.noRegistro,
+        "dpi": item.dpi,
+        "sexo": item.sexo,
+        "etnia": item.etnia,
+        "deptoNacimiento": item.deptoNacimiento,
+        "deptoResidencia": item.deptoResidencia,
+        "municipioNacimiento": item.municipioNacimiento,
+        "municipioResidencia": item.municipioResidencia,
+        "direccion": item.direccion,
+        "telefono": item.telefono,
+        "nombreEncargado": item.nombreEncargado,
+        "telefonoEncargado": item.telefonoEncargado,
+        "fechaIngreso": item.fechaIngreso,
+        "estado": item.estado,
+        "observaciones": item.observaciones,
+        "datosClinicos": item.datosClinicos
+      }      
+    });
+    this.excelService.exportToExcel(
+      fileToExport, `pacientes-${new Date().getTime()}.xlsx`
+    );
+  }
+
 
   
 }

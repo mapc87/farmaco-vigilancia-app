@@ -1,8 +1,13 @@
 <div class="col-12 text-center mt-3">
     <label class="title-registro fs-3">Pacientes</label>
 </div>
-<div class="col-12 text-rigth mt-3">
-    <button class="btn btn-primary" (click)="abrirFormPacientesModal()"> + Agregar paciente</button>
+<div class="row">
+<div class="col-6 text-rigth mt-3">
+    <button class="btn btn-primary" (click)="abrirFormPacientesModal()"><i class="bi bi-plus" data-toggle="tooltip"  data-placement="top" title="agrega un nuevo paciente"></i>Agregar paciente</button>
+</div>
+<div class="col-6 text-rigth mt-3 d-flex justify-content-end">  
+    <button class="btn btn-secondary" (click)="exportExcel()"><i class="bi bi-file-earmark-excel" data-toggle="tooltip"  data-placement="top" title="Descarga ficha de pacientes en excel"></i>Descargar</button>
+</div>
 </div>
 <div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
     <table class="table table-bordered table-striped table-hover" width="100%">

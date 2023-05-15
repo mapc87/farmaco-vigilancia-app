@@ -15,6 +15,6 @@ export class ExcelServiceService {
     const workbooK: XLSX.WorkBook = XLSX.utils.book_new();
 
     XLSX.utils.book_append_sheet(workbooK, ws, 'Pacientes');
-    XLSX.writeFile(workbooK, fileName+EXCEL_EXTENSION)
+    XLSX.writeFile(workbooK, `${fileName}${EXCEL_EXTENSION}`)
   }
 }
