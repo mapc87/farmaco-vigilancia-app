@@ -12,7 +12,7 @@
               <div class="mb-1 col-4">
               <label for="fechaIngresoUnidad" class="form-label">Fecha Ingreso</label>
               <input 
-                type="text" 
+                type="date" 
                 id="fechaIngresoUnidad" 
                 name="fechaIngresoUnidad"
                 class="form-control" 
@@ -71,8 +71,7 @@
                     id="observaciones" 
                     name="observaciones"
                     class="form-control" 
-                    [(ngModel)]="datoClinico.observaciones"
-                    required></textarea>
+                    [(ngModel)]="datoClinico.observaciones"></textarea>
                   </div>                            
               </div>    
               <div class="col-12 mt-3">
