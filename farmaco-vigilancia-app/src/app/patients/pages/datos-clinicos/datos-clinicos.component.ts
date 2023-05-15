@@ -37,7 +37,8 @@ export class DatosClinicosComponent implements OnInit  {
     fechaIngreso: new Date(),
     datosClinicos: [],
     estado: false,
-    observaciones: ''
+    observaciones: '',
+    fechaNacimiento: new Date()
   }
     
   enfermedades: enfermedad[] = [];

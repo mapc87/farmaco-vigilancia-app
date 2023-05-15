@@ -41,7 +41,8 @@ export class PacientesComponent implements OnInit {
     fechaIngreso: new Date(),
     estado: false,
     observaciones: '',
-    datosClinicos: []
+    datosClinicos: [],
+    fechaNacimiento: new Date()
   }; 
 
   modalRef: any;

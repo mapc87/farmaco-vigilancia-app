@@ -31,7 +31,8 @@ export class PacienteFichaMedicaComponent implements OnInit {
     fechaIngreso: new Date(),
     datosClinicos: [],
     estado: false,
-    observaciones: ''
+    observaciones: '',
+    fechaNacimiento: new Date()
   }
 
   list: any[] = []

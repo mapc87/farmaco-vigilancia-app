@@ -62,7 +62,18 @@
                     required >
                       <option *ngFor="let e of etnia" [value]="e">{{e}}</option>
                   </select>
-                </div>   
+                </div> 
+                <div class="mb-1 col-md-6 col-lg-3">
+                  <label for="edad" class="form-label">DPI</label>
+                  <input 
+                    type="date" 
+                    id="edad" 
+                    name="edad"
+                    #dpi
+                    class="form-control" 
+                    [(ngModel)]="paciente.fechaNacimiento" 
+                    required >
+                </div>       
                 <div class="mb-1 col-md-6 col-lg-3">
                   <label for="departamentoNacimiento" class="form-label">Departamento de nacimiento</label>
                   <select 

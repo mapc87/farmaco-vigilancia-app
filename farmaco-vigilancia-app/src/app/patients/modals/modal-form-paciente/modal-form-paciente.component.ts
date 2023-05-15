@@ -47,6 +47,7 @@ export class ModalFormPacienteComponent {
     fechaIngreso: new Date(),
     estado: true,
     observaciones: '',
+    fechaNacimiento: new Date()
   }
 
   municipiosNacimiento: string[] | undefined;
@@ -158,6 +159,7 @@ export class ModalFormPacienteComponent {
       fechaIngreso: new Date(),
       estado: true,
       observaciones: '',
+      fechaNacimiento: new Date(),
     }
     this.list[0]._id  = "";
   }

@@ -16,6 +16,7 @@ export interface paciente{
     nombreEncargado:string; 
     telefonoEncargado: string; 
     fechaIngreso: Date;
+    fechaNacimiento: Date;
     datosClinicos : datosClinicos[];
     estado: boolean;
     observaciones: string;    
