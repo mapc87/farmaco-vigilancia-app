@@ -9,14 +9,16 @@
         <div class="form-group row">   
             <div class="card col-6 ">              
                 <h3>Efectos reportados</h3>
-                <div *ngFor="let efectoR of efectosReportados, let i=index" class="mt-1">
-                    <input type="checkbox" (change)="onTextBoxChangeReportados(efectoR, $event)" [checked]="efectoR.seleccionado"> {{i+1}} - {{efectoR.efectoAdverso}}
+                <div *ngFor="let efectoR of efectosReportados, let i=index">                    
+                    <input type="checkbox" id="efectoAdversoR" (change)="onTextBoxChangeReportados(efectoR, $event)" [checked]="efectoR.seleccionado" *ngIf="efectoR.estado">
+                    <label for="efectoAdversoR" *ngIf="efectoR.estado">{{i+1}} - {{efectoR.efectoAdverso}}</label>                    
                 </div>
             </div>   
-            <div class="card col-6">  
+            <div class="card col-6"> 
                 <h3>Efectos no reportados</h3>
-                <div *ngFor="let efectoN of efectosNoReportados, let i=index" class="mt-1">                    
-                    <input type="checkbox" (change)="onTextBoxChangeNoReportados(efectoN, $event)" [checked]="efectoN.seleccionado"> {{i+1}} - {{efectoN.efectoAdverso}}
+                <div *ngFor="let efectoN of efectosNoReportados, let i=index">                    
+                    <input type="checkbox" id="efectoAdversoN" (change)="onTextBoxChangeNoReportados(efectoN, $event)" [checked]="efectoN.seleccionado" *ngIf="efectoN.estado" > 
+                    <label for="efectoAdversoN" *ngIf="efectoN.estado">{{i+1}} - {{efectoN.efectoAdverso}}</label>
                 </div>                
             </div>  
             <div class="mb-1 col-md-12 text-center  mt-2" (click)="guardar()">    

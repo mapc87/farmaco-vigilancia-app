@@ -83,7 +83,7 @@ export class ModalEfectosComponent implements OnInit {
     console.log(farmaco);
     this.srvFarmaco.updateFarmacos(farmaco).subscribe((result)=>{
       this.toastr.success("Efectos adversos actualizados");
-      console.log(farmaco);
+      this.modalRef.hide();
     });
   }
 
