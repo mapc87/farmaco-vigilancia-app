@@ -8,6 +8,7 @@ import { combineLatest, Subscription  } from 'rxjs';
 import { DatosClinicosComponent } from '../datos-clinicos/datos-clinicos.component';
 import { PacienteFichaMedicaComponent } from '../paciente-ficha-medica/paciente-ficha-medica.component';
 import { datosClinicos } from '../../interfaces/datos-clinicos';
+import { ExcelServiceService } from 'src/app/shared/services/excel-service.service';
 
 @Component({
   selector: 'app-pacientes',
@@ -49,7 +50,8 @@ export class PacientesComponent implements OnInit {
   constructor(
     private srvPaciente:  PacienteServiceService,
     private modalService: BsModalService, 
-    private changeDetection: ChangeDetectorRef) {   
+    private changeDetection: ChangeDetectorRef,
+    private excelService: ExcelServiceService) {   
   }
 
   ngOnInit(): void {
@@ -212,6 +214,7 @@ export class PacientesComponent implements OnInit {
     });
     this.subscriptions = [];
   }
+
 
   
 }

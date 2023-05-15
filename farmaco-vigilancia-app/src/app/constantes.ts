@@ -477,3 +477,193 @@ export const zonaGeograficaGuatemala =
                                                                     }    
                                                                 ]
                                             }; 
+
+export const agoritmoKarchLassagna = {
+    "items" : [
+        {   
+            "nombre": "SECUENCIA TEMPORAL",
+            "puntuacion": 0,
+            "categorias": [
+                {
+                    "nombre": "Compatible",
+                    "puntuacion": 2,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Compatible no coherenete",
+                    "puntuacion": 1,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "No hay información",
+                    "puntuacion": 0,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Imcompatible",
+                    "puntuacion": -1,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "RAM aparece tras la retirada del farmaco",
+                    "puntuacion": -2,
+                    "seleccionada": false
+                }
+            ]
+        },
+        {
+            "nombre": "PLAUSABILIDAD (CONOCIMIENTO PREVIO)",
+            "puntuacion": 0,
+            "categorias": [
+                {
+                    "nombre": "RAM bien conocida",
+                    "puntuacion": 2,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "RAM conocida en referencias ocacionales",
+                    "puntuacion": 1,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "RAM desconocida",
+                    "puntuacion": 0,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Existe información encontra de la relación",
+                    "puntuacion": -1,
+                    "seleccionada": false
+                }
+            ]
+        },
+        {
+            "nombre": "EFECTO DE LA RETIRADA DEL FÁRMACO",
+            "puntuacion": 0,
+            "categorias": [
+                {
+                    "nombre": "La RAM mejora",
+                    "puntuacion": 2,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "La RAM no mejora",
+                    "puntuacion": -2,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "No se retira el fármaco y la RAM no mejora",
+                    "puntuacion": 1,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "No se retira el fármaco y la RAM mejora",
+                    "puntuacion": -2,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "No hay información",
+                    "puntuacion": 0,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "RAM mortal o irreversible",
+                    "puntuacion": 0,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Sin retirar, RAM mejora por tolerancia",
+                    "puntuacion": 1,
+                    "seleccionada": false
+                }
+                ,
+                {
+                    "nombre": "Sin retirar, RAM mejora con el tratamiento",
+                    "puntuacion": 1,
+                    "seleccionada": false
+                }
+            ]
+        },
+        {
+            "nombre": "EFECTO DE LA RE EXPOSICIÓN",
+            "puntuacion": 0,
+            "categorias": [
+                {
+                    "nombre": "Positiva: Reaparece la RAM ",
+                    "puntuacion": 3,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Negativa: No aparece la RAM ",
+                    "puntuacion": -1,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Sin datos",
+                    "puntuacion": 0,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "RAM mortal o irreversible",
+                    "puntuacion": 0,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Reacción similar con otra especialidad farmacéutica",
+                    "puntuacion": 1,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Reacción similar con otro farmaco",
+                    "puntuacion": 1,
+                    "seleccionada": false
+                }
+            ]
+        },
+        {
+            "nombre": "CAUSAS ALTERNATIVAS",
+            "puntuacion": 0,
+            "categorias": [
+                {
+                    "nombre": "Explicación alternativa más verosímil",
+                    "puntuacion": -3,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Explicación alternativa menor o igual verosímil",
+                    "puntuacion": -1,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "No hay información para establecerla",
+                    "puntuacion": 0,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Hay información Suficiente para descartarla",
+                    "puntuacion": -1,
+                    "seleccionada": false
+                }           
+            ]
+        },
+        {
+            "nombre": "OTRAS",
+            "puntuacion": 0,
+            "categorias": [
+                {
+                    "nombre": "Factores contribuyentes que favorecen la relación de causalidad",
+                    "puntuacion": 1,
+                    "seleccionada": false
+                },
+                {
+                    "nombre": "Exploraciones complementarias ( niveles séricos de fármaco, biopsia, exploraciones radiológicas, pruebas",
+                    "puntuacion": 1,
+                    "seleccionada": false
+                }
+            ]
+        }
+    ],
+    "total": 0,
+    "analisis": ""
+}
+

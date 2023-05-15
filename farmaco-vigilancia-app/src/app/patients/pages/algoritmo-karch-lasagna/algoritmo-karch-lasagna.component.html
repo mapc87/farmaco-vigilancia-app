@@ -1,1 +1,51 @@
-<p>algoritmo-karch-lasagna works!</p>
+<div class="col-12 text-center mt-3">
+    <label class="title-registro fs-3">Algoritmo Karch & Lassagna</label>
+</div>
+<div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
+    <table class="table table-bordered table-striped table-hover" width="100%">
+        <thead class="thead-dark">
+            <tr class="text-center">
+                <th class="col-md-3">CATEGORIA</th>
+                <th class="col-md-9">EVALUACÍON</th>
+            </tr>
+        </thead>
+        <tbody>        
+            <tr *ngFor="let item of karchLassagna.items">
+                <td>{{item.nombre}}</td>                
+                <td>
+                    <table class="table">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="col-4">Categoria</th>
+                                <th class="col-5">Puntuación</th>
+                                <th class="col-3">Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let c of item.categorias">
+                                <td class="col-4">{{c.nombre}}</td>
+                                <td class="col-5 text-center">{{c.puntuacion}}</td>
+                                <td class="col-3 text-center" >
+                                    <input 
+                                        class="form-check-input" 
+                                        type="checkbox" 
+                                        [checked]="c.seleccionada"
+                                        (change)="agregarPuntuacion(item, c, $event)">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>TOTAL</td>
+                <td>{{karchLassagna.total}}</td>
+            </tr>
+            <tr>
+                <td>RESULTADO</td>
+                <td>{{karchLassagna.analisis}}</td>
+            </tr>
+        </tbody>
+    </table> 
+</div>
+
