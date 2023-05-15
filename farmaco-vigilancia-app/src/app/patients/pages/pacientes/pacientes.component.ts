@@ -245,10 +245,12 @@ export class PacientesComponent implements OnInit {
       p.datosClinicos.map(d => 
       {
         if(d){
-          let listadoFarmacos: string = "";
-          d.farmacosUtilizados.map((f, i) => {         
-            listadoFarmacos += `[${i+1} - ${f.nombre} - ${f.casa}]`
+
+          let listadoFarmacos: string[] = [];
+          d.farmacosUtilizados.map((f) => {         
+            listadoFarmacos.push(`${f.nombre} - ${f.casa}`);
           })
+
           datosClinicos.push({
             "id":p._id,
             "paciente": p.nombre,
@@ -257,7 +259,7 @@ export class PacientesComponent implements OnInit {
             "estadio enfermedad": d.estadioEnfermedad,
             "fecha ingreso": d.fechaIngresoUnidad,
             "quimioterapia": d.quimioterapia,
-            "farmacos": listadoFarmacos
+            "farmacos":listadoFarmacos.join(', ')
             })
           }
         }); 
@@ -269,16 +271,13 @@ export class PacientesComponent implements OnInit {
     {
       p.datosClinicos.forEach(d =>{
         d.farmacosUtilizados.forEach(f => {
-
-          let efectos = "";          
-          f.efectosAdversos.forEach(e => efectos+= `${[e]}`)
-
           farmacos.push({
             "id": p._id,
             "paciente": p.nombre,
             "ciclo": d.cicloNo,
             "farmaco": f.nombre,
-            "efectos": efectos
+            "efectos": f.efectosAdversos.join(', '),
+            "efectosNoReportados" : f.efectosAdversosNoReportados.join(', ')
           })
         })
       })
