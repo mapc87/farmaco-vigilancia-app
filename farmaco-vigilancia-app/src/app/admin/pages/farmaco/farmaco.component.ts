@@ -56,7 +56,12 @@ export class FarmacoComponent implements OnInit{
 
   getCasasFarmaceuticas(){
      this.srvCasaFarmaceutica.getCasasFarmaceuticas().subscribe(result => {
-      this.casasFarmaceuticas = result; 
+
+      result.forEach(r => {
+        if(r.estado){
+          this.casasFarmaceuticas.push(r)
+        }
+      });
      });
   }
 
