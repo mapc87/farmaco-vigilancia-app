@@ -9,6 +9,7 @@ import { DatosClinicosComponent } from '../datos-clinicos/datos-clinicos.compone
 import { PacienteFichaMedicaComponent } from '../paciente-ficha-medica/paciente-ficha-medica.component';
 import { datosClinicos } from '../../interfaces/datos-clinicos';
 import { ExcelServiceService } from 'src/app/shared/services/excel-service.service';
+import { Item } from '../../interfaces/karchLassagna';
 
 @Component({
   selector: 'app-pacientes',
@@ -215,8 +216,8 @@ export class PacientesComponent implements OnInit {
     this.subscriptions = [];
   }
 
-  exportExcel(): void{
-    const fileToExport = this.pacientes.map(item => {
+  async exportExcel(){
+    const pacientes = this.pacientes.map(item => {
       return{ 
         "_id" : item._id ,
         "nombre" : item.nombre,
@@ -233,18 +234,67 @@ export class PacientesComponent implements OnInit {
         "nombreEncargado": item.nombreEncargado,
         "telefonoEncargado": item.telefonoEncargado,
         "fechaIngreso": item.fechaIngreso,
-        "estado": item.estado,
-        "observaciones": item.observaciones,
-        "datosClinicos": item.datosClinicos
-      }      
-    });
+        "estado": item.estado ? 'Activo':'Inactivo',
+        "observaciones": item.observaciones               
+      }     
+    })
+
+    let datosClinicos:any[] = []; 
+
+    this.pacientes.forEach(p => {
+      p.datosClinicos.map(d => 
+      {
+        if(d){
+          let listadoFarmacos: string = "";
+          d.farmacosUtilizados.map((f, i) => {         
+            listadoFarmacos += `[${i+1} - ${f.nombre} - ${f.casa}]`
+          })
+          datosClinicos.push({
+            "id":p._id,
+            "paciente": p.nombre,
+            "diagnostico": d.diagnostico,
+            "Ciclo": d.cicloNo,
+            "estadio enfermedad": d.estadioEnfermedad,
+            "fecha ingreso": d.fechaIngresoUnidad,
+            "quimioterapia": d.quimioterapia,
+            "farmacos": listadoFarmacos
+            })
+          }
+        }); 
+    });   
+
+    let farmacos :any = [];
+    
+    this.pacientes.forEach(p=> 
+    {
+      p.datosClinicos.forEach(d =>{
+        d.farmacosUtilizados.forEach(f => {
+
+          let efectos = "";          
+          f.efectosAdversos.forEach(e => efectos+= `${[e]}`)
+
+          farmacos.push({
+            "id": p._id,
+            "paciente": p.nombre,
+            "ciclo": d.cicloNo,
+            "farmaco": f.nombre,
+            "efectos": efectos
+          })
+        })
+      })
+    });    
+
     this.excelService.exportToExcel(
-      fileToExport, `pacientes-${new Date().getTime()}.xlsx`
+      pacientes, 
+      datosClinicos,
+      farmacos,
+      `pacientes-${new Date().getTime()}`
     );
   }
 
 
-  
+
+
 }
 
 
