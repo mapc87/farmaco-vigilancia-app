@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { ModalFormUsuarioComponent } from '../../../components/modal-form-usuario/modal-form-usuario.component';
 import { UsuarioServiceService } from '../../services/usuario.service.service';
 import { PageEvent } from '@angular/material/paginator';
 import { usuario } from '../../interfaces/usuario.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-usuarios',
@@ -12,15 +12,16 @@ import { usuario } from '../../interfaces/usuario.interface';
 export class UsuariosComponent implements OnInit{
 
   modalRef?: BsModalRef;
+
+  @ViewChild('formularioUsuario') form: any; 
   
   usuarios: usuario[] = [];
 
   usuario: usuario = {
-    _id: '',
     nombre: '',
     usuario: '',
     password: '',
-    rol: 0,
+    rol: '',
     estado: false
   };
 
@@ -28,8 +29,10 @@ export class UsuariosComponent implements OnInit{
   desde: number = 0; 
   hasta: number = 10;
 
-  constructor (private modalService: BsModalService,
-    private srvUsuario: UsuarioServiceService){   
+  constructor (
+    private srvUsuario: UsuarioServiceService,
+    private modalService: BsModalService,
+    private toastr: ToastrService){   
   }
 
   ngOnInit(): void {
@@ -48,6 +51,47 @@ export class UsuariosComponent implements OnInit{
   }
 
   Guardar(){
+    if(this.usuario._id){
+      this.updateUsuario();
+    }else{
+      this.addUsuario();
+    }  
+  }
 
+  addUsuario(){
+    this.usuario.estado = true;
+    this.srvUsuario.addUsuario(this.usuario).subscribe(result => {
+      this.form.reset();
+      this.getUsuarios();
+      this.toastr.success("Usuario guardado");
+    });
+  }
+
+  updateUsuario(){
+    this.srvUsuario.updateUsuario(this.usuario).subscribe(result => {
+      this.form.reset();
+      this.getUsuarios();
+      this.toastr.success("Usuario Actualizado");
+    });
+  }
+
+  openModal(template: TemplateRef<any>, usuario: usuario) {
+    this.usuario = usuario;
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {   
+      this.usuario.estado = this.usuario.estado == true? false: true;
+      this.Guardar();
+      this.modalRef?.hide();   
+      this.getUsuarios();     
+  }
+ 
+  decline(): void {
+    this.modalRef?.hide();
+  }
+
+  actualizarUsuario(usuario: usuario){
+    this.usuario = usuario; 
   }
 }

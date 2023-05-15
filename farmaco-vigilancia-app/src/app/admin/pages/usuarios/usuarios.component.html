@@ -2,30 +2,30 @@
     <label class="title-registro fs-3">Administración de Usuarios</label>
 </div>
 <div class="form mt-3">
-    <form #formularioUsuario="ngForm" (ngSubmit)="Guardar()">        
+    <form #formularioUsuario="ngForm" (ngSubmit)="Guardar()">     
   
         <div class="form-group row">
             <div class="col-md-3">
-                <input 
-                    type="text"
-                    id="_id"
-                    name="_id"
-                    #_id
-                    [(ngModel)]="usuario._id"
-                    [hidden]="true"  
-                >
-                <label for="nombreEnfermedad" class="form-label">Nombre</label>
-                <input 
-                    type="text" 
-                    id="nombreEnfermedad"
-                    name="nombreEnfermedad"
-                    #nombreEnfermedad
-                    [(ngModel)]="usuario.nombre"  
-                    class="form-control"
-                    required>                 
+            <input 
+                type="text"
+                id="_id"
+                name="_id"
+                #_id
+                [(ngModel)]="usuario._id"
+                [hidden]="true"  
+            >
+            <label for="nombreEnfermedad" class="form-label">Nombre</label>
+            <input 
+                type="text" 
+                id="nombreEnfermedad"
+                name="nombreEnfermedad"
+                #nombreEnfermedad
+                [(ngModel)]="usuario.nombre"  
+                class="form-control"
+                required>                 
             </div>
             <div class="col-md-3">
-                <label for="usuario" class="form-label">Observaciones</label>
+                <label for="usuario" class="form-label">Usuario</label>
                 <input 
                     type="text" 
                     id="usuario" 
@@ -34,8 +34,8 @@
                     class="form-control" rows="3"
                     required>
             </div>
-            <div class="col-md-3">
-                <label for="password" class="form-label">Observaciones</label>
+            <div class="col-md-2">
+                <label for="password" class="form-label">Contraseña</label>
                 <input 
                     type="text" 
                     id="password" 
@@ -44,15 +44,20 @@
                     class="form-control" rows="3"
                     required>
             </div>
-            <div class="form-group col-md-12 mt-1">
+            <div class="col-md-2 mt-2">
                 <label for="tipoUsuario">Tipo Usuario</label>
-                <select id="tipoUsuario" class="form-control">
-                  <option value="1">Administrador</option>
-                  <option value="2" selected>Operador</option>
+                <select id="tipoUsuario" 
+                    class="form-control" 
+                    id="tipoUsuario"
+                    name="tipoUsuario"
+                    #tipoUsuario
+                    [(ngModel)]="usuario.rol">
+                  <option value="A">Administrador</option>
+                  <option value="O" selected>Operador</option>
                 </select>
             </div>    
-            <div class="col-md-2 text-center mt-4">    
-                <button class="btn btn-primary" [disabled]="formularioUsuario.invalid">Guardar</button>
+            <div class="col-md-2 mt-4">    
+                <button class="btn btn-primary" [disabled]="formularioUsuario.invalid" type="submit" >Guardar</button>
             </div>
        </div>
     </form>    
@@ -62,9 +67,11 @@
         <thead class="thead-dark">
             <tr class="text-center">
                 <th class="col-md-1">No.</th>
-                <th class="col-md-5">Nombre</th>
-                <th class="col-md-1">Usuario</th>
-                <th class="col-md-2">Rol</th>
+                <th class="col-md-3">Nombre</th>
+                <th class="col-md-2">Usuario</th>
+                <th class="col-md-1">Rol</th>
+                <th class="col-md-2">Contraseña</th>
+                <th class="col-md-1">Estado</th>
                 <th class="col-md-2">Acciones</th>
             </tr>
         </thead>
@@ -73,11 +80,13 @@
                 <td>{{i+1}}</td>
                 <td>{{usuario.nombre}}</td>
                 <td>{{usuario.usuario}}</td>
-                <td>{{usuario.rol}}</td>
+                <td>{{usuario.rol =="A"? "Administrador":"Operador"}}</td>
+                <td>{{usuario.password}}</td>
+                <td>{{usuario.estado}}</td>
                 <td>
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
+                    <button type="button" class="btn btn-dark" (click)="actualizarUsuario(usuario)"><i class="bi bi-file-arrow-up" data-toggle="tooltip"  data-placement="top" title="actualizar"></i></button>  
                     &nbsp;                          
-                    <button type="button" class="btn btn-dark"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
+                    <button type="button" class="btn btn-dark" (click)="openModal(template, usuario)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Inactivar"></i></button>
                 </td>
             </tr>        
         </tbody>
@@ -88,3 +97,11 @@
     (page)="cambiarpagina($event)">
     </mat-paginator>
 </div>
+
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>¿Está seguro que desea activar/inactivar  este farmaco?</p>
+      <button type="button" class="btn btn-primary" (click)="confirm()" >Sí</button>
+      <button type="button" class="btn btn-secondary" (click)="decline()" >No</button>
+    </div>
+  </ng-template>

@@ -30,7 +30,7 @@ export class UsuarioServiceService {
   }
 
   updateUsuario(usuario:usuario):Observable<usuario>{
-    return this.http.put<usuario>(this.url, usuario).pipe(
+    return this.http.put<usuario>(`${this.url}/${usuario._id}`, usuario).pipe(
       catchError(this.handleError)
     )
   }
