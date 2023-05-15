@@ -9,7 +9,6 @@ import { DatosClinicosComponent } from '../datos-clinicos/datos-clinicos.compone
 import { PacienteFichaMedicaComponent } from '../paciente-ficha-medica/paciente-ficha-medica.component';
 import { datosClinicos } from '../../interfaces/datos-clinicos';
 import { ExcelServiceService } from 'src/app/shared/services/excel-service.service';
-import { Item } from '../../interfaces/karchLassagna';
 
 @Component({
   selector: 'app-pacientes',
@@ -66,6 +65,7 @@ export class PacientesComponent implements OnInit {
   getPacientes(){
     this.srvPaciente.getPacientes.subscribe((result) =>{
       this.pacientes = result;
+      console.log(result);
     });
   }  
 

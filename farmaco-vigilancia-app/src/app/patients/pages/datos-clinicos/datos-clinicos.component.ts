@@ -66,7 +66,8 @@ export class DatosClinicosComponent implements OnInit  {
     cicloNo: '',
     fecha: '',
     farmacosUtilizados: [],
-    estado: false
+    estado: false,
+    observaciones: ''
   }
 
   ngOnInit(): void {

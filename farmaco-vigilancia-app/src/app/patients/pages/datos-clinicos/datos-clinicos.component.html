@@ -64,7 +64,16 @@
                   class="form-control" 
                   [(ngModel)]="datoClinico.cicloNo"
                   required>
-                </div>                           
+                </div>    
+                <div class="mb-1 col-12">
+                  <label for="noCiclo" class="form-label">Observaciones</label>
+                  <textarea 
+                    id="observaciones" 
+                    name="observaciones"
+                    class="form-control" 
+                    [(ngModel)]="datoClinico.observaciones"
+                    required></textarea>
+                  </div>                            
               </div>    
               <div class="col-12 mt-3">
                   <div class="text-center">

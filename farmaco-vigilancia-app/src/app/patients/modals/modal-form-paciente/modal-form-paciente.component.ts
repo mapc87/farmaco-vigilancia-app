@@ -83,7 +83,6 @@ export class ModalFormPacienteComponent {
       this.paciente = this.list[0];
       this.accion = "Actualizar"
     }
-     
   }
   
   ObtenerMunicipiosDeptoNacimiento(value: any){
@@ -92,7 +91,6 @@ export class ModalFormPacienteComponent {
   }
 
   ObtenerMunicipiosDeptoResedencia(value:any){
-    console.log(value);
     this.municipiosResidencia = this.informacionGeografica.obtenerMunicipios(this.paciente.deptoResidencia);
     this.paciente.municipioResidencia = this.municipiosResidencia != undefined ? this.municipiosResidencia[0]:"";
   } 
@@ -105,15 +103,17 @@ export class ModalFormPacienteComponent {
   }
 
   getEnfermedades(){
-    this.srvEnfermedad.getEnfermedades().subscribe(result => {
-      this.enfermedades = result;
-      console.log(result)
+      this.srvEnfermedad.getEnfermedades().subscribe(result => {      
+      result.forEach(e => {
+        if(e.estado){
+          this.enfermedades.push(e);
+        }
+      })
     });
   }
 
   getPaciente(id:string){
     this.srvPaciente.getPaciente(id).subscribe((result)=> { this.paciente = result})
-    console.log(this.paciente);
   }
 
   addPaciente(){

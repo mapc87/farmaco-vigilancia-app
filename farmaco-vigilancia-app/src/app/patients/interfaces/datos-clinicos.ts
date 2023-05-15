@@ -8,6 +8,7 @@ export interface datosClinicos {
     cicloNo: string; 
     fecha:string; 
     farmacosUtilizados: farmaco[];
-    estado: boolean
+    estado: boolean,
+    observaciones: string
 }
 
