@@ -97,7 +97,11 @@ export class DatosClinicosComponent implements OnInit  {
 
   getEnfermedades(){
     this.srvEnfermedad.getEnfermedades().subscribe(result => {
-      this.enfermedades = result;
+      result.forEach(r => {
+        if(r.estado){
+          this.enfermedades.push(r);
+        }       
+      })   
     });
   }
 
