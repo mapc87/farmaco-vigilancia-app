@@ -113,6 +113,7 @@ export class PacientesComponent implements OnInit {
         }
         const _reason = reason ? `, dismissed by ${reason}` : '';
         this.getPacientes();
+        this.clear();
         this.unsubscribe();
       })
     );   
@@ -142,17 +143,7 @@ export class PacientesComponent implements OnInit {
         }
         const _reason = reason ? `, dismissed by ${reason}` : '';
         this.getPacientes();
-        this.unsubscribe();
-      })
-    );   
-
-    this.subscriptions.push(
-      this.modalService.onHidden.subscribe((reason: string | any) => {
-        if (typeof reason !== 'string') {
-          reason = `onHide(), modalId is : ${reason.id}`;
-        }
-        const _reason = reason ? `, dismissed by ${reason}` : '';
-        this.getPacientes();
+        this.clear();
         this.unsubscribe();
       })
     );   
@@ -183,17 +174,7 @@ export class PacientesComponent implements OnInit {
         const _reason = reason ? `, dismissed by ${reason}` : '';
         this.getPacientes();
         this.unsubscribe();
-      })
-    );   
-
-    this.subscriptions.push(
-      this.modalService.onHidden.subscribe((reason: string | any) => {
-        if (typeof reason !== 'string') {
-          reason = `onHide(), modalId is : ${reason.id}`;
-        }
-        const _reason = reason ? `, dismissed by ${reason}` : '';
-        this.getPacientes();
-        this.unsubscribe();
+        this.clear();
       })
     );   
 
@@ -292,9 +273,29 @@ export class PacientesComponent implements OnInit {
     );
   }
 
-
-
-
+  clear(){
+    this.paciente = { nombre: "",
+      _id : null,
+      noRegistro: "",
+      dpi: "",
+      sexo: "M",
+      etnia: "Ladino",
+      deptoNacimiento: "Guatemala",
+      deptoResidencia: "Guatemala",
+      municipioNacimiento: "Guatemala",
+      municipioResidencia: "Guatemala",
+      direccion: "",
+      telefono: "",
+      nombreEncargado: "",
+      telefonoEncargado: "",
+      datosClinicos: [],
+      fechaIngreso: new Date(),
+      estado: true,
+      observaciones: '',
+      fechaNacimiento: new Date(),
+    }    
+  }
 }
+
 
 
