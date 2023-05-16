@@ -9,6 +9,17 @@
     <button class="btn btn-secondary" (click)="exportExcel()"><i class="bi bi-file-earmark-excel" data-toggle="tooltip"  data-placement="top" title="Descarga ficha de pacientes en excel"></i>Descargar</button>
 </div>
 </div>
+<div class="col-12 mt-3">
+    <label for="filtrarPaciente" class="form-label">Filtrar pacientes</label>
+    <input 
+        type="text" 
+        id="filtrarPaciente" 
+        name="filtrarPaciente"
+        #filtrarPaciente 
+        class="form-control"
+        [(ngModel)]="filterPaciente"
+        (keyup)="filtrarPacientes(filtrarPaciente.value)">
+</div>
 <div class="mt-3 bg-secondary.bg-gradient bg-opacity-10">
     <table class="table table-bordered table-striped table-hover" width="100%">
         <thead class="thead-dark">
@@ -23,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center" *ngFor="let p of pacientes| slice:desde:hasta, let i = index">
+            <tr class="text-center" *ngFor="let p of pacientesFiltrado  | slice:desde:hasta , let i = index ">
                 <td>{{i+1}}</td>
                 <td>{{p.nombre}}</td>
                 <td>{{p.noRegistro}}</td>
@@ -42,7 +53,7 @@
             </tr>        
         </tbody>
     </table>
-    <mat-paginator [length]="pacientes.length"
+    <mat-paginator [length]="pacientesFiltrado.length"
     [pageSize]="pageSize"
     [pageSizeOptions]="[5, 10, 25, 100]"
     (page)="cambiarpagina($event)">

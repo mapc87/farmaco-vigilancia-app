@@ -7,7 +7,6 @@ import { ModalFormPacienteComponent } from '../../modals/modal-form-paciente/mod
 import { combineLatest, Subscription  } from 'rxjs';
 import { DatosClinicosComponent } from '../datos-clinicos/datos-clinicos.component';
 import { PacienteFichaMedicaComponent } from '../paciente-ficha-medica/paciente-ficha-medica.component';
-import { datosClinicos } from '../../interfaces/datos-clinicos';
 import { ExcelServiceService } from 'src/app/shared/services/excel-service.service';
 
 @Component({
@@ -18,6 +17,8 @@ import { ExcelServiceService } from 'src/app/shared/services/excel-service.servi
 export class PacientesComponent implements OnInit {
   
   pacientes: paciente[] = [];
+  pacientesFiltrado: paciente[] = [];
+  filterPaciente:string =  '';
 
   pageSize = 10;
   desde: number = 0; 
@@ -66,6 +67,7 @@ export class PacientesComponent implements OnInit {
   getPacientes(){
     this.srvPaciente.getPacientes.subscribe((result) =>{
       this.pacientes = result;
+      this.pacientesFiltrado = result; 
       console.log(result);
     });
   }  
@@ -294,6 +296,19 @@ export class PacientesComponent implements OnInit {
       observaciones: '',
       fechaNacimiento: new Date(),
     }    
+  }
+
+  filtrarPacientes(busqueda: any){
+    this.pacientesFiltrado = [];
+
+    if(busqueda.length>0){ 
+      console.log("busquedad")    
+      this.pacientesFiltrado = this.pacientes.filter(p =>{
+        return p.nombre.toUpperCase().trim().includes(busqueda.toUpperCase().trim()) || p.noRegistro.toUpperCase().trim().includes(busqueda.toUpperCase().trim()) 
+      })
+    }else{
+      this.pacientesFiltrado = this.pacientes;
+    }   
   }
 }
 
