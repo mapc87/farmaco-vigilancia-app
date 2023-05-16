@@ -217,7 +217,7 @@ export class PacientesComponent implements OnInit {
         "telefono": item.telefono,
         "nombreEncargado": item.nombreEncargado,
         "telefonoEncargado": item.telefonoEncargado,
-        "fechaIngreso": item.fechaIngreso,
+        "fechaIngresoAlSistema": new Date(item.fechaIngreso),
         "estado": item.estado ? 'Activo':'Inactivo',
         "observaciones": item.observaciones               
       }     
@@ -241,7 +241,7 @@ export class PacientesComponent implements OnInit {
             "diagnostico": d.diagnostico,
             "Ciclo": d.cicloNo,
             "estadio enfermedad": d.estadioEnfermedad,
-            "fecha ingreso": d.fechaIngresoUnidad,
+            "fecha ingreso Unidad":d.fecha,
             "quimioterapia": d.quimioterapia,
             "farmacos":listadoFarmacos.join(', ')
             })
@@ -301,8 +301,7 @@ export class PacientesComponent implements OnInit {
   filtrarPacientes(busqueda: any){
     this.pacientesFiltrado = [];
 
-    if(busqueda.length>0){ 
-      console.log("busquedad")    
+    if(busqueda.length>0){    
       this.pacientesFiltrado = this.pacientes.filter(p =>{
         return p.nombre.toUpperCase().trim().includes(busqueda.toUpperCase().trim()) || p.noRegistro.toUpperCase().trim().includes(busqueda.toUpperCase().trim()) 
       })
