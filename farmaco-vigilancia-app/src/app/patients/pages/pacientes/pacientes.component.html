@@ -6,7 +6,7 @@
     <button class="btn btn-primary" (click)="abrirFormPacientesModal()"><i class="bi bi-plus" data-toggle="tooltip"  data-placement="top" title="agrega un nuevo paciente"></i>Agregar paciente</button>
 </div>
 <div class="col-6 text-rigth mt-3 d-flex justify-content-end">  
-    <button class="btn btn-success" (click)="exportExcel()"><i class="bi bi-file-earmark-excel" data-toggle="tooltip"  data-placement="top" title="Descarga ficha de pacientes en excel"></i>Descargar</button>
+    <button class="btn btn-success" (click)="exportExcel()" [disabled]="pacientes.length==0"><i class="bi bi-file-earmark-excel" data-toggle="tooltip"  data-placement="top" title="Descarga ficha de pacientes en excel"></i>Descargar</button>
 </div>
 </div>
 <div class="col-12 mt-3">
@@ -53,11 +53,13 @@
             </tr>        
         </tbody>
     </table>
-    <mat-paginator [length]="pacientesFiltrado.length"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    (page)="cambiarpagina($event)">
-</mat-paginator>
+    <div class="col-12 mb-5">
+        <mat-paginator [length]="pacientesFiltrado.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="cambiarpagina($event)">
+    </mat-paginator><br></div>
+    
 </div>
 <ng-template #template>
 <div class="modal-body text-center">

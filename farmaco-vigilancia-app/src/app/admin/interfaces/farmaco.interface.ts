@@ -1,3 +1,5 @@
+import { KarchLassagna } from "src/app/patients/interfaces/karchLassagna";
+
 export interface farmaco{
     _id?: any,
     nombre: string, 
@@ -8,4 +10,5 @@ export interface farmaco{
     estado: boolean,
     seleccionado?: boolean,
     lote?: string;
+    evaluacionKarchaLassagna?: KarchLassagna;
 }

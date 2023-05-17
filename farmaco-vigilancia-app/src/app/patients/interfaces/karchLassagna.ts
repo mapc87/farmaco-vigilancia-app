@@ -7,7 +7,8 @@ export interface KarchLassagna {
 export interface Item {
     nombre:     string;
     puntuacion: number;
-    categorias: Categoria[];
+    categorias?: Categoria[];
+    categoriaSeleccionada? : string; 
 }
 
 export interface Categoria {
@@ -15,3 +16,4 @@ export interface Categoria {
     puntuacion: number;
     seleccionada: boolean
 }
+

@@ -74,11 +74,15 @@
             </tr>        
         </tbody>
     </table>
-    <mat-paginator [length]="efectosAdversos.length"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              (page)="cambiarpagina($event)">
-    </mat-paginator>
+    <div class="col-12 mb-5">
+        <mat-paginator [length]="efectosAdversos.length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        (page)="cambiarpagina($event)">
+        </mat-paginator>
+        <br>
+    </div>
+   
 </div>
 <ng-template #template>
     <div class="modal-body text-center">

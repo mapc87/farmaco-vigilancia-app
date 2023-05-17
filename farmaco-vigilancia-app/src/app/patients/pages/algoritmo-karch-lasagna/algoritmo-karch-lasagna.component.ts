@@ -2,6 +2,9 @@ import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { agoritmoKarchLassagna } from 'src/app/constantes';
 import { Categoria, Item, KarchLassagna } from '../../interfaces/karchLassagna';
+import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.service';
+import { farmaco } from 'src/app/admin/interfaces/farmaco.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-algoritmo-karch-lasagna',
@@ -9,33 +12,55 @@ import { Categoria, Item, KarchLassagna } from '../../interfaces/karchLassagna';
 })
 export class AlgoritmoKarchLasagnaComponent implements OnInit {
 
+  idFarmaco:any = ""; 
+  farmacos: farmaco[] = [];  
+  total:number = 0;
+  algoritmoValido: boolean = false; 
+
   karchLassagna: KarchLassagna = {
     items: [],
     total: 0,
     analisis: ""
   };
 
-  total:number = 0;
+  farmaco: farmaco = {
+    nombre: '',
+    casa: '',
+    efectosAdversos: [],
+    efectosAdversosNoReportados: [],
+    observaciones: '',
+    estado: false
+  }
 
-  constructor(){   
-
+  constructor(
+      private srvFarmaco: FarmacoServiceService,
+      private toastr: ToastrService){   
   }
 
   ngOnInit(): void {
     this.karchLassagna = agoritmoKarchLassagna; 
-    console.log(this.karchLassagna);
+    this.getFarmacos();
+
   }
 
-  calcularAlgoritmo(){
-
+  getFarmacos(){
+    this.srvFarmaco.getFarmacos.subscribe(result => {
+      result.forEach(r => {
+        if(r.estado == true){
+          this.farmacos.push(r);
+        }
+      })
+      console.log(this.farmacos);
+    })
   }
 
   agregarPuntuacion(item: Item, categoria: Categoria, event: any){
-    item.categorias.forEach(c => c.seleccionada = false);
+    item.categorias?.forEach(c => c.seleccionada = false);
     categoria.seleccionada = true;   
     item.puntuacion = categoria.puntuacion; 
- 
-    this.calcularTotal();
+    item.categoriaSeleccionada = categoria.nombre;   
+    this.validarAlgoritmo();
+    this.calcularTotal();    
   }
 
   calcularTotal(){
@@ -43,9 +68,7 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
     this.karchLassagna.items.forEach(itemk => {
       this.karchLassagna.total += itemk.puntuacion;        
     });  
-    this.calcularResultado()
-
-    console.log(this.karchLassagna.total);
+    this.calcularResultado();
   }
 
   calcularResultado(){
@@ -77,5 +100,55 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
         }       
         break;        
     }
+  }
+
+  Guardar(){
+    if(this.algoritmoValido){
+      this.farmacos.forEach(f => {
+        if(f._id == this.idFarmaco){
+          this.farmaco = f;         
+          this.farmaco.evaluacionKarchaLassagna = structuredClone(this.karchLassagna);
+          this.farmaco.evaluacionKarchaLassagna?.items.forEach(element => {
+            delete element.categorias;
+          });
+        }
+      });
+      this.srvFarmaco.updateFarmacos(this.farmaco).subscribe(result=>{
+        console.log(this.farmaco);
+        if(result){
+          this.toastr.success("Algoritmo asociado al fármaco");
+          this.limpiarAlgoritmo();
+        } 
+      })
+    }else{
+      this.toastr.error("Es necesario seleccionar una categoría del agoritmo por cada sección");
+    }
+    
+  }
+
+  limpiarAlgoritmo(){
+    this.idFarmaco = "";
+    this.algoritmoValido = false; 
+    this.karchLassagna.total = 0; 
+    this.karchLassagna.analisis = "";
+    this.karchLassagna.items.forEach(i =>{
+      i.categoriaSeleccionada = "";
+      i.puntuacion = 0;
+      i.categorias?.forEach(c => {
+        c.seleccionada = false;
+      })
+    })
+  }  
+
+  validarAlgoritmo()
+  {  
+    this.algoritmoValido = true; 
+    this.karchLassagna.items.forEach(i => {
+      if(this.algoritmoValido){
+        if(!i.categoriaSeleccionada?.length){
+          this.algoritmoValido = false;       
+        }
+      }      
+    });
   }
 }
