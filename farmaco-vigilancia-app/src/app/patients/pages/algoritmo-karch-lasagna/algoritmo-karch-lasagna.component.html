@@ -4,9 +4,9 @@
 
 <div class="row mt-3">   
     <div class="col-md-6">
-        <select class="form-select" [(ngModel)]="idFarmaco" (change)="validarAlgoritmo()">
+        <select class="form-select" [(ngModel)]="idFarmaco" (change)="cargarFarmaco()">
             <option selected="selected" value="">Seleccione el fármaco a evaluar</option>
-            <option *ngFor="let f of farmacos" [value]="f._id">{{f.nombre}}</option>
+            <option *ngFor="let f of farmacos" [value]="f._id" >{{f.nombre}}</option>
         </select>     
     </div> 
     <br>   
@@ -60,12 +60,12 @@
                 </td>
             </tr>
             <tr>
-                <td>TOTAL</td>
-                <td>{{karchLassagna.total}}</td>
+                <td><label class="fw-bold">TOTAL</label></td>
+                <td><label class="fw-bold">{{karchLassagna.total}}</label></td>
             </tr>
             <tr>
-                <td>RESULTADO</td>
-                <td>{{karchLassagna.analisis}}</td>
+                <td><label class="fw-bold">RESULTADO</label></td>
+                <td><label class="fw-bold">{{karchLassagna.analisis}}</label></td>
             </tr>
         </tbody>
     </table> 

@@ -45,12 +45,12 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
 
   getFarmacos(){
     this.srvFarmaco.getFarmacos.subscribe(result => {
+      this.farmacos = [];
       result.forEach(r => {
         if(r.estado == true){
           this.farmacos.push(r);
         }
       })
-      console.log(this.farmacos);
     })
   }
 
@@ -103,31 +103,25 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
   }
 
   Guardar(){
-    if(this.algoritmoValido){
-      this.farmacos.forEach(f => {
-        if(f._id == this.idFarmaco){
-          this.farmaco = f;         
-          this.farmaco.evaluacionKarchaLassagna = structuredClone(this.karchLassagna);
-          this.farmaco.evaluacionKarchaLassagna?.items.forEach(element => {
-            delete element.categorias;
-          });
-        }
-      });
-      this.srvFarmaco.updateFarmacos(this.farmaco).subscribe(result=>{
-        console.log(this.farmaco);
-        if(result){
-          this.toastr.success("Algoritmo asociado al fármaco");
-          this.limpiarAlgoritmo();
-        } 
-      })
+    if(this.algoritmoValido){    
+      this.farmaco.evaluacionKarchaLassagna = structuredClone(this.karchLassagna);
+      this.farmaco.evaluacionKarchaLassagna?.items.forEach(element => {
+      delete element.categorias;          
+    });
+
+    this.srvFarmaco.updateFarmacos(this.farmaco).subscribe(result=>{
+      if(result){
+        this.toastr.success("Algoritmo Karch & Lassagna asociado al fármaco");
+        this.limpiarAlgoritmo();
+        this.getFarmacos();
+      } 
+    });
     }else{
-      this.toastr.error("Es necesario seleccionar una categoría del agoritmo por cada sección");
+      this.toastr.error("Es necesario seleccionar una categoría por cada sección del algoritmo Karch & Lassagna");
     }
-    
   }
 
   limpiarAlgoritmo(){
-    this.idFarmaco = "";
     this.algoritmoValido = false; 
     this.karchLassagna.total = 0; 
     this.karchLassagna.analisis = "";
@@ -150,5 +144,45 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
         }
       }      
     });
+  }
+
+  cargarAlgoritmoAnterior(){    
+    this.karchLassagna.analisis = this.farmaco.evaluacionKarchaLassagna?.analisis ?? "" 
+    this.karchLassagna.total = this.farmaco.evaluacionKarchaLassagna?.total ?? 0;
+
+    const arrayReportado = this.farmaco.evaluacionKarchaLassagna;      
+    this.karchLassagna.items.forEach(k => {
+      arrayReportado?.items.forEach(ar => {
+        if(k.nombre == ar.nombre){
+          k.puntuacion = ar.puntuacion;
+          k.categoriaSeleccionada = ar.categoriaSeleccionada; 
+          k.categorias?.forEach(c => {
+            if(c.nombre == ar.categoriaSeleccionada)
+            {
+              c.seleccionada = true; 
+            }
+          })
+        }
+      })
+    });
+  }
+
+  cargarFarmaco(){
+  
+    if(this.idFarmaco == ""){
+      this.limpiarAlgoritmo()
+    }else{
+      this.farmacos.forEach(f => {
+        if(f._id == this.idFarmaco){
+          this.farmaco = f; 
+          if(this.farmaco.evaluacionKarchaLassagna ){
+            this.toastr.info("Fármaco ya cuenta con un Algoritmo Karch & Lassagna")
+            this.cargarAlgoritmoAnterior()
+          }else{
+            this.limpiarAlgoritmo();
+          }    
+        }
+      });
+    }
   }
 }
