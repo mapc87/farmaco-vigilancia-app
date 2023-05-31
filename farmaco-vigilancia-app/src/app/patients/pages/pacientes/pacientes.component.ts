@@ -8,6 +8,7 @@ import { combineLatest, Subscription  } from 'rxjs';
 import { DatosClinicosComponent } from '../datos-clinicos/datos-clinicos.component';
 import { PacienteFichaMedicaComponent } from '../paciente-ficha-medica/paciente-ficha-medica.component';
 import { ExcelServiceService } from 'src/app/shared/services/excel-service.service';
+import { AlgoritmoKarchLasagnaComponent } from '../algoritmo-karch-lasagna/algoritmo-karch-lasagna.component';
 
 @Component({
   selector: 'app-pacientes',
@@ -190,6 +191,36 @@ export class PacientesComponent implements OnInit {
       class: 'modal-xl'
     };
     this.modalRef = this.modalService.show(PacienteFichaMedicaComponent, initialState) ;
+    this.modalRef.content.closeBtnName='Close';      
+  }
+
+  abrirAlgoritmoKarchLassagnaModal(paciente: paciente){    
+    const _combine = combineLatest(
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string | any) => {
+        if (typeof reason !== 'string') {
+          reason = `onHide(), modalId is : ${reason.id}`;
+        }
+        const _reason = reason ? `, dismissed by ${reason}` : '';
+        this.getPacientes();
+        this.clear();
+        this.unsubscribe();
+      })
+    );   
+
+    const initialState: ModalOptions = {
+      initialState: {
+        list: [
+          paciente
+        ],
+        title: 'Agregar Pacientes'
+      },
+      class: 'modal-xl'
+    };
+    this.modalRef = this.modalService.show(AlgoritmoKarchLasagnaComponent, initialState) ;
     this.modalRef.content.closeBtnName='Close';      
   }
 

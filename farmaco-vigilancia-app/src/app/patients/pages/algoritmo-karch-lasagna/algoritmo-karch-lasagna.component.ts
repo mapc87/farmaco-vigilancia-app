@@ -1,10 +1,11 @@
 import { Component, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { agoritmoKarchLassagna } from 'src/app/constantes';
 import { Categoria, Item, KarchLassagna } from '../../interfaces/karchLassagna';
-import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.service';
-import { farmaco } from 'src/app/admin/interfaces/farmaco.interface';
 import { ToastrService } from 'ngx-toastr';
+import { paciente } from '../../interfaces/paciente';
+import { PacienteServiceService } from '../../services/paciente.service.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-algoritmo-karch-lasagna',
@@ -12,8 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AlgoritmoKarchLasagnaComponent implements OnInit {
 
-  idFarmaco:any = ""; 
-  farmacos: farmaco[] = [];  
+  
+  list: any[] = [];  
   total:number = 0;
   algoritmoValido: boolean = false; 
 
@@ -23,36 +24,38 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
     analisis: ""
   };
 
-  farmaco: farmaco = {
+  paciente: paciente = {
     nombre: '',
-    casa: '',
-    efectosAdversos: [],
-    efectosAdversosNoReportados: [],
-    observaciones: '',
-    estado: false
+    noRegistro: '',
+    dpi: '',
+    sexo: '',
+    etnia: '',
+    deptoNacimiento: '',
+    deptoResidencia: '',
+    municipioNacimiento: '',
+    municipioResidencia: '',
+    direccion: '',
+    telefono: '',
+    nombreEncargado: '',
+    telefonoEncargado: '',
+    fechaIngreso: new Date,
+    fechaNacimiento: new Date,
+    datosClinicos: [],
+    estado: false,
+    observaciones: ''
   }
 
   constructor(
-      private srvFarmaco: FarmacoServiceService,
-      private toastr: ToastrService){   
+      private srvPaciente: PacienteServiceService,
+      private toastr: ToastrService,
+      public modalRef: BsModalRef){   
   }
 
   ngOnInit(): void {
     this.karchLassagna = agoritmoKarchLassagna; 
-    this.getFarmacos();
-
-  }
-
-  getFarmacos(){
-    this.srvFarmaco.getFarmacos.subscribe(result => {
-      this.farmacos = [];
-      result.forEach(r => {
-        if(r.estado == true){
-          this.farmacos.push(r);
-        }
-      })
-    })
-  }
+    this.paciente = this.list[0]; 
+    this.cargarAlgoritmoAsociado();
+  }  
 
   agregarPuntuacion(item: Item, categoria: Categoria, event: any){
     item.categorias?.forEach(c => c.seleccionada = false);
@@ -104,16 +107,15 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
 
   Guardar(){
     if(this.algoritmoValido){    
-      this.farmaco.evaluacionKarchaLassagna = structuredClone(this.karchLassagna);
-      this.farmaco.evaluacionKarchaLassagna?.items.forEach(element => {
+      this.paciente.evaluacionKarchaLassagna = structuredClone(this.karchLassagna);
+      this.paciente.evaluacionKarchaLassagna?.items.forEach(element => {
       delete element.categorias;          
     });
 
-    this.srvFarmaco.updateFarmacos(this.farmaco).subscribe(result=>{
+    this.srvPaciente.updatePaciente(this.paciente).subscribe(result=>{
       if(result){
-        this.toastr.success("Algoritmo Karch & Lassagna asociado al fármaco");
+        this.toastr.success("Algoritmo Karch & Lassagna asociado al paciente");
         this.limpiarAlgoritmo();
-        this.getFarmacos();
       } 
     });
     }else{
@@ -147,10 +149,10 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
   }
 
   cargarAlgoritmoAnterior(){    
-    this.karchLassagna.analisis = this.farmaco.evaluacionKarchaLassagna?.analisis ?? "" 
-    this.karchLassagna.total = this.farmaco.evaluacionKarchaLassagna?.total ?? 0;
+    this.karchLassagna.analisis = this.paciente.evaluacionKarchaLassagna?.analisis ?? "" 
+    this.karchLassagna.total = this.paciente.evaluacionKarchaLassagna?.total ?? 0;
 
-    const arrayReportado = this.farmaco.evaluacionKarchaLassagna;      
+    const arrayReportado = this.paciente.evaluacionKarchaLassagna;      
     this.karchLassagna.items.forEach(k => {
       arrayReportado?.items.forEach(ar => {
         if(k.nombre == ar.nombre){
@@ -167,22 +169,12 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
     });
   }
 
-  cargarFarmaco(){
-  
-    if(this.idFarmaco == ""){
-      this.limpiarAlgoritmo()
-    }else{
-      this.farmacos.forEach(f => {
-        if(f._id == this.idFarmaco){
-          this.farmaco = f; 
-          if(this.farmaco.evaluacionKarchaLassagna ){
-            this.toastr.info("Fármaco ya cuenta con un Algoritmo Karch & Lassagna")
-            this.cargarAlgoritmoAnterior()
-          }else{
-            this.limpiarAlgoritmo();
-          }    
-        }
-      });
-    }
-  }
+  cargarAlgoritmoAsociado(){ 
+      if(this.paciente.evaluacionKarchaLassagna ){
+        this.toastr.info("Paciente ya cuenta con una Algoritmo Karch & Lassagna")
+        this.cargarAlgoritmoAnterior()
+      }else{
+        this.limpiarAlgoritmo();
+      }   
+  }  
 }

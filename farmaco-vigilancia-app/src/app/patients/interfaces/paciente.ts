@@ -1,4 +1,5 @@
 import { datosClinicos } from "./datos-clinicos";
+import { KarchLassagna } from "./karchLassagna";
 
 export interface paciente{
     _id?:any;
@@ -19,6 +20,7 @@ export interface paciente{
     fechaNacimiento: Date;
     datosClinicos : datosClinicos[];
     estado: boolean;
-    observaciones: string;    
+    observaciones: string;
+    evaluacionKarchaLassagna?: KarchLassagna  
 }
 

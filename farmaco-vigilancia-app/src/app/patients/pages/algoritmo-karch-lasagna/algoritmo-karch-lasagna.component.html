@@ -1,78 +1,74 @@
-<div class="col-12 text-center mt-3">
-    <label class="title-registro fs-3">Algoritmo Karch & Lassagna</label>
-</div>
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Algoritmo Karch & Lassagna</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+<div class="modal-body">
+    <div class="row mt-3">   
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td class="col-md-6"><label class="fw-bold">TOTAL: {{karchLassagna.total}}</label></td>
+                        <td class="col-md-6"><label class="fw-bold"> ANALISIS: {{karchLassagna.analisis}}</label></td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>                
+    </div>
 
-<div class="row mt-3">   
-    <div class="col-md-6">
-        <select class="form-select" [(ngModel)]="idFarmaco" (change)="cargarFarmaco()">
-            <option selected="selected" value="">Seleccione el fármaco a evaluar</option>
-            <option *ngFor="let f of farmacos" [value]="f._id" >{{f.nombre}}</option>
-        </select>     
-    </div> 
-    <br>   
-    <div class="col-md-6">
-        <table class="table table-bordered">
-            <tbody>
+    <div class="mt-3 bg-secondary.bg-gradient bg-opacity-10 mb-5" style="height: 650px; overflow-y: scroll;">
+        <table class="table table-bordered table-striped table-hover mb-5" width="100%">
+            <thead class="thead-dark">
+                <tr class="text-center">
+                    <th class="col-md-3">CATEGORIA</th>
+                    <th class="col-md-9">EVALUACIÓN</th>
+                </tr>
+            </thead>
+            <tbody>        
+                <tr *ngFor="let item of karchLassagna.items">
+                    <td>{{item.nombre}}</td>                
+                    <td>
+                        <table class="table">
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="col-4">Categoría</th>
+                                    <th class="col-5">Puntuación</th>
+                                    <th class="col-3">Resultado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let c of item.categorias">
+                                    <td class="col-4">{{c.nombre}}</td>
+                                    <td class="col-5 text-center">{{c.puntuacion}}</td>
+                                    <td class="col-3 text-center" >
+                                        <input 
+                                            class="form-check-input" 
+                                            type="checkbox" 
+                                            [checked]="c.seleccionada"
+                                            (change)="agregarPuntuacion(item, c, $event)">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
                 <tr>
-                    <td class="col-md-6"><label class="fw-bold">TOTAL: {{karchLassagna.total}}</label></td>
-                    <td class="col-md-6"><label class="fw-bold"> ANALISIS: {{karchLassagna.analisis}}</label></td>
+                    <td><label class="fw-bold">TOTAL</label></td>
+                    <td><label class="fw-bold">{{karchLassagna.total}}</label></td>
+                </tr>
+                <tr>
+                    <td><label class="fw-bold">RESULTADO</label></td>
+                    <td><label class="fw-bold">{{karchLassagna.analisis}}</label></td>
                 </tr>
             </tbody>
-        </table>  
+        </table> 
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary" (click)="Guardar()">Guardar datos del algoritmo</button>
+        </div> 
+        <br>
+        
     </div>
-              
-</div>
-
-<div class="mt-3 bg-secondary.bg-gradient bg-opacity-10 mb-5" style="height: 650px; overflow-y: scroll;">
-    <table class="table table-bordered table-striped table-hover mb-5" width="100%">
-        <thead class="thead-dark">
-            <tr class="text-center">
-                <th class="col-md-3">CATEGORIA</th>
-                <th class="col-md-9">EVALUACIÓN</th>
-            </tr>
-        </thead>
-        <tbody>        
-            <tr *ngFor="let item of karchLassagna.items">
-                <td>{{item.nombre}}</td>                
-                <td>
-                    <table class="table">
-                        <thead>
-                            <tr class="text-center">
-                                <th class="col-4">Categoría</th>
-                                <th class="col-5">Puntuación</th>
-                                <th class="col-3">Resultado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let c of item.categorias">
-                                <td class="col-4">{{c.nombre}}</td>
-                                <td class="col-5 text-center">{{c.puntuacion}}</td>
-                                <td class="col-3 text-center" >
-                                    <input 
-                                        class="form-check-input" 
-                                        type="checkbox" 
-                                        [checked]="c.seleccionada"
-                                        (change)="agregarPuntuacion(item, c, $event)">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td><label class="fw-bold">TOTAL</label></td>
-                <td><label class="fw-bold">{{karchLassagna.total}}</label></td>
-            </tr>
-            <tr>
-                <td><label class="fw-bold">RESULTADO</label></td>
-                <td><label class="fw-bold">{{karchLassagna.analisis}}</label></td>
-            </tr>
-        </tbody>
-    </table> 
-    <div class="col-md-12 text-center">
-        <button class="btn btn-primary" (click)="Guardar()" [disabled]="idFarmaco.length == 0">Guardar datos del algoritmo</button>
-    </div> 
-    <br>
-      
 </div>
 
