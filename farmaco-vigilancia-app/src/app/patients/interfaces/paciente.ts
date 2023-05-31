@@ -21,6 +21,6 @@ export interface paciente{
     datosClinicos : datosClinicos[];
     estado: boolean;
     observaciones: string;
-    evaluacionKarchaLassagna?: KarchLassagna  
+    evaluacionKarchLassagna?: KarchLassagna  
 }
 

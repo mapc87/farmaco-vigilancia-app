@@ -54,6 +54,7 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
   ngOnInit(): void {
     this.karchLassagna = agoritmoKarchLassagna; 
     this.paciente = this.list[0]; 
+    console.log(this.paciente);
     this.cargarAlgoritmoAsociado();
   }  
 
@@ -107,8 +108,8 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
 
   Guardar(){
     if(this.algoritmoValido){    
-      this.paciente.evaluacionKarchaLassagna = structuredClone(this.karchLassagna);
-      this.paciente.evaluacionKarchaLassagna?.items.forEach(element => {
+      this.paciente.evaluacionKarchLassagna = structuredClone(this.karchLassagna);
+      this.paciente.evaluacionKarchLassagna?.items.forEach(element => {
       delete element.categorias;          
     });
 
@@ -149,10 +150,10 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
   }
 
   cargarAlgoritmoAnterior(){    
-    this.karchLassagna.analisis = this.paciente.evaluacionKarchaLassagna?.analisis ?? "" 
-    this.karchLassagna.total = this.paciente.evaluacionKarchaLassagna?.total ?? 0;
+    this.karchLassagna.analisis = this.paciente.evaluacionKarchLassagna?.analisis ?? "" 
+    this.karchLassagna.total = this.paciente.evaluacionKarchLassagna?.total ?? 0;
 
-    const arrayReportado = this.paciente.evaluacionKarchaLassagna;      
+    const arrayReportado = this.paciente.evaluacionKarchLassagna;      
     this.karchLassagna.items.forEach(k => {
       arrayReportado?.items.forEach(ar => {
         if(k.nombre == ar.nombre){
@@ -170,7 +171,7 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
   }
 
   cargarAlgoritmoAsociado(){ 
-      if(this.paciente.evaluacionKarchaLassagna ){
+      if(this.paciente.evaluacionKarchLassagna ){
         this.toastr.info("Paciente ya cuenta con una Algoritmo Karch & Lassagna")
         this.cargarAlgoritmoAnterior()
       }else{
