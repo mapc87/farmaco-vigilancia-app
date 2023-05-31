@@ -116,7 +116,7 @@ export class AlgoritmoKarchLasagnaComponent implements OnInit {
     this.srvPaciente.updatePaciente(this.paciente).subscribe(result=>{
       if(result){
         this.toastr.success("Algoritmo Karch & Lassagna asociado al paciente");
-        this.limpiarAlgoritmo();
+        this.modalRef.hide();
       } 
     });
     }else{

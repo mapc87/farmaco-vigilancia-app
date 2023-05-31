@@ -69,7 +69,6 @@ export class PacientesComponent implements OnInit {
     this.srvPaciente.getPacientes.subscribe((result) =>{
       this.pacientes = result;
       this.pacientesFiltrado = result; 
-      console.log(result);
     });
   }  
 
