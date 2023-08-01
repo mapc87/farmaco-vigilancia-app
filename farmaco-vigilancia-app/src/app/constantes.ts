@@ -3,7 +3,7 @@
 //export const urlBackend = 'https://farmaco-vigilancia-app-backend-production-3f9b.up.railway.app/api/'
 
 
-export const urlBackend = 'https://farmacovigilanciabackendservice.onrender.com'
+export const urlBackend = 'https://farmacovigilanciabackendservice.onrender.com/api/'
 
 export const genero = ['M','F'];
 
