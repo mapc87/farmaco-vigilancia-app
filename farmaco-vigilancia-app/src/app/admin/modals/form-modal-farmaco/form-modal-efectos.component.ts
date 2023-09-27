@@ -7,6 +7,7 @@ import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.se
 import { efectosAdversos } from '../../interfaces/efectos-adversos.interface';
 import { EfectosAdversosServiceService } from '../../services/efectos-adversos.service.service';
 import { ToastrService } from 'ngx-toastr';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 @Component({
   selector: 'modal-efectos',
@@ -52,22 +53,38 @@ export class ModalEfectosComponent implements OnInit {
 
   getEfectosAdversos(){
      this.srvEfectosAdversos.getEfectosAdversos.subscribe(result=>{     
-     
-      this.efectosSeleccionados = this.farmaco.efectosAdversos;   
+ 
+      this.efectosSeleccionados = this.farmaco.efectosAdversos.map(e => e); 
+      this.efectos = result.map(e => {     
+        
+        let efectoSeleccionado = this.efectosSeleccionados.filter( es => es._id == e._id)
 
-      this.efectos = result.map(e => {        
-        if(this.efectosSeleccionados[this.efectosSeleccionados.indexOf(e)]){ 
-          e.seleccionado  = true; 
+        if(efectoSeleccionado.length > 0 ){ 
+          e.seleccionado = true;         
+          e.reportado = efectoSeleccionado[0].reportado;
         }else{
-          e.seleccionado = false; 
-        }        
+          e.seleccionado = false;
+        }    
         return e;
       });         
      });         
   }
 
+  updateEstadoReportadoEfecto(efecto:efectosAdversos){
+    this.efectosSeleccionados.forEach((es, index) => {
+      if(es._id == efecto._id){
+        this.efectosSeleccionados[index].reportado = efecto.reportado;
+      }
+    });
+  }
+
   updateFarmaco(farmaco: farmaco){
-    console.log(farmaco);
+    this.efectosSeleccionados.forEach(es =>{
+      if(es.seleccionado != undefined) {
+        es.seleccionado = false
+      }    
+    });
+    this.farmaco.efectosAdversos = this.efectosSeleccionados;
     this.srvFarmaco.updateFarmacos(farmaco).subscribe((result)=>{
       this.toastr.success("Efectos adversos actualizados");
       this.modalRef.hide();
@@ -76,12 +93,20 @@ export class ModalEfectosComponent implements OnInit {
 
   onTextBoxChangeReportados(efecto :efectosAdversos, event: any){
     let accion = event.target.checked
+    
     if(accion){
       this.efectosSeleccionados.push(efecto);
-    }else{
-      this.efectosSeleccionados.splice(this.efectosSeleccionados.indexOf(efecto),1);
+      efecto.seleccionado = true;
+    }else
+    { 
+      this.efectosSeleccionados.map((e, index) => {
+        if(e._id == efecto._id){
+          this.efectosSeleccionados.splice(index, 1);
+          return true;
+        }    
+        return false;    
+      })
+      efecto.seleccionado = false;
     } 
   }
-
-
 }

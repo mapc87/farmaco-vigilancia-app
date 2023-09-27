@@ -23,8 +23,8 @@
                             <label for="efectoAdversoR" *ngIf="efecto.estado"> &nbsp;{{ efecto.efectoAdverso}}</label>    
                         </div>                
                         <div class="col-4">                            
-                            <select class="form-select" name="reportado" id="reportado" [(ngModel)]="efecto.reportado">
-                            <option [ngValue]="true" selected>SI</option>
+                            <select class="form-select" name="reportado" id="reportado" [(ngModel)]="efecto.reportado" [disabled]="!efecto.seleccionado" (ngModelChange)="updateEstadoReportadoEfecto(efecto)">
+                            <option [ngValue]="true" [selected]="true">SI</option>
                             <option [ngValue]="false">NO</option>
                         </select> </div>
                     </div>            

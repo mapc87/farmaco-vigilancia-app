@@ -10,6 +10,7 @@ import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.se
 import { farmaco } from 'src/app/admin/interfaces/farmaco.interface';
 import { ToastrService } from 'ngx-toastr';
 import { efectosAdversos } from 'src/app/admin/interfaces/efectos-adversos.interface';
+import { FarmacoComponent } from '../../../admin/pages/farmaco/farmaco.component';
 
 @Component({
   selector: 'app-datos-clinicos',
@@ -17,9 +18,18 @@ import { efectosAdversos } from 'src/app/admin/interfaces/efectos-adversos.inter
 })
 export class DatosClinicosComponent implements OnInit  {
 
-  list: any[] = [];
+  
   accion: string = "Agregar"; 
-  actualizacion: boolean = false; 
+  actualizacion: boolean = false;    
+  list: any[] = []; 
+  enfermedades: enfermedad[] = [];
+  estadioEnfermedad : string [] = [];
+  quimioterapia: string [] = [];
+  farmacos: farmaco [] = [];
+  farmacosSeleccionados: farmaco[] = [];
+  datosClinicos: datosClinicos [] = [];
+  efectosAdversos: efectosAdversos [] = [];
+  efectosAdversosSeleccionados: efectosAdversos [] = [];
 
   paciente : paciente = {
     nombre: '',
@@ -36,20 +46,11 @@ export class DatosClinicosComponent implements OnInit  {
     nombreEncargado: '',
     telefonoEncargado: '',
     fechaIngreso: new Date(),
-    datosClinicos: [],
+    datosClinicos: this.datosClinicos,
     estado: false,
     observaciones: '',
     fechaNacimiento: new Date()
   }
-    
-  enfermedades: enfermedad[] = [];
-  estadioEnfermedad : string [] = [];
-  quimioterapia: string [] = [];
-  farmacos: farmaco [] = [];
-  farmacosSeleccionados: farmaco[] = [];
-  datosClinicos: datosClinicos [] = [];
-
-  efectosAdversos: efectosAdversos [] = [];
   
   farmaco: farmaco = {
     nombre: '',
@@ -98,7 +99,8 @@ export class DatosClinicosComponent implements OnInit  {
     
     if(this.list[0]){
       console.log(this.list[0]);
-    }  
+    } 
+   
   }
 
   constructor(
@@ -150,46 +152,57 @@ export class DatosClinicosComponent implements OnInit  {
     })
   } 
   
-  agregarEfecto(efecto:efectosAdversos, tipoEfecto:boolean, event : any){   
+  agregarEfecto(efecto:efectosAdversos, event : any){  
 
-    this.efecto = efecto; 
+    let accion = event.target.checked;
 
-    this.efecto.seleccionado == true ? false : true; 
-
-    console.log(this.efecto)
-
-    if(efecto.seleccionado){
-      console.log(efecto.seleccionado)
     
-      if(tipoEfecto){
-        this.efectosAdversos.push(efecto);
-      }
+    console.log(efecto)
+    if(accion)
+    {
+      this.efectosAdversosSeleccionados.push(efecto);
     }else{
-
+      this.efectosAdversosSeleccionados.forEach((e, index )=> {        
+        if(e._id == efecto._id){
+          this.efectosAdversosSeleccionados.splice(index, 1);
+        }
+      });      
     }
-
-  
-
-
-    
   }
 
-  agregarFarmaco({...farmaco}:farmaco, event : any){
-    this.farmaco = farmaco; 
-    this.farmacoSeleccionado = farmaco;
-    this.farmaco.seleccionado = this.farmaco.seleccionado == true ? false: true;
-    this.farmacoSeleccionado.seleccionado = this.farmaco.seleccionado == true ? false: true; 
+  agregarFarmaco(){
 
+    this.farmacoSeleccionado.efectosAdversos = this.efectosAdversosSeleccionados;
+  
+    if(this.farmacosSeleccionados.findIndex(f => f._id == this.farmacoSeleccionado._id) == -1){
+      this.farmacosSeleccionados.push(this.farmacoSeleccionado);
+      this.limpiarEfectosAdversos();
+    }else{              
+      this.toastr.error("Fármaco ya se encuentra asociado al paciente");
+    }
+    
+  }
+ 
+  limpiarEfectosAdversos(){
+    this.efectosAdversosSeleccionados = [];
+    this.efectosAdversos = [];
+    this.farmaco = {
+      nombre: '',
+      casa: '',
+      efectosAdversos: [],
+      observaciones: '',
+      estado: false,
+      seleccionado: false
+    }
+  }
 
-    console.log(this.farmacoSeleccionado);
+  removerFarmaco(farmaco:farmaco){
+    this.farmacosSeleccionados.splice(this.farmacosSeleccionados.findIndex(fs => fs._id == farmaco._id),1);   
+  }
 
-     if(this.farmaco.seleccionado){
-       this.farmacosSeleccionados.push(farmaco);
-     }else{
-      this.farmacosSeleccionados.splice(this.farmacosSeleccionados.findIndex(f => f._id == this.farmaco._id),1);
-     }
-
-
+  modificarEfectosAdversos(farmaco: farmaco){
+    this.farmaco = farmaco;
+    this.farmaco.efectosAdversos = this.efectosAdversos; 
   }
 
   actualizarDatosClinicos(dato:datosClinicos){
@@ -220,7 +233,7 @@ export class DatosClinicosComponent implements OnInit  {
 
   mostrarEfectosAdversos(farmaco:farmaco){
     this.efectosAdversos = farmaco.efectosAdversos; 
-    console.log(farmaco);
+    this.farmacoSeleccionado = farmaco; 
   }
 
   index :number = 0;
