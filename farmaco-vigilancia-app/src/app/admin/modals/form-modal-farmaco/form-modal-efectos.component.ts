@@ -20,15 +20,13 @@ export class ModalEfectosComponent implements OnInit {
     nombre: '',
     casa: '',
     efectosAdversos: [],
-    efectosAdversosNoReportados: [],
     observaciones: '',
     estado: false
   }
+ 
+  efectos: efectosAdversos[] = [];
+  efectosSeleccionados: efectosAdversos[] = [];
 
-  efectosReportados : efectosAdversos[] = [];
-  efectosNoReportados : efectosAdversos[] = [];
-  efectosReportadosSeleccionados: string[] = [];
-  efectosNoReportadosSeleccionados: string[] = [];
   tipoEfecto: string = "";
   list: any[] = [];
 
@@ -43,7 +41,7 @@ export class ModalEfectosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEfectosAdversos();
-    this.farmaco = this.list[0];   
+    this.farmaco = this.list[0]; 
   }
   
   titulo = "Registro de Efectos Adversos";
@@ -55,28 +53,17 @@ export class ModalEfectosComponent implements OnInit {
   getEfectosAdversos(){
      this.srvEfectosAdversos.getEfectosAdversos.subscribe(result=>{     
      
-      this.efectosReportadosSeleccionados = this.farmaco.efectosAdversos;   
-      this.efectosReportados = result.map(e => {        
-        if(this.efectosReportadosSeleccionados[this.efectosReportadosSeleccionados.indexOf(e.efectoAdverso)]){ 
+      this.efectosSeleccionados = this.farmaco.efectosAdversos;   
+
+      this.efectos = result.map(e => {        
+        if(this.efectosSeleccionados[this.efectosSeleccionados.indexOf(e)]){ 
           e.seleccionado  = true; 
         }else{
           e.seleccionado = false; 
         }        
         return e;
       });         
-     });    
-
-     this.srvEfectosAdversos.getEfectosAdversos.subscribe(result=>{ 
-      this.efectosNoReportadosSeleccionados = this.farmaco.efectosAdversosNoReportados;    
-      this.efectosNoReportados = result.map(e => {        
-        if(this.efectosNoReportadosSeleccionados[this.efectosNoReportadosSeleccionados.indexOf(e.efectoAdverso)]){  
-          e.seleccionado = true; 
-        }else{
-          e.seleccionado = false; 
-        }        
-        return e
-      })         
-     });  
+     });         
   }
 
   updateFarmaco(farmaco: farmaco){
@@ -90,18 +77,11 @@ export class ModalEfectosComponent implements OnInit {
   onTextBoxChangeReportados(efecto :efectosAdversos, event: any){
     let accion = event.target.checked
     if(accion){
-      this.efectosReportadosSeleccionados.push(efecto.efectoAdverso);
+      this.efectosSeleccionados.push(efecto);
     }else{
-      this.efectosReportadosSeleccionados.splice(this.efectosReportadosSeleccionados.indexOf(efecto.efectoAdverso),1);
+      this.efectosSeleccionados.splice(this.efectosSeleccionados.indexOf(efecto),1);
     } 
   }
 
-  onTextBoxChangeNoReportados(efecto :efectosAdversos, event: any){
-    let accion = event.target.checked
-      if(accion){
-        this.efectosNoReportadosSeleccionados.push(efecto.efectoAdverso);
-      }else{
-        this.efectosNoReportadosSeleccionados.splice(this.efectosNoReportadosSeleccionados.indexOf(efecto.efectoAdverso),1);
-      }    
-  }
+
 }

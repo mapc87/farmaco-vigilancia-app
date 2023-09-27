@@ -290,8 +290,7 @@ export class PacientesComponent implements OnInit {
             "paciente": p.nombre,
             "ciclo": d.cicloNo,
             "farmaco": f.nombre,
-            "efectos": f.efectosAdversos.join(', '),
-            "efectosNoReportados" : f.efectosAdversosNoReportados.join(', ')
+            "efectos": f.efectosAdversos.join(', ')
           })
         })
       })

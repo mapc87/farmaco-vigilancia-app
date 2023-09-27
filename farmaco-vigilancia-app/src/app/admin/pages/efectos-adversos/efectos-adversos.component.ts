@@ -18,7 +18,9 @@ export class EfectosAdversosComponent implements OnInit {
   efectoAdverso: efectosAdversos = {
     efectoAdverso: '',
     observaciones: '',
-    estado: false
+    estado: false,
+    seleccionado: false,
+    reportado: false
   }
 
   pageSize = 10;

@@ -24,7 +24,6 @@ export class FarmacoComponent implements OnInit{
     observaciones: '',
     casa:'',
     efectosAdversos: [],
-    efectosAdversosNoReportados: [],
     estado: false
   }
 
@@ -132,8 +131,6 @@ export class FarmacoComponent implements OnInit{
   }
 
   limpiarFormulario(){
-    this.form.reset();
-    this.farmaco.efectosAdversosNoReportados = [];
-    this.farmaco.efectosAdversos = [];
+    this.form.reset();    
   }
 }

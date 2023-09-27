@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import { FarmacoServiceService } from 'src/app/admin/services/farmaco.service.service';
 import { farmaco } from 'src/app/admin/interfaces/farmaco.interface';
 import { ToastrService } from 'ngx-toastr';
+import { efectosAdversos } from 'src/app/admin/interfaces/efectos-adversos.interface';
 
 @Component({
   selector: 'app-datos-clinicos',
@@ -48,12 +49,29 @@ export class DatosClinicosComponent implements OnInit  {
   farmacosSeleccionados: farmaco[] = [];
   datosClinicos: datosClinicos [] = [];
 
+  efectosAdversos: efectosAdversos [] = [];
   
   farmaco: farmaco = {
     nombre: '',
     casa: '',
     efectosAdversos: [],
-    efectosAdversosNoReportados: [],
+    observaciones: '',
+    estado: false,
+    seleccionado: false
+  }
+
+  efecto: efectosAdversos = {
+    efectoAdverso: '',
+    observaciones: '',
+    seleccionado: false,
+    estado: false,
+    reportado: false
+  }
+
+  farmacoSeleccionado: farmaco = {
+    nombre: '',
+    casa: '',
+    efectosAdversos: [],
     observaciones: '',
     estado: false,
     seleccionado: false
@@ -132,15 +150,46 @@ export class DatosClinicosComponent implements OnInit  {
     })
   } 
   
-  agregar(farmaco:farmaco, event : any){
+  agregarEfecto(efecto:efectosAdversos, tipoEfecto:boolean, event : any){   
+
+    this.efecto = efecto; 
+
+    this.efecto.seleccionado == true ? false : true; 
+
+    console.log(this.efecto)
+
+    if(efecto.seleccionado){
+      console.log(efecto.seleccionado)
+    
+      if(tipoEfecto){
+        this.efectosAdversos.push(efecto);
+      }
+    }else{
+
+    }
+
+  
+
+
+    
+  }
+
+  agregarFarmaco({...farmaco}:farmaco, event : any){
     this.farmaco = farmaco; 
-    this.farmaco.seleccionado = this.farmaco.seleccionado == true ? false: true;  
+    this.farmacoSeleccionado = farmaco;
+    this.farmaco.seleccionado = this.farmaco.seleccionado == true ? false: true;
+    this.farmacoSeleccionado.seleccionado = this.farmaco.seleccionado == true ? false: true; 
+
+
+    console.log(this.farmacoSeleccionado);
 
      if(this.farmaco.seleccionado){
        this.farmacosSeleccionados.push(farmaco);
      }else{
       this.farmacosSeleccionados.splice(this.farmacosSeleccionados.findIndex(f => f._id == this.farmaco._id),1);
      }
+
+
   }
 
   actualizarDatosClinicos(dato:datosClinicos){
@@ -167,6 +216,11 @@ export class DatosClinicosComponent implements OnInit  {
     } 
     this.actualizacion = true;  
     this.guardar();
+  }
+
+  mostrarEfectosAdversos(farmaco:farmaco){
+    this.efectosAdversos = farmaco.efectosAdversos; 
+    console.log(farmaco);
   }
 
   index :number = 0;

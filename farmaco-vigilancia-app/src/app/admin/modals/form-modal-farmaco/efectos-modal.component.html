@@ -7,20 +7,29 @@
 <div class="modal-body">
     <div class="form">
         <div class="form-group row">   
-            <div class="card col-6 ">              
-                <h3>Efectos reportados</h3>
-                <div *ngFor="let efectoR of efectosReportados, let i=index">                    
-                    <input type="checkbox" id="efectoAdversoR" (change)="onTextBoxChangeReportados(efectoR, $event)" [checked]="efectoR.seleccionado" *ngIf="efectoR.estado">
-                    <label for="efectoAdversoR" *ngIf="efectoR.estado">{{i+1}} - {{efectoR.efectoAdverso}}</label>                    
+            <div class="col-12"> 
+                <div class="row">
+                    <div class="col-8">
+                        <h3>Efectos Adversos</h3>
+                    </div>  
+                    <div class="col-4">
+                        <h3>Reportados</h3>
+                    </div>  
+                </div>                    
+                <div *ngFor="let efecto of efectos, let i=index"> 
+                    <div class="row mt-2" *ngIf="efecto.estado" >
+                        <div class="col-8">                            
+                            <input type="checkbox" id="efectoAdversoR" (change)="onTextBoxChangeReportados(efecto, $event)" [checked]="efecto.seleccionado" >
+                            <label for="efectoAdversoR" *ngIf="efecto.estado"> &nbsp;{{ efecto.efectoAdverso}}</label>    
+                        </div>                
+                        <div class="col-4">                            
+                            <select class="form-select" name="reportado" id="reportado" [(ngModel)]="efecto.reportado">
+                            <option [ngValue]="true" selected>SI</option>
+                            <option [ngValue]="false">NO</option>
+                        </select> </div>
+                    </div>            
                 </div>
             </div>   
-            <div class="card col-6"> 
-                <h3>Efectos no reportados</h3>
-                <div *ngFor="let efectoN of efectosNoReportados, let i=index">                    
-                    <input type="checkbox" id="efectoAdversoN" (change)="onTextBoxChangeNoReportados(efectoN, $event)" [checked]="efectoN.seleccionado" *ngIf="efectoN.estado" > 
-                    <label for="efectoAdversoN" *ngIf="efectoN.estado">{{i+1}} - {{efectoN.efectoAdverso}}</label>
-                </div>                
-            </div>  
             <div class="mb-1 col-md-12 text-center  mt-2" (click)="guardar()">    
                 <button class="btn btn-primary">Guardar</button>
             </div>

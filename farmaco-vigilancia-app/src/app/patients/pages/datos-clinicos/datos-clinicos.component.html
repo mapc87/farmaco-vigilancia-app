@@ -74,19 +74,43 @@
                     [(ngModel)]="datoClinico.observaciones"></textarea>
                   </div>                            
               </div>    
+              <hr>
               <div class="col-12 mt-3">
                   <div class="text-center">
                     <label class="fs-3 mb-3">Farmacos</label>
                   </div>   
-                  <div class="row">
-                    <div class="d-inline col-3" *ngFor="let farmaco of farmacos let i = index">  
-                        <input type="checkbox" class=" form-check-input" (change)="agregar(farmaco, $event)"  [checked]="farmaco.seleccionado"> 
+                  <div class="row">  
+                    <div class="col-md-6">
+                      <select 
+                        class="form-select md-1 col-6" 
+                        id="farmaco1" 
+                        name="farmaco1" 
+                        aria-label="farmaco1" 
+                        [(ngModel)]="farmaco" 
+                        (ngModelChange)="mostrarEfectosAdversos(farmaco)">                
+                          <option *ngFor="let f of farmacos" [ngValue]="f">{{f.nombre}}</option>
+                      </select>
+                    </div>  
+                    <div class="col-md-6">
+                      <button type="button" class="btn btn-secondary" (click)="agregarFarmaco(farmaco, $event)">Asociar medicamento</button>
+                    </div>
+                    <div class="col md-6 mt-3" *ngIf="efectosAdversos.length > 0">
+                      <div class="text-center">
+                        <label class="fs-5 mt-3">Efectos Adversos Reportados</label>
+                      </div> 
+                      <div class="d-inline" *ngFor="let e of efectosAdversos let i = index">  
+                        <input type="checkbox" class=" form-check-input" (change)="agregarEfecto(e, true, $event)"  [checked]="e.seleccionado"  *ngIf="efecto.estado"> 
                         <label class="form-check-label" >
-                          &nbsp; {{i+1}} - {{farmaco.nombre}} &nbsp; 
+                          &nbsp; {{i+1}} - {{e.efectoAdverso}} &nbsp; 
                         </label>                                 
+                      </div>  
                     </div>       
+                    
+                  
                   </div>                               
-                </div>                                                
+                </div>   
+                <hr>
+                                                            
               <div class="col-12 mt-5">
                 <div class="text-center mt-3">  
                   <button class="btn btn-success" [disabled]="farmacosSeleccionados.length == 0 || formularioDatosClinicos.invalid" type="submit">Guardar datos clínicos</button>
