@@ -125,18 +125,18 @@
                   </div>   
                   <div class="row">  
                     <div class="col-md-6">
-                      <select 
+                      <select      
                         class="form-select md-1 col-6" 
                         id="farmaco" 
                         name="farmaco" 
                         aria-label="farmaco" 
                         [(ngModel)]="farmaco" 
                         (ngModelChange)="mostrarEfectosAdversos()">                
-                          <option *ngFor="let f of farmacos" [ngValue]="f">{{f.nombre}}</option>
+                          <option *ngFor="let f of farmacos" [ngValue]="f" [disabled]="f.seleccionado">{{f.nombre}}</option>
                       </select>
                     </div>  
                     <div class="col-md-3">
-                      <button type="button" class="btn btn-secondary" (click)="agregarFarmaco(limpiarVariables)">Asociar Fármaco</button>
+                      <button type="button" class="btn btn-secondary" (click)="agregarFarmaco(limpiarVariables)" [disabled]="farmaco._id == null">Asociar Fármaco</button>
                     </div>
                     <div class="col-12 mt-3">
                       <div class="text-center">

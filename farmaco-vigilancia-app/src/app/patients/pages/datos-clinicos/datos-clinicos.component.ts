@@ -147,10 +147,14 @@ export class DatosClinicosComponent implements OnInit  {
 
 
   getFarmacos(){
-    this.srvFarmacos.getFarmacos.subscribe(result => {
-      this.farmacos = result;
+    this.srvFarmacos.getFarmacos.subscribe(result  => {
+      result.forEach(r => {
+        if(r.estado){
+          this.farmacos.push(r)
+        }
+      })
       console.log(result);
-    })
+    }) 
   }
 
   agregarEfecto(efecto:efectosAdversos, event : any){
@@ -169,24 +173,31 @@ export class DatosClinicosComponent implements OnInit  {
   }
   
 
-  agregarFarmaco(calback: (that:any) => void){
+  agregarFarmaco(calback: (thisBase:any) => void){
     this.farmacoSeleccionado.efectosAdversos = [...this.efectosAdversosSeleccionados];
+    let thisBase = this;
 
     if(this.farmacosSeleccionados.findIndex(f => f._id == this.farmacoSeleccionado._id) == -1){
-      this.farmacosSeleccionados.push(this.farmacoSeleccionado);      
+      this.farmacosSeleccionados.push(this.farmacoSeleccionado);     
+      this.activarInactivarSelectFarmacos(this.farmacoSeleccionado._id, true);
+      console.log(this.farmacos);
     }else{
-      this.toastr.error("Fármaco ya se encuentra asociado al paciente");
+      this.farmacosSeleccionados[this.farmacosSeleccionados.findIndex(fs => fs._id == this.farmacoSeleccionado._id)].efectosAdversos = [...this.efectosAdversosSeleccionados]
     }
-    let that = this;
-    calback(that);
+    
+    calback(thisBase);
   }
 
-  limpiarVariables(that: any){
+  activarInactivarSelectFarmacos(idFarmaco: string, estado: boolean){
+    this.farmacos[this.farmacos.findIndex(f => f._id == idFarmaco)].seleccionado = estado; 
+  }
 
-    that.efectosAdversosSeleccionados.splice(0,)
-    that.efectosAdversos.splice(0,);
+  limpiarVariables(thisBase: any){
 
-    that.farmacoSeleccionado = {
+    thisBase.efectosAdversosSeleccionados.splice(0,)
+    thisBase.efectosAdversos.splice(0,);
+
+    thisBase.farmacoSeleccionado = {
       nombre: '',
       casa: '',
       efectosAdversos: [],
@@ -195,7 +206,7 @@ export class DatosClinicosComponent implements OnInit  {
       seleccionado: false
     }
 
-    that.farmaco = {
+    thisBase.farmaco = {
       nombre: '',
       casa: '',
       efectosAdversos: [],
@@ -203,25 +214,30 @@ export class DatosClinicosComponent implements OnInit  {
       estado: false,
       seleccionado: false
     }
+
+    thisBase.farmacos.forEach((f: farmaco) => {
+      f.efectosAdversos.forEach(e => e.seleccionado = false)
+    });
+    
+    console.log(thisBase.farmacos);
   }
 
-  removerFarmaco(farmaco:farmaco, callback: (that:any) => void){
+  removerFarmaco(farmaco:farmaco, callback: (thisBase:any) => void){
     this.farmacosSeleccionados.splice(this.farmacosSeleccionados.findIndex(fs => fs._id == farmaco._id),1);
-    let that = this; 
-    callback(that);
+    let thisBase = this; 
+    this.activarInactivarSelectFarmacos(farmaco._id, false);
+    callback(thisBase);
   }
 
   modificarEfectosAdversos(farmaco: farmaco){      
 
     this.farmaco =  this.farmacos.find(f => f._id == farmaco._id) ?? farmaco;  
-    this.farmacosSeleccionados.splice(this.farmacosSeleccionados.findIndex(fs => fs._id == farmaco._id),1);
     this.efectosAdversosSeleccionados = [...farmaco.efectosAdversos];
 
     this.mostrarEfectosAdversos();    
   }
 
-  mostrarEfectosAdversos(){
-    
+  mostrarEfectosAdversos(){    
     this.farmacoSeleccionado = {...this.farmaco}; 
     this.efectosAdversos = [...this.farmaco.efectosAdversos];
 
@@ -240,18 +256,18 @@ export class DatosClinicosComponent implements OnInit  {
   }
 
   actualizarDatosClinicos(dato:datosClinicos){
-
-    this.farmacos.forEach(f => f.seleccionado = false);
+ 
     this.actualizacion = true;
-
     this.datosClinicos = this.paciente.datosClinicos;
-    this.farmacosSeleccionados = dato.farmacosUtilizados;
+    this.farmacosSeleccionados = [...dato.farmacosUtilizados];
     this.datoClinico = dato;
 
     this.farmacos.forEach(f => {
-      if(this.farmacosSeleccionados[this.farmacosSeleccionados.findIndex(fs=> fs._id == f._id)]){
-        f.seleccionado = true;
-      }
+      if(this.farmacosSeleccionados.findIndex(fs => fs._id == f._id) >= 0){
+        this.activarInactivarSelectFarmacos(f._id, true);
+      }else{
+        this.activarInactivarSelectFarmacos(f._id, false);
+      }      
     });
   }
 
