@@ -18,10 +18,10 @@ import { FarmacoComponent } from '../../../admin/pages/farmaco/farmaco.component
 })
 export class DatosClinicosComponent implements OnInit  {
 
-  
-  accion: string = "Agregar"; 
-  actualizacion: boolean = false;    
-  list: any[] = []; 
+
+  accion: string = "Agregar";
+  actualizacion: boolean = false;
+  list: any[] = [];
   enfermedades: enfermedad[] = [];
   estadioEnfermedad : string [] = [];
   quimioterapia: string [] = [];
@@ -51,7 +51,7 @@ export class DatosClinicosComponent implements OnInit  {
     observaciones: '',
     fechaNacimiento: new Date()
   }
-  
+
   farmaco: farmaco = {
     nombre: '',
     casa: '',
@@ -77,7 +77,7 @@ export class DatosClinicosComponent implements OnInit  {
     estado: false,
     seleccionado: false
   }
-  
+
   datoClinico : datosClinicos = {
     diagnostico: '',
     estadioEnfermedad: '',
@@ -93,14 +93,14 @@ export class DatosClinicosComponent implements OnInit  {
   ngOnInit(): void {
     this.getEnfermedades();
     this.estadioEnfermedad = estadioEnfermedad;
-    this.quimioterapia = quimioterapia;   
+    this.quimioterapia = quimioterapia;
     this.getFarmacos()
-    this.paciente = this.list[0]; 
-    
+    this.paciente = this.list[0];
+
     if(this.list[0]){
       console.log(this.list[0]);
-    } 
-   
+    }
+
   }
 
   constructor(
@@ -111,8 +111,8 @@ export class DatosClinicosComponent implements OnInit  {
     private srvFarmacos: FarmacoServiceService,
     private toastr: ToastrService,
     private modalService: BsModalService
-  ){     
-    
+  ){
+
   }
 
   getEnfermedades(){
@@ -120,27 +120,27 @@ export class DatosClinicosComponent implements OnInit  {
       result.forEach(r => {
         if(r.estado){
           this.enfermedades.push(r);
-        }       
-      })   
+        }
+      })
     });
   }
 
-  guardar(){   
+  guardar(){
     this.datoClinico.farmacosUtilizados = this.farmacosSeleccionados;
     let mensaje:string  = "actualizado"
 
     if(!this.actualizacion){
       this.paciente.datosClinicos.push(this.datoClinico);
-      this.datoClinico.estado = true; 
+      this.datoClinico.estado = true;
       mensaje = "guardado"
-    } 
+    }
 
     this.srvPaciente.updatePaciente(this.paciente).subscribe(
       result => {
-          this.toastr.success("Dato clinico " + mensaje); 
-          this.actualizacion = false;  
+          this.toastr.success("Dato clinico " + mensaje);
+          this.actualizacion = false;
           this.farmacosSeleccionados = [];
-          this.modalRef.hide();          
+          this.modalRef.hide();
       }
     );
   }
@@ -148,45 +148,54 @@ export class DatosClinicosComponent implements OnInit  {
 
   getFarmacos(){
     this.srvFarmacos.getFarmacos.subscribe(result => {
-      this.farmacos = result; 
+      this.farmacos = result;
+      console.log(result);
     })
-  } 
-  
-  agregarEfecto(efecto:efectosAdversos, event : any){  
+  }
+
+  agregarEfecto(efecto:efectosAdversos, event : any){
 
     let accion = event.target.checked;
 
-    
-    console.log(efecto)
     if(accion)
     {
       this.efectosAdversosSeleccionados.push(efecto);
     }else{
-      this.efectosAdversosSeleccionados.forEach((e, index )=> {        
-        if(e._id == efecto._id){
-          this.efectosAdversosSeleccionados.splice(index, 1);
-        }
-      });      
-    }
-  }
-
-  agregarFarmaco(){
-
-    this.farmacoSeleccionado.efectosAdversos = this.efectosAdversosSeleccionados;
-  
-    if(this.farmacosSeleccionados.findIndex(f => f._id == this.farmacoSeleccionado._id) == -1){
-      this.farmacosSeleccionados.push(this.farmacoSeleccionado);
-      this.limpiarEfectosAdversos();
-    }else{              
-      this.toastr.error("Fármaco ya se encuentra asociado al paciente");
-    }
+      this.efectosAdversosSeleccionados
+          .splice(this.efectosAdversosSeleccionados
+          .findIndex(e => e._id == efecto._id), 1);
+    };
     
   }
- 
-  limpiarEfectosAdversos(){
-    this.efectosAdversosSeleccionados = [];
-    this.efectosAdversos = [];
-    this.farmaco = {
+  
+
+  agregarFarmaco(calback: (that:any) => void){
+    this.farmacoSeleccionado.efectosAdversos = [...this.efectosAdversosSeleccionados];
+
+    if(this.farmacosSeleccionados.findIndex(f => f._id == this.farmacoSeleccionado._id) == -1){
+      this.farmacosSeleccionados.push(this.farmacoSeleccionado);      
+    }else{
+      this.toastr.error("Fármaco ya se encuentra asociado al paciente");
+    }
+    let that = this;
+    calback(that);
+  }
+
+  limpiarVariables(that: any){
+
+    that.efectosAdversosSeleccionados.splice(0,)
+    that.efectosAdversos.splice(0,);
+
+    that.farmacoSeleccionado = {
+      nombre: '',
+      casa: '',
+      efectosAdversos: [],
+      observaciones: '',
+      estado: false,
+      seleccionado: false
+    }
+
+    that.farmaco = {
       nombre: '',
       casa: '',
       efectosAdversos: [],
@@ -196,29 +205,54 @@ export class DatosClinicosComponent implements OnInit  {
     }
   }
 
-  removerFarmaco(farmaco:farmaco){
-    this.farmacosSeleccionados.splice(this.farmacosSeleccionados.findIndex(fs => fs._id == farmaco._id),1);   
+  removerFarmaco(farmaco:farmaco, callback: (that:any) => void){
+    this.farmacosSeleccionados.splice(this.farmacosSeleccionados.findIndex(fs => fs._id == farmaco._id),1);
+    let that = this; 
+    callback(that);
   }
 
-  modificarEfectosAdversos(farmaco: farmaco){
-    this.farmaco = farmaco;
-    this.farmaco.efectosAdversos = this.efectosAdversos; 
+  modificarEfectosAdversos(farmaco: farmaco){      
+
+    this.farmaco =  this.farmacos.find(f => f._id == farmaco._id) ?? farmaco;  
+    this.farmacosSeleccionados.splice(this.farmacosSeleccionados.findIndex(fs => fs._id == farmaco._id),1);
+    this.efectosAdversosSeleccionados = [...farmaco.efectosAdversos];
+
+    this.mostrarEfectosAdversos();    
+  }
+
+  mostrarEfectosAdversos(){
+    
+    this.farmacoSeleccionado = {...this.farmaco}; 
+    this.efectosAdversos = [...this.farmaco.efectosAdversos];
+
+    console.log(this.efectosAdversos);
+    console.log(this.farmacoSeleccionado);
+  
+    if(this.efectosAdversosSeleccionados.length > 0){
+      this.efectosAdversos.forEach(ea => {
+        if(typeof ea != "string"){
+          if(this.efectosAdversosSeleccionados.findIndex(eas => eas._id == ea._id) != -1){
+            ea.seleccionado = true; 
+          }
+        }
+      })
+    }
   }
 
   actualizarDatosClinicos(dato:datosClinicos){
-     
-    this.farmacos.forEach(f => f.seleccionado = false);
-    this.actualizacion = true; 
 
-    this.datosClinicos = this.paciente.datosClinicos; 
+    this.farmacos.forEach(f => f.seleccionado = false);
+    this.actualizacion = true;
+
+    this.datosClinicos = this.paciente.datosClinicos;
     this.farmacosSeleccionados = dato.farmacosUtilizados;
-    this.datoClinico = dato; 
-  
+    this.datoClinico = dato;
+
     this.farmacos.forEach(f => {
       if(this.farmacosSeleccionados[this.farmacosSeleccionados.findIndex(fs=> fs._id == f._id)]){
         f.seleccionado = true;
       }
-    });     
+    });
   }
 
   inactivarDatoClinico(index : number){
@@ -226,15 +260,12 @@ export class DatosClinicosComponent implements OnInit  {
       this.paciente.datosClinicos[index].estado = false
     }else{
       this.paciente.datosClinicos[index].estado = true;
-    } 
-    this.actualizacion = true;  
+    }
+    this.actualizacion = true;
     this.guardar();
   }
 
-  mostrarEfectosAdversos(farmaco:farmaco){
-    this.efectosAdversos = farmaco.efectosAdversos; 
-    this.farmacoSeleccionado = farmaco; 
-  }
+  
 
   index :number = 0;
 
@@ -243,22 +274,22 @@ export class DatosClinicosComponent implements OnInit  {
     this.modalRefConfirm = this.modalService.show(template, {class: 'modal-sm'});
   }
 
-  confirm(): void {   
+  confirm(): void {
     if(this.paciente.datosClinicos[this.index].estado){
       this.paciente.datosClinicos[this.index].estado = false
     }else{
       this.paciente.datosClinicos[this.index].estado = true;
     }
- 
-    this.actualizacion = true;  
+
+    this.actualizacion = true;
     this.guardar();
     this.index = 0;
-    this.modalRefConfirm?.hide(); 
-    this.modalRef?.hide();        
+    this.modalRefConfirm?.hide();
+    this.modalRef?.hide();
   }
 
   decline(): void {
     this.modalRefConfirm?.hide();
     this.modalRef?.hide();
-  }  
+  }
 }

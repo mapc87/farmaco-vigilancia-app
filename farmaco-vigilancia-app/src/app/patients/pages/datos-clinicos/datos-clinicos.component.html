@@ -17,7 +17,7 @@
           <th>Estadio Efermedad</th>
           <th>Quimioterapia</th>
           <th>Ciclo No.</th>
-          <th>Farmacos</th>
+          <th>Farmacos y Efectos Adversos</th>
           <th>estado</th>
           <th>Acciones</th>
         </tr>
@@ -30,10 +30,14 @@
           <td class="col-1">{{d.quimioterapia}}</td>
           <td class="col-1">{{d.cicloNo}}</td>                
           <td class="col-3">
-            <ul style="list-style-type: none; margin: 0; padding: 0;" class="text-left">
-              <li *ngFor="let d of d.farmacosUtilizados, let i = index">{{i+1}} - {{d.nombre}}</li>
+            <ul  class="text-left list-group list-group-flush">
+              <li class="list-group-item" *ngFor="let d of d.farmacosUtilizados, let i = index">{{i+1}} - {{d.nombre}}
+                <ul>
+                  <li *ngFor="let e of d.efectosAdversos, let i = index">{{i+1}} - {{e.efectoAdverso}} - {{e.reportado == true? "Reportado":"No Reportado"}}</li>
+                </ul>
+              </li>              
             </ul>
-          </td>
+          </td>          
           <td class="col-1">{{d.estado == true ? "Activo": "Inactivo"}}</td>
           <td class="col-2">
               <button type="button" class="btn btn-dark" data-toggle="tooltip" (click)="actualizarDatosClinicos(d)"  data-placement="top" title="actualizar" ><i class="bi bi-file-arrow-down" >                        
@@ -123,18 +127,18 @@
                     <div class="col-md-6">
                       <select 
                         class="form-select md-1 col-6" 
-                        id="farmaco1" 
-                        name="farmaco1" 
-                        aria-label="farmaco1" 
+                        id="farmaco" 
+                        name="farmaco" 
+                        aria-label="farmaco" 
                         [(ngModel)]="farmaco" 
-                        (ngModelChange)="mostrarEfectosAdversos(farmaco)">                
+                        (ngModelChange)="mostrarEfectosAdversos()">                
                           <option *ngFor="let f of farmacos" [ngValue]="f">{{f.nombre}}</option>
                       </select>
                     </div>  
                     <div class="col-md-3">
-                      <button type="button" class="btn btn-secondary" (click)="agregarFarmaco()">Asociar Fármaco</button>
+                      <button type="button" class="btn btn-secondary" (click)="agregarFarmaco(limpiarVariables)">Asociar Fármaco</button>
                     </div>
-                    <div class="col-12 mt-3" *ngIf="efectosAdversos.length > 0">
+                    <div class="col-12 mt-3">
                       <div class="text-center">
                         <label class="fs-5 mt-3">Efectos Adversos</label>
                       </div> 
@@ -157,14 +161,18 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let f of farmacosSeleccionados, let i = index">
-                            <td>{{index + 1}}</td>
+                            <td>{{i + 1}}</td>
                             <td>{{f.nombre}}</td>
-                            <td>{{f.efectosAdversos}}</td>
+                            <td>
+                               <ul>                                
+                                <li *ngFor="let e of f.efectosAdversos">{{e.efectoAdverso }} - {{e.reportado == true? "Reportado":"No Reportado"}}</li>
+                              </ul> 
+                            </td>
                             <td>
                                 <button type="button" class="btn btn-dark" data-toggle="tooltip" (click)="modificarEfectosAdversos(f)"  data-placement="top" title="Modificar Efectos Adversos" ><i class="bi bi-file-arrow-up" >                        
                               </i></button>  
                               &nbsp;                          
-                              <button type="button" class="btn btn-dark" (click)="removerFarmaco(f)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Activar/Inactivar"></i></button></td>
+                              <button type="button" class="btn btn-dark" (click)="removerFarmaco(f, limpiarVariables)"><i class="bi bi-file-x" data-toggle="tooltip"  data-placement="top" title="Activar/Inactivar"></i></button></td>
                           </tr>
                         </tbody>
                       </table>
