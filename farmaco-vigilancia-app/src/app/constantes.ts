@@ -1,6 +1,6 @@
-export const urlBackend = 'http://localhost:3000/api/'
+// export const urlBackend = 'http://localhost:3000/api/'
 
-//export const urlBackend = 'https://farmaco-vigilancia-app-backend-production-3f9b.up.railway.app/api/'
+export const urlBackend = 'https://pacientesapp-backend-production.up.railway.app/api/'
 
 
 // export const urlBackend = 'https://farmacovigilanciabackendservice.onrender.com/api/'
