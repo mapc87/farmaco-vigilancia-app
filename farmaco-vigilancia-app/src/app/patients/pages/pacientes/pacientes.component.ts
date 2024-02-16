@@ -9,6 +9,7 @@ import { DatosClinicosComponent } from '../datos-clinicos/datos-clinicos.compone
 import { PacienteFichaMedicaComponent } from '../paciente-ficha-medica/paciente-ficha-medica.component';
 import { ExcelServiceService } from 'src/app/shared/services/excel-service.service';
 import { AlgoritmoKarchLasagnaComponent } from '../algoritmo-karch-lasagna/algoritmo-karch-lasagna.component';
+import { efectosAdversos } from 'src/app/admin/interfaces/efectos-adversos.interface';
 
 @Component({
   selector: 'app-pacientes',
@@ -279,7 +280,7 @@ export class PacientesComponent implements OnInit {
         }); 
     });   
 
-    let farmacos :any = [];
+    let farmacos : any = [];
     
     this.pacientes.forEach(p=> 
     {
@@ -290,7 +291,7 @@ export class PacientesComponent implements OnInit {
             "paciente": p.nombre,
             "ciclo": d.cicloNo,
             "farmaco": f.nombre,
-            "efectos": f.efectosAdversos.join(', ')
+            "efectos": f.efectosAdversos.map(e => e.efectoAdverso).join(", ")
           })
         })
       })

@@ -96,6 +96,7 @@ export class ModalEfectosComponent implements OnInit {
     
     if(accion){
       this.efectosSeleccionados.push(efecto);
+      efecto.reportado = true;
       efecto.seleccionado = true;
     }else
     { 
